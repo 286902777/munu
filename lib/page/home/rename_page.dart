@@ -1,0 +1,207 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:munu/common/db_tool.dart';
+import 'package:munu/data/video_data.dart';
+import 'package:munu/tools/toast_tool.dart';
+
+import '../../generated/assets.dart';
+
+class RenamePage extends StatefulWidget {
+  const RenamePage({super.key, required this.model});
+  final VideoData model;
+
+  @override
+  State<RenamePage> createState() => _RenamePageState();
+}
+
+class _RenamePageState extends State<RenamePage> {
+  final TextEditingController _controller = TextEditingController();
+  var name = ''.obs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: AnimatedPadding(
+        padding: MediaQuery.of(context).viewInsets, // 动态获取键盘遮挡区域
+        duration: const Duration(milliseconds: 100),
+        child: Container(
+          height: 258,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            gradient: LinearGradient(
+              colors: [Color(0xFFD3E3FC), Color(0xFFF4F4F4)], // 中心到边缘颜色
+              begin: Alignment.topCenter,
+              end: Alignment.center,
+            ),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 72,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 22,
+                      left: 20,
+                      child: Text(
+                        'Rename',
+                        style: const TextStyle(
+                          letterSpacing: -0.5,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF17132C),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: InkWell(
+                        onTap: () {
+                          Get.back(result: 0);
+                        },
+                        child: Image.asset(Assets.iconCloseAlert, width: 24),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // SizedBox(height: 18),
+              _inputView(),
+              SizedBox(height: 8),
+              _numView(),
+              SizedBox(height: 10),
+              _sureBtn(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _inputView() {
+    return Container(
+      alignment: Alignment.center,
+      width: Get.width - 40,
+      height: 56,
+      decoration: BoxDecoration(
+        color: Color(0xFFE8E8E8),
+        borderRadius: BorderRadius.all(Radius.circular(6)),
+      ),
+      child: TextField(
+        autofocus: true,
+        maxLength: 100,
+        maxLengthEnforcement: MaxLengthEnforcement.truncateAfterCompositionEnds,
+        controller: _controller,
+        cursorColor: Color(0xFF17132C), // 光标颜色
+        cursorWidth: 2,
+        maxLines: 1, // 最大行数
+        onChanged: (text) {
+          if (text.length > 10) {
+            _controller.text = text.substring(0, 10);
+            _controller.selection = TextSelection.collapsed(offset: 10);
+          }
+          name.value = _controller.text;
+        },
+        style: const TextStyle(
+          letterSpacing: -0.5,
+          color: Color(0xFF17132C),
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+        decoration: InputDecoration(
+          hintText: '',
+          counterText: '',
+          hintStyle: const TextStyle(
+            letterSpacing: -0.5,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF17132C),
+          ),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(12),
+        ),
+      ),
+    );
+  }
+
+  Widget _numView() {
+    return Obx(
+      () => Container(
+        alignment: Alignment.centerRight,
+        height: 26,
+        padding: EdgeInsets.only(right: 20),
+        child: Text(
+          '${_controller.text.length}/100',
+          style: TextStyle(
+            letterSpacing: -0.5,
+            fontSize: 9,
+            fontWeight: FontWeight.w400,
+            color: name.value.length < 100
+                ? Color(0xBF17132C)
+                : Color(0xBFED1606),
+          ),
+          textAlign: TextAlign.right,
+        ),
+      ),
+    );
+  }
+
+  Widget _sureBtn() {
+    return Obx(
+      () => Container(
+        width: 168,
+        height: 52,
+        decoration: BoxDecoration(
+          color: name.value.isNotEmpty ? Color(0xFF136FF9) : Color(0x80136FF9),
+          borderRadius: BorderRadius.all(Radius.circular(26)),
+        ),
+        child: CupertinoButton(
+          child: Text(
+            'OK',
+            style: TextStyle(
+              letterSpacing: -0.5,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: name.value.isNotEmpty ? Colors.white : Color(0x80EFEFEF),
+            ),
+          ),
+          onPressed: () {
+            if (_controller.text.isNotEmpty) {
+              var isEx = false;
+              for (VideoData m in DataTool.instance.items) {
+                if (m.name == _controller.text) {
+                  isEx = true;
+                  break;
+                }
+              }
+              if (isEx) {
+                ToastTool.show(
+                  message: 'The file name already exists!',
+                  type: ToastType.fail,
+                );
+              } else {
+                widget.model.name = _controller.text;
+                DataTool.instance.updateVideoData(widget.model);
+                ToastTool.show(message: "Rename successfully!");
+                Get.back();
+              }
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
