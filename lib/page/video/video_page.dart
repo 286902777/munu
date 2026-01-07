@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:munu/page/video/video_full_page.dart';
+import 'package:munu/page/video/video_list_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:volume_controller/volume_controller.dart';
@@ -14,6 +16,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../common/db_tool.dart';
 import '../../data/video_data.dart';
+import '../../generated/assets.dart';
 import '../../keys/app_key.dart';
 import '../../tools/common_tool.dart';
 import '../../tools/event_tool.dart';
@@ -599,7 +602,7 @@ class _VideoPageState extends State<VideoPage>
     if (isFullScreen) {
       showDialog(
         context: context,
-        builder: (context) => PlayListFullPage(
+        builder: (context) => VideoFullPage(
           lists: lists ?? [],
           selectItem: (dataList) {
             lists?.assignAll(dataList);
@@ -620,7 +623,7 @@ class _VideoPageState extends State<VideoPage>
         // 点击背景是否关闭
         enableDrag: false,
         isScrollControlled: true,
-        builder: (context) => PlayListPage(
+        builder: (context) => VideoListPage(
           lists: lists ?? [],
           selectItem: (dataList) {
             savePlayTime();
@@ -775,7 +778,7 @@ class _VideoPageState extends State<VideoPage>
               CupertinoButton(
                 sizeStyle: CupertinoButtonSize.small,
                 padding: EdgeInsets.zero,
-                child: Image.asset(Assets.assetsBack, width: 24),
+                child: Image.asset(Assets.playPlayBack, width: 24),
                 onPressed: () async {
                   SystemChrome.setPreferredOrientations([
                     DeviceOrientation.portraitUp,
@@ -845,7 +848,7 @@ class _VideoPageState extends State<VideoPage>
                   sizeStyle: CupertinoButtonSize.small,
                   onPressed: isAutoLoadShow ? null : _clickPlayAction,
                   child: Image.asset(
-                    isPlay.value ? Assets.assetsPlay : Assets.assetsPause,
+                    isPlay.value ? Assets.playPlay : Assets.playPause,
                     width: 32,
                   ),
                 ),
@@ -861,9 +864,7 @@ class _VideoPageState extends State<VideoPage>
                           _goNextEvent(false);
                         },
                   child: Image.asset(
-                    isEnd.value
-                        ? Assets.assetsPlayUnNext
-                        : Assets.assetsPlayNext,
+                    isEnd.value ? Assets.playPlayUnNext : Assets.playPlayNext,
                     width: 32,
                   ),
                 ),
@@ -872,7 +873,7 @@ class _VideoPageState extends State<VideoPage>
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 sizeStyle: CupertinoButtonSize.small,
-                child: Image.asset(Assets.assetsPlayList, width: 32),
+                child: Image.asset(Assets.playPlayList, width: 32),
                 onPressed: () {
                   _openListEvent();
                 },
@@ -881,7 +882,7 @@ class _VideoPageState extends State<VideoPage>
               CupertinoButton(
                 padding: EdgeInsets.zero,
                 sizeStyle: CupertinoButtonSize.small,
-                child: Image.asset(Assets.assetsPlayScreen, width: 32),
+                child: Image.asset(Assets.playPlayFull, width: 32),
                 onPressed: () {
                   displayTool(true);
                   _screenChange();
@@ -1033,7 +1034,7 @@ class _VideoPageState extends State<VideoPage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(Assets.assetsBrightness, width: 16),
+                  Image.asset(Assets.playBrightness, width: 16),
                   SizedBox(width: 8),
                   Flexible(
                     child: ValueListenableBuilder(
@@ -1082,7 +1083,7 @@ class _VideoPageState extends State<VideoPage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(Assets.assetsVolume, width: 16),
+                  Image.asset(Assets.playVoice, width: 16),
                   SizedBox(width: 8),
                   Flexible(
                     child: ValueListenableBuilder(
@@ -1131,7 +1132,7 @@ class _VideoPageState extends State<VideoPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(Assets.assetsRewind, width: 16),
+                  Image.asset(Assets.playForward, width: 16),
                   const SizedBox(width: 14),
                   const Flexible(
                     child: Text(
@@ -1175,7 +1176,7 @@ class _VideoPageState extends State<VideoPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(Assets.assetsForward, width: 16),
+                  Image.asset(Assets.playRewind, width: 16),
                   const SizedBox(width: 14),
                   const Flexible(
                     child: Text(

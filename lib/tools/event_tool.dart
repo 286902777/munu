@@ -180,48 +180,48 @@ class EventTool extends GetConnect {
     EventApi api, {
     required Map<String, dynamic> para,
   }) async {
-    if (Platform.isIOS) {
-      bool has = false;
-      for (Map<String, dynamic> m in eventList) {
-        if (m.keys.contains('a')) {
-          has = m['a']['b'] == para['a']['b'];
-          break;
-        }
-      }
-      if (has == false) {
-        eventList.add(para);
-        logArr.add(para['a']['b']);
-        Map<String, dynamic> saveData = {};
-        for (Map<String, dynamic> m in eventList) {
-          if (m.keys.contains('a')) {
-            saveData[m['a']['b']] = m;
-            break;
-          }
-        }
-        await AppKey.save(AppKey.eventList, saveData);
-        postApiEvent();
-      } else {
-        print('-------${para['a']['b']}');
-        postApiEvent();
-      }
-      // } else {
-      //   bool has = eventList.any(
-      //     (m) => m['dramatic']['knurl'] == para['dramatic']['knurl'],
-      //   );
-      //   if (has == false) {
-      //     eventList.add(para);
-      //     logArr.add(para['dramatic']['knurl']);
-      //     Map<String, dynamic> saveData = {};
-      //     eventList.forEach((m) {
-      //       saveData[m['dramatic']['knurl']] = m;
-      //     });
-      //     await AppKey.save(AppKey.eventList, saveData);
-      //     uploadTbaEvent();
-      //   } else {
-      //     print('-------${para['dramatic']['knurl']}');
-      //     uploadTbaEvent();
-      //   }
-    }
+    // if (Platform.isIOS) {
+    //   bool has = false;
+    //   for (Map<String, dynamic> m in eventList) {
+    //     if (m.keys.contains('a')) {
+    //       has = m['a']['b'] == para['a']['b'];
+    //       break;
+    //     }
+    //   }
+    //   if (has == false) {
+    //     eventList.add(para);
+    //     logArr.add(para['a']['b']);
+    //     Map<String, dynamic> saveData = {};
+    //     for (Map<String, dynamic> m in eventList) {
+    //       if (m.keys.contains('a')) {
+    //         saveData[m['a']['b']] = m;
+    //         break;
+    //       }
+    //     }
+    //     await AppKey.save(AppKey.eventList, saveData);
+    //     postApiEvent();
+    //   } else {
+    //     print('-------${para['a']['b']}');
+    //     postApiEvent();
+    //   }
+    // } else {
+    //   bool has = eventList.any(
+    //     (m) => m['dramatic']['knurl'] == para['dramatic']['knurl'],
+    //   );
+    //   if (has == false) {
+    //     eventList.add(para);
+    //     logArr.add(para['dramatic']['knurl']);
+    //     Map<String, dynamic> saveData = {};
+    //     eventList.forEach((m) {
+    //       saveData[m['dramatic']['knurl']] = m;
+    //     });
+    //     await AppKey.save(AppKey.eventList, saveData);
+    //     uploadTbaEvent();
+    //   } else {
+    //     print('-------${para['dramatic']['knurl']}');
+    //     uploadTbaEvent();
+    //   }
+    // }
   }
 
   void postApiEvent() async {

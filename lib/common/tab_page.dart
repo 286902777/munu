@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:munu/page/set/set_page.dart';
@@ -230,33 +232,62 @@ class _TabPageState extends State<TabPage>
                 highlightColor: Colors.transparent,
                 dividerColor: Colors.transparent,
               ),
-              child: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                currentIndex: _currentTabIdx,
-                backgroundColor: Colors.white,
-                selectedItemColor: Colors.transparent,
-                unselectedItemColor: Colors.transparent,
-                enableFeedback: false,
-                onTap: (index) {
-                  openSelectIndex(index);
-                },
-                items: const [
-                  BottomNavigationBarItem(
-                    label: "0",
-                    icon: TabBarItems(Assets.tabHome, false),
-                    activeIcon: TabBarItems(Assets.tabHomeSel, true),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 10.0, // 水平模糊度
+                  sigmaY: 10.0, // 垂直模糊度
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2), // 半透明背景
+                    border: Border(
+                      top: BorderSide(
+                        color: Colors.white.withOpacity(0.1),
+                        width: 1.0,
+                      ),
+                    ),
                   ),
-                  BottomNavigationBarItem(
-                    label: "1",
-                    icon: TabBarItems(Assets.tabUpload, false),
-                    activeIcon: TabBarItems(Assets.tabUploadSel, true),
+                  child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    currentIndex: _currentTabIdx,
+                    backgroundColor: Colors.white,
+                    selectedItemColor: Colors.transparent,
+                    unselectedItemColor: Colors.transparent,
+                    enableFeedback: false,
+                    onTap: (index) {
+                      openSelectIndex(index);
+                    },
+                    items: const [
+                      BottomNavigationBarItem(
+                        label: "0",
+                        icon: TabBarItems(Assets.tabHome, '', false),
+                        activeIcon: TabBarItems(
+                          Assets.tabHomeSel,
+                          'Home',
+                          true,
+                        ),
+                      ),
+                      BottomNavigationBarItem(
+                        label: "1",
+                        icon: TabBarItems(Assets.tabUpload, '', false),
+                        activeIcon: TabBarItems(
+                          Assets.tabUploadSel,
+                          'Add',
+                          true,
+                        ),
+                      ),
+                      BottomNavigationBarItem(
+                        label: "2",
+                        icon: TabBarItems(Assets.tabSet, '', false),
+                        activeIcon: TabBarItems(
+                          Assets.tabSetSel,
+                          'Setting',
+                          true,
+                        ),
+                      ),
+                    ],
                   ),
-                  BottomNavigationBarItem(
-                    label: "2",
-                    icon: TabBarItems(Assets.tabSet, false),
-                    activeIcon: TabBarItems(Assets.tabSetSel, true),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -268,35 +299,52 @@ class _TabPageState extends State<TabPage>
 
 class TabBarItems extends StatelessWidget {
   final String name;
+  final String title;
   final bool isSelected;
-  const TabBarItems(this.name, this.isSelected, {super.key});
+  const TabBarItems(this.name, this.title, this.isSelected, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          width: 66,
-          height: 40,
-          child: Image.asset(
-            name,
-            fit: BoxFit.fill,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-        ),
-        SizedBox(height: 6),
         Visibility(
           visible: isSelected,
           child: Container(
-            width: 4,
+            width: 24,
             height: 4,
-            alignment: Alignment.center,
+            alignment: Alignment.topCenter,
             decoration: BoxDecoration(
-              color: Color(0xFF0C0C0C),
+              color: Color(0xFFFD6B39),
               borderRadius: BorderRadius.all(Radius.circular(2)),
             ),
+          ),
+        ),
+        SizedBox(height: 8),
+        Container(
+          width: isSelected ? 80 : 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: isSelected ? Color(0xFFFD6B39) : Color(0x0DFD6B39),
+            borderRadius: BorderRadius.all(Radius.circular(18)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(name, width: 24, height: 24),
+              Visibility(visible: isSelected, child: SizedBox(width: 4)),
+              Visibility(
+                visible: isSelected,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFFFFFFFF),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

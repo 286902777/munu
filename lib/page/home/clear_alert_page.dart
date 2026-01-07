@@ -15,8 +15,12 @@ class ClearAlertPage extends StatelessWidget {
           height: 190,
           padding: EdgeInsets.only(left: 16, top: 18, right: 16, bottom: 18),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(22)),
-            color: Color(0xFFF5F5F5),
+            borderRadius: BorderRadius.all(Radius.circular(36)),
+            gradient: LinearGradient(
+              colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+              begin: Alignment.topCenter, // 渐变起点
+              end: Alignment.bottomCenter, // 渐变终点
+            ),
           ),
           child: Column(
             children: [

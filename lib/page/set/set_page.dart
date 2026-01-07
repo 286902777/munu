@@ -70,48 +70,28 @@ class _SetPageState extends State<SetPage>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 40),
-              Stack(
+              Row(
                 children: [
-                  Positioned(
-                    left: 8,
-                    bottom: 4,
-                    child: Image.asset(Assets.iconTitle, width: 40, height: 14),
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(width: 8),
-                      Text(
-                        'Setting',
-                        style: const TextStyle(
-                          letterSpacing: -0.5,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 22,
-                          color: Color(0xFF17132C),
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ],
+                  Image.asset(Assets.iconTitle, width: 20, height: 20),
+                  SizedBox(width: 6),
+
+                  Text(
+                    'Setting',
+                    style: const TextStyle(
+                      letterSpacing: -0.5,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 22,
+                      color: Color(0xFF17132C),
+                    ),
+                    textAlign: TextAlign.start,
                   ),
                 ],
               ),
               SizedBox(height: 33),
               Column(
                 children: [
-                  Image.asset(Assets.setArrow, width: 88, height: 88),
-                  SizedBox(height: 12),
-                  Obx(
-                    () => Text(
-                      appName.value,
-                      style: const TextStyle(
-                        letterSpacing: -0.5,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        color: Color(0xFF17132C),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 6),
+                  Image.asset(Assets.setLogoSet, width: 80, height: 80),
+                  SizedBox(height: 8),
                   Obx(
                     () => Text(
                       'v${version.value}',

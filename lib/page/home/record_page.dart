@@ -62,38 +62,6 @@ class _RecordPageState extends State<RecordPage> {
           ),
         ],
       ),
-      actions: [
-        Container(
-          width: 92,
-          height: 32,
-          padding: EdgeInsets.all(7),
-          decoration: BoxDecoration(
-            color: Color(0x40A9CBFF), // 颜色放在 decoration 中
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: InkWell(
-            onTap: () {
-              _displayAlert();
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(Assets.iconDeleteNav, width: 18),
-                Text(
-                  'Delete All',
-                  style: const TextStyle(
-                    letterSpacing: -0.5,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12,
-                    color: Color(0xFF202020),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(width: 12),
-      ],
     );
   }
 
@@ -104,25 +72,49 @@ class _RecordPageState extends State<RecordPage> {
           alignment: Alignment.centerLeft,
           width: Get.width,
           height: 44,
-          padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
-          child: Stack(
+          padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
+          child: Row(
             children: [
-              Positioned(
-                left: 0,
-                bottom: 0,
-                child: Image.asset(Assets.iconTitle, width: 40, height: 14),
+              Image.asset(Assets.iconTitle, width: 20, height: 20),
+              SizedBox(width: 6),
+              Text(
+                'Record',
+                style: const TextStyle(
+                  letterSpacing: -0.5,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF141414),
+                ),
+                textAlign: TextAlign.start,
               ),
-              Positioned(
-                left: 0,
-                child: Text(
-                  'History',
-                  style: const TextStyle(
-                    letterSpacing: -0.5,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF17132C),
+              Spacer(),
+              Container(
+                width: 84,
+                height: 32,
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  color: Color(0xCCFFFFFF), // 颜色放在 decoration 中
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    _displayAlert();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(Assets.iconDeleteNav, width: 24),
+                      Text(
+                        'Delete All',
+                        style: const TextStyle(
+                          letterSpacing: -0.5,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 9,
+                          color: Color(0xFF202020),
+                        ),
+                      ),
+                    ],
                   ),
-                  textAlign: TextAlign.start,
                 ),
               ),
             ],

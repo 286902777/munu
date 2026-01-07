@@ -127,10 +127,7 @@ class _FileListPageState extends State<FileListPage> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: navbar(),
-          body: Padding(
-            padding: EdgeInsets.only(top: 12),
-            child: _contentView(),
-          ),
+          body: Padding(padding: EdgeInsets.only(top: 12), child: listWidget()),
         ),
       ),
     );
@@ -162,7 +159,7 @@ class _FileListPageState extends State<FileListPage> {
     );
   }
 
-  Widget _contentView() {
+  Widget listWidget() {
     return RefreshConfiguration(
       hideFooterWhenNotFull: true,
       child: RefreshTool(

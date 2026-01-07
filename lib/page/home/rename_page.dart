@@ -35,15 +35,13 @@ class _RenamePageState extends State<RenamePage> {
         duration: const Duration(milliseconds: 100),
         child: Container(
           height: 258,
+          padding: EdgeInsets.fromLTRB(20, 0, 48, 20),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(36)),
             gradient: LinearGradient(
-              colors: [Color(0xFFD3E3FC), Color(0xFFF4F4F4)], // 中心到边缘颜色
-              begin: Alignment.topCenter,
-              end: Alignment.center,
+              colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+              begin: Alignment.topCenter, // 渐变起点
+              end: Alignment.bottomCenter, // 渐变终点
             ),
           ),
           child: Column(
@@ -61,7 +59,7 @@ class _RenamePageState extends State<RenamePage> {
                           letterSpacing: -0.5,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF17132C),
+                          color: Color(0xFF141414),
                         ),
                       ),
                     ),
@@ -151,7 +149,7 @@ class _RenamePageState extends State<RenamePage> {
             fontWeight: FontWeight.w400,
             color: name.value.length < 100
                 ? Color(0xBF17132C)
-                : Color(0xBFED1606),
+                : Color(0xBFFF2020),
           ),
           textAlign: TextAlign.right,
         ),
@@ -163,9 +161,9 @@ class _RenamePageState extends State<RenamePage> {
     return Obx(
       () => Container(
         width: 168,
-        height: 52,
+        height: 46,
         decoration: BoxDecoration(
-          color: name.value.isNotEmpty ? Color(0xFF136FF9) : Color(0x80136FF9),
+          color: name.value.isNotEmpty ? Color(0xFFFD6B39) : Color(0x80FD6B39),
           borderRadius: BorderRadius.all(Radius.circular(26)),
         ),
         child: CupertinoButton(
@@ -175,7 +173,9 @@ class _RenamePageState extends State<RenamePage> {
               letterSpacing: -0.5,
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: name.value.isNotEmpty ? Colors.white : Color(0x80EFEFEF),
+              color: name.value.isNotEmpty
+                  ? Color(0xFFEFEFEF)
+                  : Color(0x80EFEFEF),
             ),
           ),
           onPressed: () {

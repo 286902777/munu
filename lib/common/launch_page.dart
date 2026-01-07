@@ -86,7 +86,7 @@ class _LaunchPageState extends State<LaunchPage> {
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/app_bg.png'),
+              image: AssetImage('image/icon/munu_bg.webp'),
               fit: BoxFit.fill,
             ),
           ),

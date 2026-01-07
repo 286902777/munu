@@ -56,7 +56,7 @@ class _HomeCellState extends State<HomeCell> {
                 child: Positioned(
                   top: -1,
                   left: 4,
-                  child: Image.asset(Assets.assetsHot, width: 28, height: 14),
+                  child: Image.asset(Assets.iconAvatar, width: 28, height: 14),
                 ),
               ),
               Visibility(
@@ -64,11 +64,7 @@ class _HomeCellState extends State<HomeCell> {
                 child: Positioned(
                   right: 0,
                   top: 0,
-                  child: Image.asset(
-                    Assets.assetsRecommend,
-                    width: 56,
-                    height: 18,
-                  ),
+                  child: Image.asset(Assets.iconAvatar, width: 56, height: 18),
                 ),
               ),
             ],
@@ -148,15 +144,13 @@ class _HomeCellState extends State<HomeCell> {
   }
 
   Widget _setPlaceholder(int type) {
-    int colorValue = 0xFFDDEEEA;
-    String name = Assets.assetsVideoBg;
+    int colorValue = 0xFFEDE4E1;
+    String name = Assets.iconVideoBg;
     switch (type) {
       case 1:
-        name = Assets.assetsPhotoBg;
-        colorValue = 0xFFDDEEEA;
+        name = Assets.iconPhotoBg;
       case 2:
-        name = Assets.assetsFolderBg;
-        colorValue = 0xFFDDEEEA;
+        name = Assets.iconFileBg;
       default:
         break;
     }

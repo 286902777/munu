@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   void didPopNext() {
-    requsetChannelData();
+    requestChannelData();
     indexServiceEvent();
     super.didPopNext();
   }
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage>
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     TrackTool.instance.config();
     isNetwork.value = NetworkTool.instance.netStatus;
-    requsetChannelData();
+    requestChannelData();
     indexServiceEvent();
     uploadOpenApp();
   }
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 
-  Future<void> requsetChannelData() async {
+  Future<void> requestChannelData() async {
     userLists.assignAll(DataTool.instance.users);
     if (userLists.isNotEmpty) {
       String userId = userLists.first.id;
@@ -143,19 +143,19 @@ class _HomePageState extends State<HomePage>
                 tempUser.add(pool);
               }
             });
-            InsertChannelData(tempUser);
+            insertChannelData(tempUser);
           }
         },
         failHandle: (refresh, code, msg) {
           if (refresh) {
-            requsetChannelData();
+            requestChannelData();
           }
         },
       );
     }
   }
 
-  void InsertChannelData(List<UserPoolData> list) async {
+  void insertChannelData(List<UserPoolData> list) async {
     List<UserPoolData> tempList = <UserPoolData>[];
     await DataTool.instance.loadUsers();
     List<UserPoolData> users = DataTool.instance.users;
@@ -276,7 +276,7 @@ class _HomePageState extends State<HomePage>
         children: [
           Container(
             height: 44,
-            padding: EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -284,14 +284,14 @@ class _HomePageState extends State<HomePage>
                   children: [
                     Positioned(
                       left: 0,
-                      bottom: 4,
                       child: Image.asset(
                         Assets.iconTitle,
-                        width: 40,
-                        height: 14,
+                        width: 20,
+                        height: 20,
                       ),
                     ),
                     Positioned(
+                      left: 26,
                       child: Text(
                         'Channel',
                         style: const TextStyle(
@@ -418,27 +418,20 @@ class _HomePageState extends State<HomePage>
     return Column(
       children: [
         SizedBox(height: 8),
-        Stack(
+        Row(
           children: [
-            Positioned(
-              left: 12,
-              bottom: 4,
-              child: Image.asset(Assets.iconTitle, width: 40, height: 14),
-            ),
-            Row(
-              children: [
-                SizedBox(width: 12),
-                Text(
-                  'Media List',
-                  style: const TextStyle(
-                    letterSpacing: -0.5,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                    color: Color(0xFF17132C),
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ],
+            SizedBox(width: 16),
+            Image.asset(Assets.iconTitle, width: 20, height: 20),
+            SizedBox(width: 6),
+            Text(
+              'Collection',
+              style: const TextStyle(
+                letterSpacing: -0.5,
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Color(0xFF17132C),
+              ),
+              textAlign: TextAlign.start,
             ),
           ],
         ),
@@ -450,10 +443,10 @@ class _HomePageState extends State<HomePage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(Assets.iconAvatar, width: 120, height: 120),
+                  Image.asset(Assets.iconNoContent, width: 120, height: 120),
                   SizedBox(height: 4),
                   Text(
-                    'No files uploaded so far.',
+                    'No files uploaded yet.',
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontSize: 14,
@@ -466,10 +459,10 @@ class _HomePageState extends State<HomePage>
                   GestureDetector(
                     child: Container(
                       width: 132,
-                      height: 48,
+                      height: 42,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: Color(0xFF136FF9),
+                        color: Color(0xFFFD6B39),
                         borderRadius: BorderRadius.all(Radius.circular(24)),
                       ),
                       child: Text(
@@ -502,27 +495,21 @@ class _HomePageState extends State<HomePage>
     return Column(
       children: [
         SizedBox(height: 8),
-        Stack(
+
+        Row(
           children: [
-            Positioned(
-              left: 12,
-              bottom: 4,
-              child: Image.asset(Assets.iconTitle, width: 40, height: 14),
-            ),
-            Row(
-              children: [
-                SizedBox(width: 12),
-                Text(
-                  'Media List',
-                  style: const TextStyle(
-                    letterSpacing: -0.5,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                    color: Color(0xFF17132C),
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ],
+            SizedBox(width: 16),
+            Image.asset(Assets.iconTitle, width: 20, height: 20),
+            SizedBox(width: 6),
+            Text(
+              'Collection',
+              style: const TextStyle(
+                letterSpacing: -0.5,
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Color(0xFF17132C),
+              ),
+              textAlign: TextAlign.start,
             ),
           ],
         ),
@@ -534,10 +521,10 @@ class _HomePageState extends State<HomePage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(Assets.iconAvatar, width: 120, height: 120),
+                  Image.asset(Assets.iconNoNetwork, width: 120, height: 120),
                   SizedBox(height: 4),
                   Text(
-                    'Offline, please retry.',
+                    'No internet. Retry, please.',
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontSize: 14,

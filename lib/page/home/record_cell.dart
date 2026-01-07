@@ -68,15 +68,17 @@ class _RecordCellState extends State<RecordCell> {
           widget.model.netMovie != 0,
         );
       },
-      child: SizedBox(
+      child: Container(
         height: 88,
+        padding: EdgeInsets.symmetric(vertical: 8),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.end, // 垂直下对齐
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
                   child: widget.model.netMovie == 0
                       ? Image.memory(
                           widget.model.img ??
@@ -91,9 +93,9 @@ class _RecordCellState extends State<RecordCell> {
                           width: 128,
                           height: 72,
                           placeholder: (context, url) =>
-                              _setPlaceholder(widget.model.fileType),
+                              setPlaceWidget(widget.model.fileType),
                           errorWidget: (context, url, error) =>
-                              _setPlaceholder(widget.model.fileType),
+                              setPlaceWidget(widget.model.fileType),
                         ),
                 ),
                 SizedBox(width: 12),
@@ -114,7 +116,7 @@ class _RecordCellState extends State<RecordCell> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        changeTime(widget.model),
+                        replaceDate(widget.model),
                         style: const TextStyle(
                           letterSpacing: -0.5,
                           fontSize: 12,
@@ -130,32 +132,26 @@ class _RecordCellState extends State<RecordCell> {
                 SizedBox(width: 12),
               ],
             ),
-            SizedBox(height: 16),
           ],
         ),
       ),
     );
   }
 
-  Widget _setPlaceholder(int type) {
-    int colorValue = 0xFFDDEEEA;
-    String name = Assets.assetsVideoBg;
-    switch (type) {
-      case 1:
-        name = Assets.assetsVideoBg;
-      case 2:
-        name = Assets.assetsVideoBg;
-      default:
-        break;
-    }
+  Widget setPlaceWidget(int type) {
     return Container(
       alignment: Alignment.center,
-      color: Color(colorValue),
-      child: Image.asset(name, fit: BoxFit.cover),
+      color: Color(0xFFEDE4E1),
+      child: Image.asset(
+        Assets.iconVideoBg,
+        width: 62,
+        height: 46,
+        fit: BoxFit.cover,
+      ),
     );
   }
 
-  String changeTime(VideoData model) {
+  String replaceDate(VideoData model) {
     final duration = Duration(seconds: model.totalTime.toInt());
     final time = CommonTool.instance.formatHMS(duration);
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(model.createDate);

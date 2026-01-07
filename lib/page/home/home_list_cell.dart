@@ -34,18 +34,18 @@ class _HomeListCellState extends State<HomeListCell> {
         children: [
           Container(
             height: 44,
-            padding: EdgeInsets.fromLTRB(12, 10, 12, 10),
+            padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
             child: Stack(
               children: [
                 Positioned(
                   left: 0,
                   bottom: 0,
-                  child: Image.asset(Assets.iconTitle, width: 40, height: 14),
+                  child: Image.asset(Assets.iconTitle, width: 20, height: 20),
                 ),
                 Positioned(
-                  left: 0,
+                  left: 26,
                   child: Text(
-                    'Media List',
+                    'Collection',
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontWeight: FontWeight.w500,
@@ -202,20 +202,15 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
   }
 
   Widget _setPlaceholder(int type) {
-    int colorValue = 0xFFDDEEEA;
-    String name = Assets.assetsVideoBg;
-    switch (type) {
-      case 1:
-        name = Assets.assetsVideoBg;
-      case 2:
-        name = Assets.assetsVideoBg;
-      default:
-        break;
-    }
     return Container(
       alignment: Alignment.center,
-      color: Color(colorValue),
-      child: Image.asset(name, width: 62, height: 46, fit: BoxFit.cover),
+      color: Color(0xFFEDE4E1),
+      child: Image.asset(
+        Assets.iconVideoBg,
+        width: 62,
+        height: 46,
+        fit: BoxFit.cover,
+      ),
     );
   }
 

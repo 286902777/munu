@@ -373,9 +373,9 @@ class _VideoListPageState extends State<VideoListPage> {
                               width: 110,
                               height: 62,
                               placeholder: (context, url) =>
-                                  _getPlaceholderImage(model.fileType),
+                                  setPlaceWidget(model.fileType),
                               errorWidget: (context, url, error) =>
-                                  _getPlaceholderImage(model.fileType),
+                                  setPlaceWidget(model.fileType),
                             ),
                     ),
                   ),
@@ -383,7 +383,7 @@ class _VideoListPageState extends State<VideoListPage> {
                     Positioned(
                       top: 4,
                       left: 8,
-                      child: Image.asset(Assets.assetsPlaying, width: 14),
+                      child: Image.asset(Assets.playPlayIng, width: 14),
                     ),
                   // if (model.recommend == 1)
                   //   Positioned(
@@ -435,23 +435,16 @@ class _VideoListPageState extends State<VideoListPage> {
     );
   }
 
-  Widget _getPlaceholderImage(int type) {
-    int colorValue = 0xFFDDEEEA;
-    String name = Assets.assetsVideoBg;
-    switch (type) {
-      case 1:
-        name = Assets.assetsVideoBg;
-        colorValue = 0xFFDDEEEA;
-      case 2:
-        name = Assets.assetsVideoBg;
-        colorValue = 0xFFDDEEEA;
-      default:
-        break;
-    }
+  Widget setPlaceWidget(int type) {
     return Container(
       alignment: Alignment.center,
-      color: Color(colorValue),
-      child: Image.asset(name, width: 62, height: 46, fit: BoxFit.cover),
+      color: Color(0xFFEDE4E1),
+      child: Image.asset(
+        Assets.iconVideoBg,
+        width: 62,
+        height: 46,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

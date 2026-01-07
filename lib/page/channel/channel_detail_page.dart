@@ -302,8 +302,8 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
                       SizedBox(width: 4),
                       Image.asset(
                         show.value
-                            ? Assets.assetsChannelClose
-                            : Assets.assetsChannelExpand,
+                            ? Assets.iconAvatar
+                            : Assets.iconAvatar,
                         width: 16,
                         height: 16,
                       ),
