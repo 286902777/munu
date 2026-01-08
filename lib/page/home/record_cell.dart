@@ -80,26 +80,52 @@ class _RecordCellState extends State<RecordCell> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.end, // 垂直下对齐
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                  child: widget.model.netMovie == 0
-                      ? Image.memory(
-                          widget.model.img ??
-                              Uint8List.fromList(0 as List<int>),
-                          width: 128,
-                          height: 72,
-                          fit: BoxFit.cover,
-                        )
-                      : CachedNetworkImage(
-                          imageUrl: widget.model.thumbnail,
-                          fit: BoxFit.cover,
-                          width: 128,
-                          height: 72,
-                          placeholder: (context, url) =>
-                              setPlaceWidget(widget.model.fileType),
-                          errorWidget: (context, url, error) =>
-                              setPlaceWidget(widget.model.fileType),
+                Container(
+                  width: 128,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 0,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: widget.model.netMovie == 0
+                            ? Image.memory(
+                                widget.model.img ??
+                                    Uint8List.fromList(0 as List<int>),
+                                fit: BoxFit.cover,
+                              )
+                            : CachedNetworkImage(
+                                imageUrl: widget.model.thumbnail,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    setPlaceWidget(widget.model.fileType),
+                                errorWidget: (context, url, error) =>
+                                    setPlaceWidget(widget.model.fileType),
+                              ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: LinearProgressIndicator(
+                          minHeight: 2,
+                          value: widget.model.totalTime > 0
+                              ? (widget.model.playTime / widget.model.totalTime)
+                              : 0,
+                          backgroundColor: Colors.transparent,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Color(0xFFFD6B39),
+                          ),
                         ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(width: 12),
                 Expanded(

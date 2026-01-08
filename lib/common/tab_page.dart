@@ -210,76 +210,57 @@ class _TabPageState extends State<TabPage>
           physics: const NeverScrollableScrollPhysics(),
           children: [HomePage(), UploadPage(), SetPage()],
         ),
-        bottomNavigationBar: ClipRRect(
-          clipBehavior: Clip.antiAlias,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-          child: Theme(
-            data: Theme.of(context).copyWith(
-              splashColor: Colors.transparent, // 禁用水波纹颜色
-              highlightColor: Colors.transparent,
-              dividerColor: Colors.transparent,
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+            splashColor: Colors.transparent, // 禁用水波纹颜色
+            highlightColor: Colors.transparent,
+            dividerColor: Colors.transparent,
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                // 外部阴影
+                BoxShadow(
+                  color: Color(0x1F000000),
+                  spreadRadius: 2,
+                  blurRadius: 6,
+                  offset: Offset(0, -3),
+                ),
+              ],
+              borderRadius: BorderRadius.all(Radius.circular(24)),
             ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 20.0, // 水平模糊度
-                sigmaY: 20.0, // 垂直模糊度
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    // 外部阴影
-                    BoxShadow(
-                      color: Color(0x1F000000),
-                      spreadRadius: 2,
-                      blurRadius: 6,
-                      offset: Offset(0, -3),
-                    ),
-                  ],
-                  color: Colors.white.withOpacity(0.2), // 半透明背景
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.white.withOpacity(0.1),
-                      width: 1.0,
-                    ),
-                  ),
+            clipBehavior: Clip.antiAlias,
+            child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              elevation: 0,
+              currentIndex: _currentTabIdx,
+              backgroundColor: Colors.white,
+              selectedItemColor: Colors.transparent,
+              unselectedItemColor: Colors.transparent,
+              enableFeedback: false,
+              onTap: (index) {
+                openSelectIndex(index);
+              },
+              items: const [
+                BottomNavigationBarItem(
+                  label: "0",
+                  icon: TabBarItems(Assets.tabHome, '', false),
+                  activeIcon: TabBarItems(Assets.tabHomeSel, 'Home', true),
+                  backgroundColor: Colors.transparent,
                 ),
-                child: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  elevation: 0,
-                  currentIndex: _currentTabIdx,
-                  backgroundColor: Colors.white,
-                  selectedItemColor: Colors.transparent,
-                  unselectedItemColor: Colors.transparent,
-                  enableFeedback: false,
-                  onTap: (index) {
-                    openSelectIndex(index);
-                  },
-                  items: const [
-                    BottomNavigationBarItem(
-                      label: "0",
-                      icon: TabBarItems(Assets.tabHome, '', false),
-                      activeIcon: TabBarItems(Assets.tabHomeSel, 'Home', true),
-                      backgroundColor: Colors.transparent,
-                    ),
-                    BottomNavigationBarItem(
-                      label: "1",
-                      icon: TabBarItems(Assets.tabUpload, '', false),
-                      activeIcon: TabBarItems(Assets.tabUploadSel, 'Add', true),
-                      backgroundColor: Colors.transparent,
-                    ),
-                    BottomNavigationBarItem(
-                      label: "2",
-                      icon: TabBarItems(Assets.tabSet, '', false),
-                      activeIcon: TabBarItems(
-                        Assets.tabSetSel,
-                        'Setting',
-                        true,
-                      ),
-                      backgroundColor: Colors.transparent,
-                    ),
-                  ],
+                BottomNavigationBarItem(
+                  label: "1",
+                  icon: TabBarItems(Assets.tabUpload, '', false),
+                  activeIcon: TabBarItems(Assets.tabUploadSel, 'Add', true),
+                  backgroundColor: Colors.transparent,
                 ),
-              ),
+                BottomNavigationBarItem(
+                  label: "2",
+                  icon: TabBarItems(Assets.tabSet, '', false),
+                  activeIcon: TabBarItems(Assets.tabSetSel, 'Setting', true),
+                  backgroundColor: Colors.transparent,
+                ),
+              ],
             ),
           ),
         ),
@@ -297,7 +278,8 @@ class TabBarItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Visibility(
           visible: isSelected,

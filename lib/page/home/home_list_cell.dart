@@ -67,7 +67,10 @@ class _HomeListCellState extends State<HomeListCell> {
                   onTap: () {
                     widget.clickItem(index);
                   },
-                  child: HomeListCellContent(model: widget.lists[index]),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 16, bottom: 16, right: 8),
+                    child: HomeListCellContent(model: widget.lists[index]),
+                  ),
                 );
               },
             ),
@@ -90,26 +93,25 @@ class HomeListCellContent extends StatefulWidget {
 class _HomeListCellContentState extends State<HomeListCellContent> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 88,
-      padding: EdgeInsets.only(left: 16, bottom: 16, right: 8),
+    return SizedBox(
+      height: 60,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end, // 垂直下对齐
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(6)),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
             child: widget.model.netMovie == 0
                 ? Image.memory(
                     widget.model.img ?? Uint8List.fromList(0 as List<int>),
-                    width: 128,
-                    height: 72,
+                    width: 60,
+                    height: 60,
                     fit: BoxFit.cover,
                   )
                 : CachedNetworkImage(
                     imageUrl: widget.model.thumbnail,
                     fit: BoxFit.cover,
-                    width: 128,
-                    height: 72,
+                    width: 60,
+                    height: 60,
                     placeholder: (context, url) =>
                         _setPlaceholder(widget.model.fileType),
                     errorWidget: (context, url, error) =>
@@ -130,9 +132,9 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF03011A),
                   ),
-                  maxLines: 2,
+                  maxLines: 1,
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 4),
                 Text(
                   replaceDate(widget.model),
                   style: const TextStyle(
@@ -149,10 +151,10 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
           ),
           if (widget.model.fileType != 2)
             CupertinoButton(
-              padding: EdgeInsets.zero,
+              padding: EdgeInsets.only(right: 0),
               child: Image.asset(Assets.iconMorebtn, width: 24),
               onPressed: () {
-                _clickMore(context, widget.model);
+                openMoreAction(context, widget.model);
               },
             ),
         ],
@@ -160,7 +162,7 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
     );
   }
 
-  void _clickMore(BuildContext context, VideoData model) async {
+  void openMoreAction(BuildContext context, VideoData model) async {
     showModalBottomSheet(
       context: context,
       isDismissible: false, // 点击背景是否关闭
