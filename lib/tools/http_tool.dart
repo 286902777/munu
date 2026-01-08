@@ -11,32 +11,23 @@ enum HttpState { success, fail, start, end }
 
 enum ApiKey {
   home(
-    'coercive',
-    '/v1/choluria/bethumped/manlikely',
+    'c',
+    '/v1/b/w/b',
   ), // /v1/app/open/data  current_page:nitering page_size: prereport
   folder(
-    'alkaligen',
-    '/v1/unwild/cuffless/kxxg1ke4qr',
+    'bvx',
+    '/v1/sa/bx/sdf',
   ), // /v1/app/open/file/{uid}/{dirId} current_page:meature page_size: shopmaid
-  video(
-    'metabole',
-    '/v1/fonly/bawneen/logt5dmbxl',
-  ), // 视频资源/v1/app/download/file/{uid}/{fileId}
+  video('bc', '/v1/se/bxbs/sfd'), // 视频资源/v1/app/download/file/{uid}/{fileId}
   userPools(
-    'xeromorphy',
-    '/v1/banked/hebraical',
+    'bas',
+    '/v1/ta/bx',
   ), //拉取运营推荐数据 HTTP POST /v1/app/push_operation_pools
 
-  playRecommend(
-    'thrimp',
-    '/v1/irk4ddparn/hb50idujge',
-  ), //app端推荐接口 HTTP POST /v1/app/recommend
+  playRecommend('gx', '/v1/wg/bx'), //app端推荐接口 HTTP POST /v1/app/recommend
 
-  report(
-    'despotist',
-    '/v1/karbi/7tkkb35xeu',
-  ), //app违规举报事件  HTTP POST /v1/app/violate_report
-  event('hoselike', '/v1/cotoin/obtain'); //app端事件上报 HTTP POST  v1/app/events
+  report('ghnb', '/v1/x/gs'), //app违规举报事件  HTTP POST /v1/app/violate_report
+  event('bxd', '/v1/wt/bxsd'); //app端事件上报 HTTP POST  v1/app/events
 
   final String headName;
   final String address;
@@ -62,21 +53,15 @@ class HttpTool extends GetConnect {
   static const contentType = 'application/json';
   static const textPlain = 'text/plain';
 
-  List<String> east = [
-    'https://api.framedoodlo.com',
-    'https://api.frameenq.com',
-  ];
-  List<String> india = [
-    'https://api.framerelocate.com',
-    'https://api.framecreame.com',
-  ];
+  List<String> east = ['https://api.s.com', 'https://api.b.com'];
+  List<String> india = ['https://api.xc.com', 'https://api.xs.com'];
 
   String hostUrl = '';
 
   void setHost(PlatformType? source) {
     hostUrl = source == PlatformType.india
-        ? 'https://api.framerelocate.com'
-        : 'https://api.framedoodlo.com';
+        ? 'https://api.bx.com'
+        : 'https://api.bxs.com';
     httpClient.baseUrl = hostUrl;
     httpClient.maxAuthRetries = 3;
     httpClient.defaultContentType = HttpTool.contentType;
@@ -110,10 +95,7 @@ class HttpTool extends GetConnect {
       Response response = await instance.get(
         '${api.address}$url',
         query: newPara,
-        headers: {
-          'u1gp9mp9ay': api.headName,
-          'Content-Type': HttpTool.contentType,
-        },
+        headers: {'sd': api.headName, 'Content-Type': HttpTool.contentType},
       );
       _handleResult(
         response.statusCode,
@@ -165,10 +147,7 @@ class HttpTool extends GetConnect {
       Response response = await instance.post(
         api.address,
         newPara,
-        headers: {
-          'u1gp9mp9ay': api.headName,
-          'Content-Type': HttpTool.contentType,
-        },
+        headers: {'sdg': api.headName, 'Content-Type': HttpTool.contentType},
       );
       _handleResult(
         response.statusCode,
@@ -216,10 +195,7 @@ class HttpTool extends GetConnect {
       Response response = await instance.post(
         api.address,
         newPara,
-        headers: {
-          'u1gp9mp9ay': api.headName,
-          'Content-Type': HttpTool.contentType,
-        },
+        headers: {'sdga': api.headName, 'Content-Type': HttpTool.contentType},
       );
       _handleResult(
         response.statusCode,
@@ -263,10 +239,10 @@ class HttpTool extends GetConnect {
       Response response = await instance.post(
         ApiKey.event.address,
         {
-          'returfer': HttpTool.instance.sshToKey(jsonEncode([newPara])),
+          'bsgsgs': HttpTool.instance.sshToKey(jsonEncode([newPara])),
         },
         headers: {
-          'u1gp9mp9ay': ApiKey.event.headName,
+          'bxxx': ApiKey.event.headName,
           'Content-Type': HttpTool.contentType,
         },
       );
@@ -451,7 +427,7 @@ class HttpTool extends GetConnect {
     });
   }
 
-  String writeSSH(String videoAddress) {
+  String sshToResult(String videoAddress) {
     String baseStr = 'xT8bwhcjlL8ba9I0wCvSvjWAz6A==';
     final token = Key.fromBase64(baseStr.substring(5));
     // final key = Key.fromBase64('2QRaKUXg8Y/RqBPJJiAyVA==');

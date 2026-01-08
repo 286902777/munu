@@ -74,7 +74,6 @@ class _SetPageState extends State<SetPage>
                 children: [
                   Image.asset(Assets.iconTitle, width: 20, height: 20),
                   SizedBox(width: 6),
-
                   Text(
                     'Setting',
                     style: const TextStyle(

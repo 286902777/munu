@@ -96,7 +96,7 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
     return SizedBox(
       height: 60,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end, // 垂直下对齐
+        crossAxisAlignment: CrossAxisAlignment.center, // 垂直下对齐
         children: [
           ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(16)),

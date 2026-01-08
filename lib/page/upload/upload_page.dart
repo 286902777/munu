@@ -27,7 +27,7 @@ class _UploadPageState extends State<UploadPage>
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 24),
+              SizedBox(height: 40),
               Row(
                 children: [
                   Image.asset(Assets.iconTitle, width: 20, height: 20),

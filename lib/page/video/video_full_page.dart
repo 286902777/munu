@@ -281,7 +281,7 @@ class _VideoFullPageState extends State<VideoFullPage> {
                       ],
                     ),
                   ),
-                  Expanded(child: _listView()),
+                  Expanded(child: listWidget()),
                 ],
               ),
             ),
@@ -291,7 +291,7 @@ class _VideoFullPageState extends State<VideoFullPage> {
     );
   }
 
-  Widget _listView() {
+  Widget listWidget() {
     return ListView.builder(
       controller: _controller,
       itemCount: dataList.length,
@@ -300,7 +300,7 @@ class _VideoFullPageState extends State<VideoFullPage> {
             dataList[index].name == 'Recommend') {
           return _recommendHeader();
         }
-        return _listCell(dataList[index]);
+        return cellWidget(dataList[index]);
       },
     );
   }
@@ -334,7 +334,7 @@ class _VideoFullPageState extends State<VideoFullPage> {
     );
   }
 
-  Widget _listCell(VideoData model) {
+  Widget cellWidget(VideoData model) {
     return GestureDetector(
       onTap: () {
         for (VideoData m in dataList) {

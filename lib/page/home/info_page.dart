@@ -29,7 +29,7 @@ class _InfoPageState extends State<InfoPage> {
       'Size': widget.model.size,
       'Format': widget.model.ext,
       'Path': 'Library',
-      'Modified': formattedTime,
+      'Date': formattedTime,
     };
   }
 

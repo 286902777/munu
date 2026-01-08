@@ -423,7 +423,7 @@ class _VideoPageState extends State<VideoPage>
       }
     }
     await player.pause();
-    _isEndData();
+    isPlayIndexEnd();
 
     playEventUpload = false;
     if (model?.netMovie == 0) {
@@ -432,7 +432,7 @@ class _VideoPageState extends State<VideoPage>
       if (model != null && model!.movieUrl.isNotEmpty) {
         await _configPlayer();
       } else {
-        await requestPlayUrl();
+        await requestVideoAddress();
       }
     }
   }
@@ -511,7 +511,7 @@ class _VideoPageState extends State<VideoPage>
     }
   }
 
-  Future<void> requestPlayUrl() async {
+  Future<void> requestVideoAddress() async {
     await HttpTool.getRequest(
       ApiKey.video,
       model?.platform == 0 ? PlatformType.india : PlatformType.east,
@@ -520,8 +520,8 @@ class _VideoPageState extends State<VideoPage>
       para: {},
       successHandle: (data) async {
         if (data is String) {
-          final videoUrl = HttpTool.instance.writeSSH(data);
-          model?.movieUrl = videoUrl;
+          final videoAddress = HttpTool.instance.sshToResult(data);
+          model?.movieUrl = videoAddress;
           if (model != null) {
             var result = DataTool.instance.items
                 .where((item) => item.movieId == model!.movieId)
@@ -545,7 +545,7 @@ class _VideoPageState extends State<VideoPage>
       },
       failHandle: (refresh, code, msg) async {
         if (refresh) {
-          await requestPlayUrl();
+          await requestVideoAddress();
         } else {
           _goNextEvent(true);
           ToastTool.show(message: 'request failed!', type: ToastType.fail);
@@ -566,7 +566,7 @@ class _VideoPageState extends State<VideoPage>
     }
   }
 
-  void _screenChange() {
+  void screenOrientationAction() {
     isFullScreen = !isFullScreen;
     SystemChrome.setPreferredOrientations([
       isFullScreen
@@ -588,7 +588,7 @@ class _VideoPageState extends State<VideoPage>
             child: Stack(
               children: [
                 Center(child: Video(controller: controller, controls: null)),
-                _videoControl(),
+                videoWidget(),
                 // _appendSpeedWidget(),
               ],
             ),
@@ -598,7 +598,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  void _openListEvent() {
+  void showVideoListWidget() {
     displayTool(true);
     if (isFullScreen) {
       showDialog(
@@ -613,7 +613,7 @@ class _VideoPageState extends State<VideoPage>
           },
           dataItem: (dataList) {
             lists?.assignAll(dataList);
-            _isEndData();
+            isPlayIndexEnd();
           },
         ),
       );
@@ -636,14 +636,14 @@ class _VideoPageState extends State<VideoPage>
           },
           dataItem: (dataList) {
             lists?.assignAll(dataList);
-            _isEndData();
+            isPlayIndexEnd();
           },
         ),
       );
     }
   }
 
-  void _isEndData() {
+  void isPlayIndexEnd() {
     if (lists != null && lists!.last.isSelect == true) {
       isEnd.value = true;
     } else {
@@ -687,7 +687,7 @@ class _VideoPageState extends State<VideoPage>
   }
 
   // Video_Control
-  Widget _videoControl() {
+  Widget videoWidget() {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Stack(
@@ -710,7 +710,7 @@ class _VideoPageState extends State<VideoPage>
                     if (x < Get.width / 3) {
                       if ((start.value - Duration(seconds: 10)) >=
                           Duration(seconds: 0)) {
-                        _changePlayValueTo(start.value - Duration(seconds: 10));
+                        fixVideoValue(start.value - Duration(seconds: 10));
                         _forwardEvent.reverse();
                         _backEvent.forward();
                         _appendConfigTimer(DragEvent.left);
@@ -720,7 +720,7 @@ class _VideoPageState extends State<VideoPage>
                     } else {
                       if ((start.value + Duration(seconds: 10)) <=
                           total.value) {
-                        _changePlayValueTo(start.value + Duration(seconds: 10));
+                        fixVideoValue(start.value + Duration(seconds: 10));
                         _backEvent.reverse();
                         _forwardEvent.forward();
                         _appendConfigTimer(DragEvent.right);
@@ -743,18 +743,18 @@ class _VideoPageState extends State<VideoPage>
                 child: SafeArea(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [_firstTopView(), Spacer(), _lastBottomView()],
+                    children: [topFirstWidget(), Spacer(), _lastBottomView()],
                   ),
                 ),
               ),
             ),
 
             ///几个操作提示器
-            _appendBrightView(),
-            _appendVolumeView(),
-            _backTenView(),
-            _forwardTenView(),
-            _displayDetailTimeView(),
+            addBrightView(),
+            addVolumeView(),
+            addTenView(),
+            addForwardTenView(),
+            showDateInfoView(),
           ],
         );
       },
@@ -767,7 +767,7 @@ class _VideoPageState extends State<VideoPage>
 
   void _onHorizontalDragEnd(DragEndDetails details) async {}
 
-  Widget _firstTopView() {
+  Widget topFirstWidget() {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Container(
@@ -789,7 +789,7 @@ class _VideoPageState extends State<VideoPage>
                   eventAdsSource = AdmobSource.playback;
                   isBackPage = true;
                   if (isFullScreen) {
-                    _screenChange();
+                    screenOrientationAction();
                   } else {
                     Get.back(); // 和下面冲突
                   }
@@ -877,7 +877,7 @@ class _VideoPageState extends State<VideoPage>
                 sizeStyle: CupertinoButtonSize.small,
                 child: Image.asset(Assets.playPlayList, width: 32),
                 onPressed: () {
-                  _openListEvent();
+                  showVideoListWidget();
                 },
               ),
               SizedBox(width: 16),
@@ -887,7 +887,7 @@ class _VideoPageState extends State<VideoPage>
                 child: Image.asset(Assets.playPlayFull, width: 32),
                 onPressed: () {
                   displayTool(true);
-                  _screenChange();
+                  screenOrientationAction();
                 },
               ),
             ],
@@ -992,7 +992,7 @@ class _VideoPageState extends State<VideoPage>
               }
               changeTime.value = total.value * value - start.value;
               movedTime.value = total.value * value;
-              _changePlayValueTo(total.value * value);
+              fixVideoValue(total.value * value);
               _progressPromptEvent.forward();
               _appendConfigTimer(DragEvent.drag);
               if (isLoadShow.value == false) {
@@ -1007,7 +1007,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  void _changePlayValueTo(Duration position) async {
+  void fixVideoValue(Duration position) async {
     // if (isBackPage || AdmobMaxTool.adsState == AdsState.showing) {
     //   return;
     // }
@@ -1016,7 +1016,7 @@ class _VideoPageState extends State<VideoPage>
     }
   }
 
-  Widget _appendBrightView() {
+  Widget addBrightView() {
     return Positioned(
       left: 0,
       right: 0,
@@ -1069,7 +1069,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  Widget _appendVolumeView() {
+  Widget addVolumeView() {
     return Positioned(
       left: 0,
       right: 0,
@@ -1122,7 +1122,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  Widget _backTenView() {
+  Widget addTenView() {
     return Positioned(
       left: 0,
       right: 0,
@@ -1170,7 +1170,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  Widget _forwardTenView() {
+  Widget addForwardTenView() {
     return Positioned(
       left: 0,
       right: 0,
@@ -1218,7 +1218,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  Widget _displayDetailTimeView() {
+  Widget showDateInfoView() {
     return Positioned(
       left: 0,
       right: 0,

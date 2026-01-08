@@ -224,8 +224,9 @@ class _VideoListPageState extends State<VideoListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
@@ -291,7 +292,7 @@ class _VideoListPageState extends State<VideoListPage> {
                     ],
                   ),
                 ),
-                Expanded(child: _listView()),
+                Expanded(child: cellWidget()),
               ],
             ),
           ),
@@ -300,7 +301,7 @@ class _VideoListPageState extends State<VideoListPage> {
     );
   }
 
-  Widget _listView() {
+  Widget cellWidget() {
     return ListView.builder(
       controller: _controller,
       itemCount: dataList.length,
@@ -309,7 +310,7 @@ class _VideoListPageState extends State<VideoListPage> {
             dataList[index].name == 'Recommend') {
           return _recommendTitleV();
         }
-        return _listCell(dataList[index]);
+        return subCell(dataList[index]);
       },
     );
   }
@@ -344,7 +345,7 @@ class _VideoListPageState extends State<VideoListPage> {
     );
   }
 
-  Widget _listCell(VideoData model) {
+  Widget subCell(VideoData model) {
     return GestureDetector(
       onTap: () {
         for (VideoData m in dataList) {
