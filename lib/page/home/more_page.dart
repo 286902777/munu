@@ -1,6 +1,4 @@
 import 'dart:typed_data';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +14,7 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
-  final List<String> titles = ['Rename', 'Details', 'Delete'];
+  final List<String> titles = ['Rename', 'Info', 'Delete'];
   final List<String> images = [
     Assets.iconRenameInfo,
     Assets.iconIconInfo,
@@ -27,83 +25,75 @@ class _MorePageState extends State<MorePage> {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: Container(
-        height: 340,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          ),
-          gradient: LinearGradient(
-            colors: [Color(0xFFD3E3FC), Color(0xFFF4F4F4)], // 中心到边缘颜色
-            begin: Alignment.topCenter,
-            end: Alignment.center,
-          ),
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 68,
-              child: Stack(
+      child: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 44),
+              padding: EdgeInsets.only(left: 24, right: 24, top: 28),
+              height: 334,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(36)),
+                gradient: LinearGradient(
+                  colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+                  begin: Alignment.topCenter, // 渐变起点
+                  end: Alignment.bottomCenter, // 渐变终点
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Positioned(
-                    top: 22,
-                    child: Container(
-                      width: Get.width - 100,
-                      padding: EdgeInsets.only(left: 20, right: 80),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(2)),
-                            child: Image.memory(
-                              widget.model.img ??
-                                  Uint8List.fromList(0 as List<int>),
-                              width: 36,
-                              height: 36,
-                              fit: BoxFit.cover,
-                            ),
+                  SizedBox(
+                    height: 40,
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          child: Image.memory(
+                            widget.model.img ??
+                                Uint8List.fromList(0 as List<int>),
+                            width: 36,
+                            height: 36,
+                            fit: BoxFit.cover,
                           ),
-                          SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              widget.model.name,
-                              style: const TextStyle(
-                                letterSpacing: -0.5,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF17132C),
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            widget.model.name,
+                            style: const TextStyle(
+                              letterSpacing: -0.5,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF17132C),
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: InkWell(
-                      onTap: () {
-                        Get.back(result: 0);
-                      },
-                      child: Image.asset(Assets.iconCloseAlert, width: 24),
-                    ),
-                  ),
-                  Positioned(
-                    top: 67,
-                    left: 0,
-                    right: 0,
-                    child: Container(height: 1, color: Color(0x2035267F)),
-                  ),
+                  SizedBox(height: 12),
+                  listWidget(),
                 ],
               ),
             ),
-            SizedBox(height: 12),
-            listWidget(),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 394,
+            right: 20,
+            child: InkWell(
+              onTap: () {
+                Get.back(result: 0);
+              },
+              child: Image.asset(Assets.iconCloseAlert, width: 24),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -118,10 +108,9 @@ class _MorePageState extends State<MorePage> {
           onTap: () {
             Get.back(result: index + 1);
           },
-          child: Container(
+          child: SizedBox(
             height: 72,
-            width: Get.width,
-            padding: EdgeInsets.only(left: 20, right: 20),
+            width: Get.width - 88,
             child: Row(
               children: [
                 Image.asset(images[index], width: 32),

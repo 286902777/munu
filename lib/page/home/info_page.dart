@@ -37,28 +37,28 @@ class _InfoPageState extends State<InfoPage> {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: Container(
-        height: 320,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          ),
-          gradient: LinearGradient(
-            colors: [Color(0xFFD3E3FC), Color(0xFFF4F4F4)], // 中心到边缘颜色
-            begin: Alignment.topCenter,
-            end: Alignment.center,
-          ),
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 68,
-              child: Stack(
+      child: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 44),
+              padding: EdgeInsets.only(left: 24, right: 24, top: 28),
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(36)),
+                gradient: LinearGradient(
+                  colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+                  begin: Alignment.topCenter, // 渐变起点
+                  end: Alignment.bottomCenter, // 渐变终点
+                ),
+              ),
+              child: Column(
                 children: [
-                  Positioned(
-                    top: 22,
-                    left: 20,
+                  SizedBox(
+                    height: 40,
                     child: Text(
                       'Info',
                       style: const TextStyle(
@@ -67,31 +67,33 @@ class _InfoPageState extends State<InfoPage> {
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF17132C),
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: InkWell(
-                      onTap: () {
-                        Get.back(result: 0);
-                      },
-                      child: Image.asset(Assets.iconCloseAlert, width: 24),
+                  SizedBox(height: 6),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      color: Color(0x10FB7331),
                     ),
-                  ),
-                  Positioned(
-                    top: 67,
-                    left: 0,
-                    right: 0,
-                    child: Container(height: 1, color: Color(0x2035267F)),
+                    child: listView(),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 18),
-            listView(),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 360,
+            right: 20,
+            child: InkWell(
+              onTap: () {
+                Get.back(result: 0);
+              },
+              child: Image.asset(Assets.iconCloseAlert, width: 24),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -112,8 +114,8 @@ class _InfoPageState extends State<InfoPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
-                  flex: 1,
+                SizedBox(
+                  width: 80,
                   child: Text(
                     lists.keys.toList()[index],
                     style: const TextStyle(
@@ -124,9 +126,7 @@ class _InfoPageState extends State<InfoPage> {
                     ),
                   ),
                 ),
-                Spacer(),
                 Expanded(
-                  flex: 3,
                   child: Text(
                     lists.values.toList()[index],
                     style: const TextStyle(

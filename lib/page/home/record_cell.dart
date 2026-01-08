@@ -41,11 +41,11 @@ class _RecordCellState extends State<RecordCell> {
         children: [
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-              color: Color(0xFFFF7DE5),
+              borderRadius: BorderRadius.all(Radius.circular(22)),
+              color: Color(0xFFFF3B1F),
             ),
             alignment: Alignment.center,
-            width: 67,
+            width: 68,
             height: 72,
             child: CupertinoButton(
               padding: EdgeInsets.zero,

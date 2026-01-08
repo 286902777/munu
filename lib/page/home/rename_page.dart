@@ -168,7 +168,7 @@ class _RenamePageState extends State<RenamePage> {
         ),
         child: CupertinoButton(
           child: Text(
-            'OK',
+            'Comfirm',
             style: TextStyle(
               letterSpacing: -0.5,
               fontSize: 14,

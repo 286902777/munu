@@ -13,7 +13,7 @@ class ClearAlertPage extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 28),
           height: 190,
-          padding: EdgeInsets.only(left: 16, top: 18, right: 16, bottom: 18),
+          padding: EdgeInsets.all(18),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(36)),
             gradient: LinearGradient(
@@ -27,7 +27,7 @@ class ClearAlertPage extends StatelessWidget {
               Expanded(
                 child: Center(
                   child: Text(
-                    'Do you want to erase the history?',
+                    'Would you like to delete the history records?',
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontSize: 16,
@@ -42,9 +42,9 @@ class ClearAlertPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: _setBottomBtn(false)),
-                  SizedBox(width: 23),
-                  Expanded(child: _setBottomBtn(true)),
+                  Expanded(child: addAction(false)),
+                  SizedBox(width: 20),
+                  Expanded(child: addAction(true)),
                 ],
               ),
               SizedBox(height: 10),
@@ -55,26 +55,26 @@ class ClearAlertPage extends StatelessWidget {
     );
   }
 
-  Widget _setBottomBtn(bool sure) {
+  Widget addAction(bool sure) {
     return Container(
-      height: 38,
+      height: 42,
       decoration: BoxDecoration(
-        color: sure ? Color(0xFF136FF9) : Colors.transparent,
+        color: sure ? Color(0xFFFD6B39) : Colors.transparent,
         border: Border.all(
-          color: Color(0xFF136FF9), // 边框颜色
+          color: Color(0xFFFD6B39), // 边框颜色
           width: sure ? 0 : 1, // 边框宽度
           style: BorderStyle.solid, // 边框样式（可选 dashed 等）
         ),
-        borderRadius: BorderRadius.circular(19), // 圆角
+        borderRadius: BorderRadius.circular(21), // 圆角
       ),
       child: CupertinoButton(
         padding: EdgeInsets.zero,
         child: Text(
-          sure ? 'Ok' : 'Cancel',
+          sure ? 'Confirm' : 'Cancel',
           style: TextStyle(
             letterSpacing: -0.5,
             fontSize: 14,
-            color: sure ? Colors.white : Color(0xFF136FF9),
+            color: sure ? Colors.white : Color(0xFFFD6B39),
           ),
         ),
         onPressed: () {

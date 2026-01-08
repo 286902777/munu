@@ -164,6 +164,7 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
     showModalBottomSheet(
       context: context,
       isDismissible: false, // 点击背景是否关闭
+      backgroundColor: Colors.transparent,
       enableDrag: false,
       builder: (context) => MorePage(model: model),
     ).then((result) async {
@@ -173,6 +174,7 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
             context: context,
             isDismissible: false, // 点击背景是否关闭
             enableDrag: false,
+            backgroundColor: Colors.transparent,
             isScrollControlled: true,
             builder: (context) => RenamePage(model: model),
           ).then((idx) {});
@@ -180,6 +182,7 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
           showModalBottomSheet(
             context: context,
             isDismissible: false, // 点击背景是否关闭
+            backgroundColor: Colors.transparent,
             enableDrag: false,
             builder: (context) => InfoPage(model: model),
           );
