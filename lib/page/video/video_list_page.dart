@@ -225,60 +225,77 @@ class _VideoListPageState extends State<VideoListPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        height: 436,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            height: 40,
+            padding: EdgeInsets.only(right: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    widget.dataItem(dataList);
+                    Get.back();
+                  },
+                  splashColor: Colors.transparent, // 透明水波纹
+                  highlightColor: Colors.transparent, // 透明高亮
+                  hoverColor: Colors.transparent, // 透明悬停
+                  child: Image.asset(Assets.iconCloseAlert, width: 24),
+                ),
+              ],
+            ),
           ),
-          gradient: LinearGradient(
-            colors: [Color(0xFFD5E4FC), Color(0xFFF4F4F4)], // 中心到边缘颜色
-            begin: Alignment.topCenter,
-            end: Alignment.center,
-          ),
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 62,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 20,
-                    bottom: 16,
-                    child: Image.asset(Assets.iconTitle, width: 40, height: 14),
-                  ),
-                  Positioned(
-                    top: 20,
-                    left: 20,
-                    child: Text(
-                      'Playlist',
-                      style: const TextStyle(
-                        letterSpacing: -0.5,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF17132C),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: InkWell(
-                      onTap: () {
-                        widget.dataItem(dataList);
-                        Get.back();
-                      },
-                      child: Image.asset(Assets.iconCloseAlert, width: 24),
-                    ),
-                  ),
-                ],
+          Container(
+            height: 442,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(32),
+                topRight: Radius.circular(32),
+              ),
+              gradient: LinearGradient(
+                colors: [Color(0xFFFEF6F2), Color(0xFFFFFEFC)], // 中心到边缘颜色
+                begin: Alignment.topCenter,
+                end: Alignment.center,
               ),
             ),
-            Expanded(child: _listView()),
-          ],
-        ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 62,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 20,
+                        bottom: 16,
+                        child: Image.asset(
+                          Assets.iconTitle,
+                          width: 20,
+                          height: 20,
+                        ),
+                      ),
+                      Positioned(
+                        top: 20,
+                        left: 46,
+                        child: Text(
+                          'Playlist',
+                          style: const TextStyle(
+                            letterSpacing: -0.5,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF17132C),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(child: _listView()),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -307,10 +324,10 @@ class _VideoListPageState extends State<VideoListPage> {
           Positioned(
             left: 0,
             bottom: 10,
-            child: Image.asset(Assets.iconTitle, width: 40, height: 14),
+            child: Image.asset(Assets.iconTitle, width: 20, height: 20),
           ),
           Positioned(
-            left: 0,
+            left: 26,
             top: 8,
             child: Text(
               'Recommend',
@@ -345,7 +362,7 @@ class _VideoListPageState extends State<VideoListPage> {
       child: Container(
         height: 78,
         width: Get.width,
-        color: model.isSelect ? Color(0xFFDCE9FF) : Colors.transparent,
+        color: model.isSelect ? Color(0xFFFFEEE4) : Colors.transparent,
         padding: EdgeInsets.only(left: 16, top: 8, right: 14, bottom: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -359,7 +376,7 @@ class _VideoListPageState extends State<VideoListPage> {
                   Positioned(
                     left: 4,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
                       child: model.netMovie == 0
                           ? Image.memory(
                               model.img ?? Uint8List.fromList(0 as List<int>),
@@ -381,8 +398,8 @@ class _VideoListPageState extends State<VideoListPage> {
                   ),
                   if (model.isSelect)
                     Positioned(
-                      top: 4,
-                      left: 8,
+                      right: 6,
+                      bottom: 6,
                       child: Image.asset(Assets.playPlayIng, width: 14),
                     ),
                   // if (model.recommend == 1)
@@ -441,8 +458,8 @@ class _VideoListPageState extends State<VideoListPage> {
       color: Color(0xFFEDE4E1),
       child: Image.asset(
         Assets.iconVideoBg,
-        width: 62,
-        height: 46,
+        width: 40,
+        height: 40,
         fit: BoxFit.cover,
       ),
     );

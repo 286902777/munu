@@ -197,7 +197,10 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
             }
           }
           DataTool.instance.removeVideoData(model);
-          ToastTool.show(message: 'Removal Complete', type: ToastType.success);
+          ToastTool.show(
+            message: 'Deleted successfully',
+            type: ToastType.success,
+          );
         default:
           break;
       }
@@ -210,8 +213,8 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
       color: Color(0xFFEDE4E1),
       child: Image.asset(
         Assets.iconVideoBg,
-        width: 62,
-        height: 46,
+        width: 40,
+        height: 40,
         fit: BoxFit.cover,
       ),
     );

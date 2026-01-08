@@ -9,6 +9,7 @@ class Assets {
   static const String iconDeleteCell = 'image/icon/delete_cell.webp';
   static const String iconDeleteInfo = 'image/icon/delete_info.webp';
   static const String iconDeleteNav = 'image/icon/delete_nav.webp';
+  static const String iconFailToast = 'image/icon/fail_toast.webp';
   static const String iconFileBg = 'image/icon/file_bg.webp';
   static const String iconFileUpload = 'image/icon/file_upload.webp';
   static const String iconIconInfo = 'image/icon/icon_info.webp';
@@ -21,6 +22,7 @@ class Assets {
   static const String iconNoNetwork = 'image/icon/no_network.webp';
   static const String iconPhotoBg = 'image/icon/photo_bg.webp';
   static const String iconRenameInfo = 'image/icon/rename_info.webp';
+  static const String iconSuccessToast = 'image/icon/success_toast.webp';
   static const String iconTitle = 'image/icon/title.webp';
   static const String iconUploadArrow = 'image/icon/upload_arrow.webp';
   static const String iconVideoBg = 'image/icon/video_bg.webp';
@@ -41,6 +43,7 @@ class Assets {
   static const String playVoice = 'image/play/voice.webp';
   static const String setArrow = 'image/set/arrow.webp';
   static const String setFeedback = 'image/set/feedback.webp';
+  static const String setLaunchLogo = 'image/set/launch_logo.webp';
   static const String setLogoSet = 'image/set/logo_set.webp';
   static const String setPrivacy = 'image/set/privacy.webp';
   static const String setTerms = 'image/set/terms.webp';

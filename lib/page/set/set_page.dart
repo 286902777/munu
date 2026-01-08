@@ -54,7 +54,7 @@ class _SetPageState extends State<SetPage>
   void didPushNext() {}
 
   void openEmail() async {
-    String email = 'chengshuo1947@outlook.com';
+    String email = 'xxxx@outlook.com';
     launchUrl(Uri(scheme: 'mailto', path: email));
   }
 

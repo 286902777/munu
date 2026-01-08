@@ -99,10 +99,10 @@ class _LaunchPageState extends State<LaunchPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 220),
-                Image.asset(Assets.setArrow, width: 48, height: 48),
+                Image.asset(Assets.setLaunchLogo, width: 48, height: 48),
                 SizedBox(height: 12),
                 Text(
-                  'Frame',
+                  'Lens',
                   style: const TextStyle(
                     letterSpacing: -0.5,
                     fontSize: 16,
@@ -117,7 +117,7 @@ class _LaunchPageState extends State<LaunchPage> {
                   style: const TextStyle(
                     letterSpacing: -0.5,
                     fontSize: 14,
-                    color: Color(0xFF242038),
+                    color: Color(0xFF17132C),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -130,9 +130,9 @@ class _LaunchPageState extends State<LaunchPage> {
                     child: Obx(
                       () => LinearProgressIndicator(
                         value: progress.value,
-                        backgroundColor: Color(0x4D202020),
+                        backgroundColor: Color(0x4DFF5C24),
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color(0xFFEF58D1),
+                          Color(0xFFFF5C24),
                         ),
                       ),
                     ),

@@ -49,6 +49,9 @@ class _HomeRecordCellState extends State<HomeRecordCell> {
                     playSource = PlaySource.history;
                     Get.to(() => RecordPage());
                   },
+                  splashColor: Colors.transparent, // 透明水波纹
+                  highlightColor: Colors.transparent, // 透明高亮
+                  hoverColor: Colors.transparent, // 透明悬停
                   child: Row(
                     children: [
                       Text(
@@ -88,6 +91,9 @@ class _HomeRecordCellState extends State<HomeRecordCell> {
                         DataTool.instance.historyItems[index].netMovie != 0,
                       );
                     },
+                    splashColor: Colors.transparent, // 透明水波纹
+                    highlightColor: Colors.transparent, // 透明高亮
+                    hoverColor: Colors.transparent, // 透明悬停
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       child: Container(
@@ -129,14 +135,14 @@ class _HomeRecordCellState extends State<HomeRecordCell> {
                             Positioned(
                               left: 0,
                               right: 0,
-                              top: 114,
+                              top: 164,
                               bottom: 0,
                               child: Container(
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
                                       Color(0x00000000),
-                                      Color(0xA6000000),
+                                      Color(0x66000000),
                                     ], // 中心到边缘颜色
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
@@ -219,6 +225,13 @@ class _HomeRecordCellState extends State<HomeRecordCell> {
                                 ),
                               ),
                             ),
+                            Center(
+                              child: Image.asset(
+                                Assets.iconIconPlay,
+                                width: 36,
+                                height: 36,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -240,8 +253,8 @@ class _HomeRecordCellState extends State<HomeRecordCell> {
       color: Color(0xFFEDE4E1),
       child: Image.asset(
         Assets.iconVideoBg,
-        width: 62,
-        height: 46,
+        width: 40,
+        height: 40,
         fit: BoxFit.cover,
       ),
     );

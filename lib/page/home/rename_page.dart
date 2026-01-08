@@ -33,57 +33,71 @@ class _RenamePageState extends State<RenamePage> {
       child: AnimatedPadding(
         padding: MediaQuery.of(context).viewInsets, // 动态获取键盘遮挡区域
         duration: const Duration(milliseconds: 100),
-        child: Container(
-          height: 258,
-          padding: EdgeInsets.fromLTRB(20, 0, 48, 20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(36)),
-            gradient: LinearGradient(
-              colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
-              begin: Alignment.topCenter, // 渐变起点
-              end: Alignment.bottomCenter, // 渐变终点
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              height: 40,
+              padding: EdgeInsets.only(right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    splashColor: Colors.transparent, // 透明水波纹
+                    highlightColor: Colors.transparent, // 透明高亮
+                    hoverColor: Colors.transparent, // 透明悬停
+                    onTap: () {
+                      Get.back(result: 0);
+                    },
+                    child: Image.asset(Assets.iconCloseAlert, width: 24),
+                  ),
+                ],
+              ),
             ),
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 72,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 22,
-                      left: 20,
-                      child: Text(
-                        'Rename',
-                        style: const TextStyle(
-                          letterSpacing: -0.5,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF141414),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 8,
-                      right: 8,
-                      child: InkWell(
-                        onTap: () {
-                          Get.back(result: 0);
-                        },
-                        child: Image.asset(Assets.iconCloseAlert, width: 24),
-                      ),
-                    ),
-                  ],
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 44),
+              height: 258,
+              padding: EdgeInsets.only(left: 24, right: 24, top: 28),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(36)),
+                gradient: LinearGradient(
+                  colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+                  begin: Alignment.topCenter, // 渐变起点
+                  end: Alignment.bottomCenter, // 渐变终点
                 ),
               ),
-              // SizedBox(height: 18),
-              _inputView(),
-              SizedBox(height: 8),
-              _numView(),
-              SizedBox(height: 10),
-              _sureBtn(),
-            ],
-          ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 48,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 0,
+                          left: 20,
+                          child: Text(
+                            'Rename',
+                            style: const TextStyle(
+                              letterSpacing: -0.5,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF141414),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // SizedBox(height: 18),
+                  _inputView(),
+                  SizedBox(height: 8),
+                  _numView(),
+                  SizedBox(height: 10),
+                  _sureBtn(),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -92,11 +106,11 @@ class _RenamePageState extends State<RenamePage> {
   Widget _inputView() {
     return Container(
       alignment: Alignment.center,
-      width: Get.width - 40,
+      padding: EdgeInsets.symmetric(horizontal: 4),
       height: 56,
       decoration: BoxDecoration(
-        color: Color(0xFFE8E8E8),
-        borderRadius: BorderRadius.all(Radius.circular(6)),
+        color: Color(0xFFFFFFFF),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       child: TextField(
         autofocus: true,
@@ -168,7 +182,7 @@ class _RenamePageState extends State<RenamePage> {
         ),
         child: CupertinoButton(
           child: Text(
-            'Comfirm',
+            'Confirm',
             style: TextStyle(
               letterSpacing: -0.5,
               fontSize: 14,

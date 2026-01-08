@@ -238,40 +238,43 @@ class _VideoFullPageState extends State<VideoFullPage> {
             right: 0,
             bottom: 0,
             child: Container(
+              margin: EdgeInsets.only(top: 24, right: 24, bottom: 24),
               alignment: Alignment.centerRight,
               width: 375,
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(32)),
                 gradient: LinearGradient(
-                  colors: [Color(0x00CADFFF), Color(0xFA3E5E8E)], // 中心到边缘颜色
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
+                  colors: [Color(0xFFFEF6F2), Color(0xFFFFFEFC)], // 中心到边缘颜色
+                  begin: Alignment.topCenter,
+                  end: Alignment.center,
                 ),
               ),
               child: Column(
                 children: [
-                  SizedBox(
+                  Container(
                     height: 60,
+                    padding: EdgeInsets.only(left: 20, right: 20),
                     child: Stack(
                       children: [
                         Positioned(
-                          left: 20,
+                          left: 0,
                           bottom: 16,
                           child: Image.asset(
                             Assets.iconTitle,
-                            width: 40,
-                            height: 14,
+                            width: 20,
+                            height: 20,
                           ),
                         ),
                         Positioned(
                           top: 20,
-                          left: 20,
+                          left: 24,
                           child: Text(
                             'Playlist',
                             style: const TextStyle(
                               letterSpacing: -0.5,
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                              color: Color(0xFF141414),
                             ),
                           ),
                         ),
@@ -305,17 +308,16 @@ class _VideoFullPageState extends State<VideoFullPage> {
   Widget _recommendHeader() {
     return Container(
       height: 44,
-      padding: EdgeInsets.symmetric(horizontal: 20),
       alignment: Alignment.centerLeft,
       child: Stack(
         children: [
           Positioned(
             left: 0,
             bottom: 10,
-            child: Image.asset(Assets.iconTitle, width: 40, height: 14),
+            child: Image.asset(Assets.iconTitle, width: 20, height: 20),
           ),
           Positioned(
-            left: 0,
+            left: 26,
             top: 8,
             child: Text(
               'Recommend',
@@ -323,7 +325,7 @@ class _VideoFullPageState extends State<VideoFullPage> {
                 letterSpacing: -0.5,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF17132C),
+                color: Color(0xFF141414),
               ),
             ),
           ),
@@ -349,12 +351,12 @@ class _VideoFullPageState extends State<VideoFullPage> {
       },
       child: Container(
         height: 78,
-        width: Get.width,
-        color: model.isSelect ? Color(0x40FFFFFF) : Colors.transparent,
-        padding: EdgeInsets.only(left: 16, top: 8, right: 14, bottom: 8),
+        color: model.isSelect ? Color(0xFFFFEEE4) : Colors.transparent,
+        padding: EdgeInsets.only(left: 0, top: 8, right: 0, bottom: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(width: 20),
             SizedBox(
               width: 114,
               height: 62,
@@ -364,7 +366,7 @@ class _VideoFullPageState extends State<VideoFullPage> {
                   Positioned(
                     left: 4,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
                       child: model.netMovie == 0
                           ? Image.memory(
                               model.img ?? Uint8List.fromList(0 as List<int>),
@@ -418,7 +420,7 @@ class _VideoFullPageState extends State<VideoFullPage> {
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontSize: 14,
-                      color: Colors.white,
+                      color: Color(0xFF17132C),
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -432,13 +434,14 @@ class _VideoFullPageState extends State<VideoFullPage> {
                       style: const TextStyle(
                         letterSpacing: -0.5,
                         fontSize: 12,
-                        color: Color(0x80FFFFFF),
+                        color: Color(0x8017132C),
                       ),
                       maxLines: 1,
                     ),
                 ],
               ),
             ),
+            SizedBox(width: 20),
           ],
         ),
       ),
@@ -451,8 +454,8 @@ class _VideoFullPageState extends State<VideoFullPage> {
       color: Color(0xFFEDE4E1),
       child: Image.asset(
         Assets.iconVideoBg,
-        width: 62,
-        height: 46,
+        width: 40,
+        height: 40,
         fit: BoxFit.cover,
       ),
     );

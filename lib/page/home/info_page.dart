@@ -90,6 +90,9 @@ class _InfoPageState extends State<InfoPage> {
               onTap: () {
                 Get.back(result: 0);
               },
+              splashColor: Colors.transparent, // 透明水波纹
+              highlightColor: Colors.transparent, // 透明高亮
+              hoverColor: Colors.transparent, // 透明悬停
               child: Image.asset(Assets.iconCloseAlert, width: 24),
             ),
           ),

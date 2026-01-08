@@ -157,7 +157,7 @@ class _HomeCellState extends State<HomeCell> {
     return Container(
       alignment: Alignment.center,
       color: Color(colorValue),
-      child: Image.asset(name, width: 62, height: 46, fit: BoxFit.cover),
+      child: Image.asset(name, width: 40, height: 40, fit: BoxFit.cover),
     );
   }
 }

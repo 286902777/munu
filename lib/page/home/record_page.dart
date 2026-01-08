@@ -134,7 +134,7 @@ class _RecordPageState extends State<RecordPage> {
                     m.isHistory = 0;
                     DataTool.instance.updateVideoData(m);
                     ToastTool.show(
-                      message: 'Removal Complete',
+                      message: 'Deleted successfully',
                       type: ToastType.success,
                     );
                   },

@@ -474,6 +474,7 @@ class _VideoPageState extends State<VideoPage>
     // if (AdmobMaxTool.adsState != AdsState.showing) {
     //   await player.play();
     // }
+    await player.play();
   }
 
   void uploadPlayEvent() async {
@@ -621,6 +622,7 @@ class _VideoPageState extends State<VideoPage>
         context: context,
         isDismissible: false,
         // 点击背景是否关闭
+        backgroundColor: Colors.transparent,
         enableDrag: false,
         isScrollControlled: true,
         builder: (context) => VideoListPage(
@@ -958,8 +960,8 @@ class _VideoPageState extends State<VideoPage>
         ),
         child: Obx(
           () => Slider(
-            activeColor: Color(0xFFEF58D1),
-            secondaryActiveColor: Color(0x4DEF58D1),
+            activeColor: Color(0xFFFD6B39),
+            secondaryActiveColor: Color(0x4DFD6B39),
             thumbColor: Colors.white,
             inactiveColor: Color(0xFFBBBBBB),
             value: sliderValue.value,
@@ -996,6 +998,7 @@ class _VideoPageState extends State<VideoPage>
               if (isLoadShow.value == false) {
                 isLoadShow.value = true;
               }
+              await player.play();
               // _removeSpeed();
             },
           ),
@@ -1024,12 +1027,16 @@ class _VideoPageState extends State<VideoPage>
           child: Container(
             alignment: Alignment.center,
             child: Container(
-              width: 180,
-              height: 48,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              width: 220,
+              height: 56,
+              padding: const EdgeInsets.symmetric(horizontal: 34),
               decoration: BoxDecoration(
-                color: Color(0xFF508BE1),
-                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+                  begin: Alignment.topCenter, // 渐变起点
+                  end: Alignment.bottomCenter, // 渐变终点
+                ),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1044,9 +1051,9 @@ class _VideoPageState extends State<VideoPage>
                           borderRadius: BorderRadius.all(Radius.circular(2)),
                           child: LinearProgressIndicator(
                             value: screenBrightness,
-                            backgroundColor: Color(0x50FFFFFF),
+                            backgroundColor: Color(0x48FD6B39),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              Color(0xFFFFFFFF),
+                              Color(0xFFFD6B39),
                             ),
                           ),
                         );
@@ -1073,12 +1080,16 @@ class _VideoPageState extends State<VideoPage>
           child: Container(
             alignment: Alignment.center,
             child: Container(
-              width: 180,
-              height: 48,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              width: 220,
+              height: 56,
+              padding: const EdgeInsets.symmetric(horizontal: 34),
               decoration: BoxDecoration(
-                color: Color(0xFF508BE1),
-                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+                  begin: Alignment.topCenter, // 渐变起点
+                  end: Alignment.bottomCenter, // 渐变终点
+                ),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1093,9 +1104,9 @@ class _VideoPageState extends State<VideoPage>
                           borderRadius: BorderRadius.all(Radius.circular(2)),
                           child: LinearProgressIndicator(
                             value: volume,
-                            backgroundColor: Color(0x50FFFFFF),
+                            backgroundColor: Color(0x48FD6B39),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              Color(0xFFFFFFFF),
+                              Color(0xFFFD6B39),
                             ),
                           ),
                         );
@@ -1122,11 +1133,15 @@ class _VideoPageState extends State<VideoPage>
           child: Container(
             alignment: Alignment.center,
             child: Container(
-              width: 180,
-              height: 48,
+              width: 220,
+              height: 56,
               decoration: BoxDecoration(
-                color: Color(0xFF508BE1),
-                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+                  begin: Alignment.topCenter, // 渐变起点
+                  end: Alignment.bottomCenter, // 渐变终点
+                ),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -1141,7 +1156,7 @@ class _VideoPageState extends State<VideoPage>
                         letterSpacing: -0.5,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                        color: Color(0xFF141414),
                         decoration: TextDecoration.none,
                       ),
                     ),
@@ -1166,11 +1181,15 @@ class _VideoPageState extends State<VideoPage>
           child: Container(
             alignment: Alignment.center,
             child: Container(
-              width: 180,
-              height: 48,
+              width: 220,
+              height: 56,
               decoration: BoxDecoration(
-                color: Color(0xFF508BE1),
-                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+                  begin: Alignment.topCenter, // 渐变起点
+                  end: Alignment.bottomCenter, // 渐变终点
+                ),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -1185,7 +1204,7 @@ class _VideoPageState extends State<VideoPage>
                         letterSpacing: -0.5,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                        color: Color(0xFF141414),
                         decoration: TextDecoration.none,
                       ),
                     ),
@@ -1212,12 +1231,16 @@ class _VideoPageState extends State<VideoPage>
           ).animate(_progressPromptEvent),
           child: IgnorePointer(
             child: Container(
-              width: 180,
-              height: 72,
+              width: 220,
+              height: 88,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Color(0xFF508BE1),
-                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  colors: [Color(0xFFFDF1EB), Color(0xFFFFFEFC)], // 颜色数组
+                  begin: Alignment.topCenter, // 渐变起点
+                  end: Alignment.bottomCenter, // 渐变终点
+                ),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Obx(
                 () => Column(
@@ -1228,19 +1251,19 @@ class _VideoPageState extends State<VideoPage>
                       CommonTool.instance.formatHMS(movedTime.value),
                       style: const TextStyle(
                         letterSpacing: -0.5,
-                        color: Colors.white,
+                        color: Color(0xFF141414),
                         fontSize: 16,
                         decoration: TextDecoration.none,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 2),
                     Text(
                       changeTime.value.inSeconds > 0
                           ? '[+${CommonTool.instance.formatHMS(changeTime.value)}]'
                           : '[-${CommonTool.instance.formatHMS(durationAbs(changeTime.value))}]',
                       style: const TextStyle(
                         letterSpacing: -0.5,
-                        color: Colors.white,
+                        color: Color(0xFF141414),
                         fontSize: 12,
                         decoration: TextDecoration.none,
                       ),

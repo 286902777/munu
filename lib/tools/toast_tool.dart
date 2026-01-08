@@ -40,11 +40,10 @@ class ToastTool {
                       children: [
                         Image.asset(
                           type == ToastType.success
-                              ? Assets.iconTitle
-                              : (type == ToastType.fail
-                                    ? Assets.iconTitle
-                                    : Assets.iconTitle),
-                          width: 24,
+                              ? Assets.iconSuccessToast
+                              : Assets.iconFailToast,
+                          width: 20,
+                          height: 20,
                         ),
                         SizedBox(width: 16),
                       ],
