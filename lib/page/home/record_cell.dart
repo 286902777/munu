@@ -68,6 +68,9 @@ class _RecordCellState extends State<RecordCell> {
           widget.model.netMovie != 0,
         );
       },
+      splashColor: Colors.transparent, // 透明水波纹
+      highlightColor: Colors.transparent, // 透明高亮
+      hoverColor: Colors.transparent, // 透明悬停
       child: Container(
         height: 88,
         padding: EdgeInsets.symmetric(vertical: 8),
@@ -138,6 +141,14 @@ class _RecordCellState extends State<RecordCell> {
     );
   }
 
+  String replaceDate(VideoData model) {
+    final duration = Duration(seconds: model.totalTime.toInt());
+    final time = CommonTool.instance.formatHMS(duration);
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(model.createDate);
+    String formattedTime = DateFormat('yyyy/MM/dd').format(dateTime);
+    return '$time · ${model.size} · $formattedTime';
+  }
+
   Widget setPlaceWidget(int type) {
     return Container(
       alignment: Alignment.center,
@@ -149,13 +160,5 @@ class _RecordCellState extends State<RecordCell> {
         fit: BoxFit.cover,
       ),
     );
-  }
-
-  String replaceDate(VideoData model) {
-    final duration = Duration(seconds: model.totalTime.toInt());
-    final time = CommonTool.instance.formatHMS(duration);
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(model.createDate);
-    String formattedTime = DateFormat('yyyy/MM/dd').format(dateTime);
-    return '$time · ${model.size} · $formattedTime';
   }
 }

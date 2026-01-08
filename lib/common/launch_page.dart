@@ -19,7 +19,7 @@ class LaunchPage extends StatefulWidget {
 
 class _LaunchPageState extends State<LaunchPage> {
   Timer? _timer;
-  double startTime = 0.0;
+  double startTime = 7.0;
   double totalTime = 7.0;
   // double startTime = AdmobMaxTool.instance.startLoadTime.toDouble();
   // double totalTime = AdmobMaxTool.instance.startLoadTime.toDouble();

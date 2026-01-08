@@ -17,12 +17,6 @@ class _UploadPageState extends State<UploadPage>
   bool get wantKeepAlive => true;
 
   @override
-  void didPopNext() {}
-
-  @override
-  void didPushNext() {}
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
     return MunuPage(
@@ -51,9 +45,9 @@ class _UploadPageState extends State<UploadPage>
                 ],
               ),
               SizedBox(height: 12),
-              _contentView(0),
-              SizedBox(height: 18),
-              _contentView(1),
+              addWidget(true),
+              SizedBox(height: 36),
+              addWidget(false),
             ],
           ),
         ),
@@ -61,13 +55,13 @@ class _UploadPageState extends State<UploadPage>
     );
   }
 
-  Widget _contentView(int index) {
+  Widget addWidget(bool video) {
     return InkWell(
       onTap: () async {
-        if (index == 0) {
-          VideoTool.instance.openPage(index == 0);
+        if (video == true) {
+          VideoTool.instance.openPage(true);
         } else {
-          VideoTool.instance.openPage(index == 0);
+          VideoTool.instance.openPage(false);
         }
       },
       child: Container(
@@ -90,7 +84,9 @@ class _UploadPageState extends State<UploadPage>
                 ),
                 alignment: Alignment.center,
                 child: Image.asset(
-                  index == 0 ? Assets.iconVideoUpload : Assets.iconFileUpload,
+                  video == true
+                      ? Assets.iconVideoUpload
+                      : Assets.iconFileUpload,
                   width: 32,
                   height: 32,
                 ),
@@ -100,7 +96,7 @@ class _UploadPageState extends State<UploadPage>
               left: 92,
               top: 41,
               child: Text(
-                index == 0 ? 'Video' : 'File',
+                video == true ? 'Video' : 'File',
                 style: const TextStyle(
                   letterSpacing: -0.5,
                   fontSize: 18,
@@ -114,7 +110,7 @@ class _UploadPageState extends State<UploadPage>
               top: 90,
               right: 130,
               child: Text(
-                index == 0
+                video == true
                     ? 'Upload local files upon authorization.'
                     : 'Import from system files.',
                 style: const TextStyle(

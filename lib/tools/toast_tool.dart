@@ -3,7 +3,7 @@ import 'package:oktoast/oktoast.dart';
 
 import '../generated/assets.dart';
 
-enum ToastType { none, success, fail, waring }
+enum ToastType { none, success, fail }
 
 class ToastTool {
   static void show({
@@ -12,8 +12,8 @@ class ToastTool {
     ToastType type = ToastType.none,
     Color textColor = Colors.white,
     double fontSize = 14,
-    double radius = 16,
-    Color bgColor = const Color(0xFF274065),
+    double radius = 18,
+    Color bgColor = const Color(0xFF595959),
     Duration duration = const Duration(seconds: 2),
   }) {
     showToastWidget(
@@ -21,7 +21,7 @@ class ToastTool {
       handleTouch: true,
       FractionallySizedBox(
         child: Container(
-          color: Color(0xA6000000),
+          color: Colors.transparent,
           child: Center(
             child: Container(
               constraints: BoxConstraints(maxWidth: 280), // 设置最大宽度为200
@@ -52,11 +52,11 @@ class ToastTool {
                   Flexible(
                     child: Text(
                       message,
-                      style: const TextStyle(
+                      style: TextStyle(
                         letterSpacing: -0.5,
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: Colors.white,
+                        color: textColor,
                       ),
                       // maxLines: 10,
                     ),

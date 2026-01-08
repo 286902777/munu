@@ -89,11 +89,11 @@ class _RenamePageState extends State<RenamePage> {
                     ),
                   ),
                   // SizedBox(height: 18),
-                  _inputView(),
+                  nameWidget(),
                   SizedBox(height: 8),
-                  _numView(),
+                  textLengthWidget(),
                   SizedBox(height: 10),
-                  _sureBtn(),
+                  changeWidget(),
                 ],
               ),
             ),
@@ -103,13 +103,22 @@ class _RenamePageState extends State<RenamePage> {
     );
   }
 
-  Widget _inputView() {
+  Widget nameWidget() {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 4),
       height: 56,
       decoration: BoxDecoration(
         color: Color(0xFFFFFFFF),
+        boxShadow: [
+          // 外部阴影
+          BoxShadow(
+            color: Color(0x0D000000),
+            spreadRadius: 2,
+            blurRadius: 6,
+            offset: Offset(0, -3),
+          ),
+        ],
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       child: TextField(
@@ -149,7 +158,7 @@ class _RenamePageState extends State<RenamePage> {
     );
   }
 
-  Widget _numView() {
+  Widget textLengthWidget() {
     return Obx(
       () => Container(
         alignment: Alignment.centerRight,
@@ -171,7 +180,7 @@ class _RenamePageState extends State<RenamePage> {
     );
   }
 
-  Widget _sureBtn() {
+  Widget changeWidget() {
     return Obx(
       () => Container(
         width: 168,
@@ -194,22 +203,22 @@ class _RenamePageState extends State<RenamePage> {
           ),
           onPressed: () {
             if (_controller.text.isNotEmpty) {
-              var isEx = false;
+              var isHas = false;
               for (VideoData m in DataTool.instance.items) {
                 if (m.name == _controller.text) {
-                  isEx = true;
+                  isHas = true;
                   break;
                 }
               }
-              if (isEx) {
+              if (isHas) {
                 ToastTool.show(
                   message: 'The file name already exists!',
                   type: ToastType.fail,
                 );
               } else {
+                ToastTool.show(message: "Rename successfully!");
                 widget.model.name = _controller.text;
                 DataTool.instance.updateVideoData(widget.model);
-                ToastTool.show(message: "Rename successfully!");
                 Get.back();
               }
             }
