@@ -109,7 +109,7 @@ class AdmobTool {
     AdsSceneType sceneType, {
     int? levelIndex,
   }) async {
-    bool isSVip = await AppKey.getBool(AppKey.isVipUser) ?? false;
+    // bool isSVip = await AppKey.getBool(AppKey.isVipUser) ?? false;
     // if (UserVipTool.instance.vipData.value.status != VipStatus.none || isSVip) {
     //   return false;
     // }
@@ -266,7 +266,7 @@ class AdmobTool {
   ///返回是否显示成功
   static Future<bool> showAdsScreen(AdsSceneType sceneType) async {
     // //如果是vip则不展示广告
-    bool isSVip = await AppKey.getBool(AppKey.isVipUser) ?? false;
+    // bool isSVip = await AppKey.getBool(AppKey.isVipUser) ?? false;
     // if (UserVipTool.instance.vipData.value.status != VipStatus.none || isSVip) {
     //   return false;
     // }

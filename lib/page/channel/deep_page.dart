@@ -451,27 +451,27 @@ class _DeepPageState extends State<DeepPage>
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(14)),
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
                         child: CachedNetworkImage(
                           imageUrl: userInfoChange.value
                               ? user?.picture ?? ''
                               : '',
                           fit: BoxFit.cover,
-                          width: 28,
-                          height: 28,
+                          width: 24,
+                          height: 24,
                           placeholder: (context, url) => Image.asset(
                             Assets.channelAvatar,
-                            width: 28,
-                            height: 28,
+                            width: 24,
+                            height: 24,
                           ),
                           errorWidget: (context, url, error) => Image.asset(
                             Assets.channelAvatar,
-                            width: 28,
-                            height: 28,
+                            width: 24,
+                            height: 24,
                           ),
                         ),
                       ),
-                      SizedBox(width: 12),
+                      SizedBox(width: 8),
                       Flexible(
                         child: Text(
                           userInfoChange.value ? user?.name ?? '' : '',
@@ -484,7 +484,7 @@ class _DeepPageState extends State<DeepPage>
                         ),
                       ),
                       SizedBox(width: 4),
-                      Image.asset(Assets.iconMore, width: 16, height: 16),
+                      Image.asset(Assets.channelUp, width: 16, height: 16),
                     ],
                   ),
                 ),

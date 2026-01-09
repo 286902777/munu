@@ -61,10 +61,11 @@ class _ChannelPageState extends State<ChannelPage>
   String? randomUserId;
   bool loadRecommend = false;
 
-  List<VideoData> allArray = [];
+  List<VideoData> listArray = [];
   List<VideoData> hotArray = [];
-  List<VideoData> newArray = [];
+  List<VideoData> recentArray = [];
 
+  bool isCurrentPage = true;
   var otherChange = false.obs;
   var userInfoChange = false.obs;
   bool noMoreData = false;
@@ -73,8 +74,6 @@ class _ChannelPageState extends State<ChannelPage>
     StationState.hot,
     StationState.recently,
   ];
-
-  bool isCurrentPage = true;
 
   @override
   void initState() {
@@ -246,7 +245,7 @@ class _ChannelPageState extends State<ChannelPage>
           userId: user?.id ?? '',
           platform: widget.platform == PlatformType.india ? 0 : 1,
         );
-        allArray.add(videoM);
+        listArray.add(videoM);
       }
       if (mounted) {
         setState(() {});
@@ -283,7 +282,7 @@ class _ChannelPageState extends State<ChannelPage>
           userId: user?.id ?? '',
           platform: widget.platform == PlatformType.india ? 0 : 1,
         );
-        newArray.add(videoM);
+        recentArray.add(videoM);
       }
       otherChange.value = true;
     }
@@ -355,7 +354,7 @@ class _ChannelPageState extends State<ChannelPage>
           HomeData model = homeDataFromJson(data);
           if (model.files.isNotEmpty) {
             if (randomPage == 1) {
-              allArray.add(VideoData(name: 'Recommend'));
+              listArray.add(VideoData(name: 'Recommend'));
             }
             for (HomeListData item in model.files) {
               VideoData videoM = VideoData(
@@ -373,7 +372,7 @@ class _ChannelPageState extends State<ChannelPage>
                 userId: randomUserId ?? '',
                 platform: widget.platform == PlatformType.india ? 0 : 1,
               );
-              allArray.add(videoM);
+              listArray.add(videoM);
             }
             setState(() {});
             randomPage = randomPage + 1;
@@ -398,55 +397,60 @@ class _ChannelPageState extends State<ChannelPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Stack(
-      children: [
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: SizedBox(
-            height: Get.width / 375 * 230,
-            child: CachedNetworkImage(
-              imageUrl: userInfoChange.value ? user?.picture ?? '' : '',
-              fit: BoxFit.cover,
-              height: Get.width / 375 * 230,
-              placeholder: (context, url) => Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFFBCDAFF), Color(0xFF5E9EFF)], // 中心到边缘颜色
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-              ),
-              errorWidget: (context, url, error) => Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFFBCDAFF), Color(0xFF5E9EFF)], // 中心到边缘颜色
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(color: Color(0xFFD8D8D8)),
-          ),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: cusNavbar(),
-          body: headWidget(),
-        ),
-      ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: cusNavbar(),
+      body: headWidget(),
     );
+    // return Stack(
+    //   children: [
+    //     Positioned(
+    //       top: 0,
+    //       left: 0,
+    //       right: 0,
+    //       child: SizedBox(
+    //         height: Get.width / 375 * 230,
+    //         child: CachedNetworkImage(
+    //           imageUrl: userInfoChange.value ? user?.picture ?? '' : '',
+    //           fit: BoxFit.cover,
+    //           height: Get.width / 375 * 230,
+    //           placeholder: (context, url) => Container(
+    //             decoration: BoxDecoration(
+    //               gradient: LinearGradient(
+    //                 colors: [Color(0xFFBCDAFF), Color(0xFF5E9EFF)], // 中心到边缘颜色
+    //                 begin: Alignment.topCenter,
+    //                 end: Alignment.bottomCenter,
+    //               ),
+    //             ),
+    //           ),
+    //           errorWidget: (context, url, error) => Container(
+    //             decoration: BoxDecoration(
+    //               gradient: LinearGradient(
+    //                 colors: [Color(0xFFBCDAFF), Color(0xFF5E9EFF)], // 中心到边缘颜色
+    //                 begin: Alignment.topCenter,
+    //                 end: Alignment.bottomCenter,
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //     Positioned(
+    //       top: 0,
+    //       left: 0,
+    //       right: 0,
+    //       child: BackdropFilter(
+    //         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+    //         child: Container(color: Color(0xFFD8D8D8)),
+    //       ),
+    //     ),
+    //     Scaffold(
+    //       backgroundColor: Colors.transparent,
+    //       appBar: cusNavbar(),
+    //       body: headWidget(),
+    //     ),
+    //   ],
+    // );
   }
 
   AppBar cusNavbar() {
@@ -486,57 +490,94 @@ class _ChannelPageState extends State<ChannelPage>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 66,
-            child: Stack(
-              fit: StackFit.loose,
+          // SizedBox(
+          //   height: 66,
+          //   child: Stack(
+          //     fit: StackFit.loose,
+          //     children: [
+          //       Positioned(
+          //         top: 0,
+          //         left: 0,
+          //         right: 0,
+          //         child: Container(
+          //           alignment: Alignment.center,
+          //           child: Image.asset(
+          //             Assets.channelAvatar,
+          //             width: 66,
+          //             height: 66,
+          //             fit: BoxFit.cover,
+          //           ),
+          //         ),
+          //       ),
+          //       Positioned(
+          //         top: 6,
+          //         left: (Get.width - 56) * 0.5,
+          //         child: ClipRRect(
+          //           borderRadius: BorderRadius.all(Radius.circular(28)),
+          //           child: CachedNetworkImage(
+          //             imageUrl: userInfoChange.value ? user?.picture ?? '' : '',
+          //             fit: BoxFit.cover,
+          //             width: 56,
+          //             height: 56,
+          //             placeholder: (context, url) =>
+          //                 Container(color: Colors.transparent),
+          //             errorWidget: (context, url, error) =>
+          //                 Container(color: Colors.transparent),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(height: 2),
+          // Text(
+          //   userInfoChange.value ? user?.name ?? '' : '',
+          //   style: const TextStyle(
+          //     letterSpacing: -0.5,
+          //     fontSize: 18,
+          //     color: Colors.white,
+          //   ),
+          //   textAlign: TextAlign.center,
+          //   maxLines: 1,
+          // ),
+          Container(
+            padding: EdgeInsets.only(left: 16, right: 20),
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            height: 72,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(24)),
+              color: Colors.white,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      Assets.channelAvatar,
-                      width: 66,
-                      height: 66,
-                      fit: BoxFit.cover,
-                    ),
+                Text(
+                  userInfoChange.value ? user?.name ?? '' : '',
+                  style: const TextStyle(
+                    letterSpacing: -0.5,
+                    fontSize: 18,
+                    color: Color(0xFF141414),
                   ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
                 ),
-                Positioned(
-                  top: 6,
-                  left: (Get.width - 56) * 0.5,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(28)),
-                    child: CachedNetworkImage(
-                      imageUrl: userInfoChange.value ? user?.picture ?? '' : '',
-                      fit: BoxFit.cover,
-                      width: 56,
-                      height: 56,
-                      placeholder: (context, url) =>
-                          Container(color: Colors.transparent),
-                      errorWidget: (context, url, error) =>
-                          Container(color: Colors.transparent),
-                    ),
+                SizedBox(width: 30),
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(24)),
+                  child: CachedNetworkImage(
+                    imageUrl: userInfoChange.value ? user?.picture ?? '' : '',
+                    fit: BoxFit.cover,
+                    width: 48,
+                    height: 48,
+                    placeholder: (context, url) =>
+                        Container(color: Colors.transparent),
+                    errorWidget: (context, url, error) =>
+                        Container(color: Colors.transparent),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 2),
-          Text(
-            userInfoChange.value ? user?.name ?? '' : '',
-            style: const TextStyle(
-              letterSpacing: -0.5,
-              fontSize: 18,
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.center,
-            maxLines: 1,
-          ),
-          SizedBox(height: 16),
           Expanded(child: Container(child: bodyWidget())),
         ],
       ),
@@ -608,19 +649,19 @@ class _ChannelPageState extends State<ChannelPage>
         itemNum: 1,
         onLoading: requestData,
         child: ListView.builder(
-          itemCount: allArray.length,
+          itemCount: listArray.length,
           itemBuilder: (context, index) {
-            if (allArray[index].name == 'Recommend' &&
-                allArray[index].movieId.isEmpty) {
+            if (listArray[index].name == 'Recommend' &&
+                listArray[index].movieId.isEmpty) {
               return recommendHeadWidget();
             } else {
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
                   playSource = PlaySource.channel_file;
-                  openPlayPage(allArray[index], allArray);
+                  openPlayPage(listArray[index], listArray);
                 },
-                child: HomeCell(model: allArray[index]),
+                child: HomeCell(model: listArray[index]),
               );
             }
           },
@@ -709,15 +750,15 @@ class _ChannelPageState extends State<ChannelPage>
   Widget newWidget() {
     return Obx(
       () => ListView.builder(
-        itemCount: otherChange.value ? newArray.length : 0,
+        itemCount: otherChange.value ? recentArray.length : 0,
         itemBuilder: (context, index) {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
               playSource = PlaySource.channel_recently;
-              openPlayPage(newArray[index], newArray);
+              openPlayPage(recentArray[index], recentArray);
             },
-            child: HomeCell(model: newArray[index]),
+            child: HomeCell(model: recentArray[index]),
           );
         },
       ),
