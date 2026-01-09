@@ -35,6 +35,7 @@ class ClearAlertPage extends StatelessWidget {
                       color: Color(0xFF17132C),
                       overflow: TextOverflow.ellipsis,
                     ),
+                    textAlign: TextAlign.center,
                     maxLines: 3,
                   ),
                 ),

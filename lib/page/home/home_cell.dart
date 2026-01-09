@@ -37,14 +37,14 @@ class _HomeCellState extends State<HomeCell> {
                         width: 128,
                         height: 72,
                         placeholder: (context, url) =>
-                            _setPlaceholder(widget.model.fileType),
+                            placeWidget(widget.model.fileType),
                         errorWidget: (context, url, error) =>
-                            _setPlaceholder(widget.model.fileType),
+                            placeWidget(widget.model.fileType),
                       )
                     : SizedBox(
                         width: 128,
                         height: 72,
-                        child: _setPlaceholder(widget.model.fileType),
+                        child: placeWidget(widget.model.fileType),
                       ),
               ),
               Visibility(
@@ -139,7 +139,7 @@ class _HomeCellState extends State<HomeCell> {
     }
   }
 
-  Widget _setPlaceholder(int type) {
+  Widget placeWidget(int type) {
     int colorValue = 0xFFEDE4E1;
     String name = Assets.iconVideoBg;
     switch (type) {

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-VideoData VideoDataFromJson(String str) => VideoData.fromJson(json.decode(str));
+// VideoData videoDataFromJson(String str) => VideoData.fromJson(json.decode(str));
 
-String VideoDataToJson(VideoData data) => json.encode(data.toJson());
+// String videoDataToJson(VideoData data) => json.encode(data.toJson());
 
 class VideoData {
   int? vId;

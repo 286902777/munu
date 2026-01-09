@@ -144,7 +144,6 @@ class _SetPageState extends State<SetPage>
                 ),
                 Spacer(),
                 Image.asset(Assets.setArrow, width: 24),
-                SizedBox(width: 16),
               ],
             ),
           ),

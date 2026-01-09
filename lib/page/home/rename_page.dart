@@ -130,9 +130,9 @@ class _RenamePageState extends State<RenamePage> {
         cursorWidth: 2,
         maxLines: 1, // 最大行数
         onChanged: (text) {
-          if (text.length > 10) {
-            _controller.text = text.substring(0, 10);
-            _controller.selection = TextSelection.collapsed(offset: 10);
+          if (text.length > 100) {
+            _controller.text = text.substring(0, 100);
+            _controller.selection = TextSelection.collapsed(offset: 100);
           }
           name.value = _controller.text;
         },
