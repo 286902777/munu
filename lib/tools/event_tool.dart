@@ -84,7 +84,7 @@ class EventTool extends GetConnect {
     httpClient.defaultContentType = EventTool.contentType;
   }
 
-  Future<void> getLocalData() async {
+  Future<void> loadLocalConfig() async {
     Map<String, dynamic>? data = await AppKey.getMap(AppKey.eventList);
     if (data != null) {
       for (var entry in data.entries) {

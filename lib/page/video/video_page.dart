@@ -383,11 +383,11 @@ class _VideoPageState extends State<VideoPage>
   @override
   void dispose() async {
     super.dispose();
-    isFullScreen = false;
-    WakelockPlus.disable();
     // _removeSpeed();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    isFullScreen = false;
+    WakelockPlus.disable();
     await player.dispose();
     _brightnessEvent.dispose();
     _volumeEvent.dispose();

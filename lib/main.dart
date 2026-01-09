@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:munu/common/db_tool.dart';
 import 'package:munu/common/launch_page.dart';
+import 'package:munu/tools/event_tool.dart';
+import 'package:munu/tools/fire_base_tool.dart';
 import 'package:munu/tools/network_tool.dart';
 import 'package:munu/tools/track_tool.dart';
 import 'package:oktoast/oktoast.dart';
@@ -19,9 +21,9 @@ void main() async {
   Get.put(DataTool());
   TrackTool.instance.config();
   NetworkTool.instance.networkStatus();
-  // await FireManager.instance.addConfig();
-  // await EventManager.instance.getLocalData();
-  // EventManager.instance.postApiEvent();
+  await FireBaseTool.instance.addConfig();
+  await EventTool.instance.loadLocalConfig();
+  EventTool.instance.postApiEvent();
   runApp(const MyApp());
 }
 
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
     return OKToast(
       child: GetMaterialApp(
         navigatorKey: navigatorKey,
-        title: 'Test',
+        title: '',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           appBarTheme: AppBarTheme(
