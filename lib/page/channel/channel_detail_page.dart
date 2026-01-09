@@ -32,11 +32,11 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _requestUserListInfo();
+    loadUserInfo();
     EventTool.instance.eventUpload(EventApi.channellistExpose, null);
   }
 
-  Future<void> _requestUserListInfo() async {
+  Future<void> loadUserInfo() async {
     DataTool.instance.loadUsers();
     allUsers = DataTool.instance.users;
     String userId = allUsers.first.id;
@@ -79,7 +79,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
       },
       failHandle: (refresh, code, msg) {
         if (refresh) {
-          _requestUserListInfo();
+          loadUserInfo();
         }
       },
     );
@@ -131,12 +131,12 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
           child: Stack(
             children: [
               Positioned(
-                left: 0,
+                left: 16,
                 bottom: 21,
-                child: Image.asset(Assets.iconTitle, width: 40, height: 14),
+                child: Image.asset(Assets.iconTitle, width: 20, height: 20),
               ),
               Positioned(
-                left: 0,
+                left: 42,
                 child: Text(
                   'Channel',
                   style: const TextStyle(
@@ -150,12 +150,12 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
             ],
           ),
         ),
-        Expanded(child: _contentView()),
+        Expanded(child: contentWidget()),
       ],
     );
   }
 
-  Widget _contentView() {
+  Widget contentWidget() {
     return ListView.builder(
       itemCount: recommends.isNotEmpty ? (recommends.length + 2) : 1,
       itemBuilder: (context, index) {
@@ -169,12 +169,12 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
               child: Stack(
                 children: [
                   Positioned(
-                    left: 0,
+                    left: 16,
                     bottom: 11,
-                    child: Image.asset(Assets.iconTitle, width: 40, height: 14),
+                    child: Image.asset(Assets.iconTitle, width: 20, height: 20),
                   ),
                   Positioned(
-                    left: 0,
+                    left: 42,
                     top: 10,
                     child: Text(
                       'Recommend',
@@ -243,13 +243,13 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
                             width: 54,
                             height: 54,
                             placeholder: (context, url) => Image.asset(
-                              Assets.iconAvatar,
+                              Assets.channelAvatar,
                               width: 54,
                               height: 54,
                               fit: BoxFit.cover,
                             ),
                             errorWidget: (context, url, error) => Image.asset(
-                              Assets.iconAvatar,
+                              Assets.channelAvatar,
                               width: 54,
                               height: 54,
                               fit: BoxFit.cover,
@@ -301,9 +301,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
                       ),
                       SizedBox(width: 4),
                       Image.asset(
-                        show.value
-                            ? Assets.iconAvatar
-                            : Assets.iconAvatar,
+                        show.value ? Assets.channelUp : Assets.channelDown,
                         width: 16,
                         height: 16,
                       ),
@@ -348,13 +346,13 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
                     width: 54,
                     height: 54,
                     placeholder: (context, url) => Image.asset(
-                      Assets.iconAvatar,
+                      Assets.channelAvatar,
                       width: 54,
                       height: 54,
                       fit: BoxFit.cover,
                     ),
                     errorWidget: (context, url, error) => Image.asset(
-                      Assets.iconAvatar,
+                      Assets.channelAvatar,
                       width: 54,
                       height: 54,
                       fit: BoxFit.cover,

@@ -283,7 +283,7 @@ class _HomePageState extends State<HomePage>
                 Stack(
                   children: [
                     Positioned(
-                      left: 0,
+                      left: 16,
                       child: Image.asset(
                         Assets.iconTitle,
                         width: 20,
@@ -291,7 +291,7 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                     Positioned(
-                      left: 26,
+                      left: 42,
                       child: Text(
                         'Channel',
                         style: const TextStyle(
@@ -304,7 +304,6 @@ class _HomePageState extends State<HomePage>
                     ),
                   ],
                 ),
-
                 InkWell(
                   onTap: () {
                     Get.to(() => ChannelDetailPage());
@@ -329,7 +328,7 @@ class _HomePageState extends State<HomePage>
             ),
           ),
           SingleChildScrollView(
-            padding: EdgeInsets.only(left: 12),
+            padding: EdgeInsets.only(left: 16),
             scrollDirection: Axis.horizontal,
             child: Wrap(
               spacing: 16, // 主轴间距
@@ -375,13 +374,13 @@ class _HomePageState extends State<HomePage>
                               width: 72,
                               height: 72,
                               placeholder: (context, url) => Image.asset(
-                                Assets.iconAvatar,
+                                Assets.channelAvatar,
                                 width: 72,
                                 height: 72,
                                 fit: BoxFit.cover,
                               ),
                               errorWidget: (context, url, error) => Image.asset(
-                                Assets.iconAvatar,
+                                Assets.channelAvatar,
                                 width: 72,
                                 height: 72,
                                 fit: BoxFit.cover,

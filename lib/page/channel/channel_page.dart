@@ -495,7 +495,7 @@ class _ChannelPageState extends State<ChannelPage>
                   child: Container(
                     alignment: Alignment.center,
                     child: Image.asset(
-                      Assets.iconAvatar,
+                      Assets.channelAvatar,
                       width: 66,
                       height: 66,
                       fit: BoxFit.cover,
@@ -582,7 +582,7 @@ class _ChannelPageState extends State<ChannelPage>
                             decoration: BoxDecoration(
                               image: selectIndex.value == index
                                   ? DecorationImage(
-                                      image: AssetImage(Assets.iconAvatar),
+                                      image: AssetImage(Assets.channelAvatar),
                                       fit: BoxFit.cover,
                                     )
                                   : null,
@@ -625,11 +625,7 @@ class _ChannelPageState extends State<ChannelPage>
               child: PageView(
                 controller: _controller,
                 physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  allContentView(),
-                  hotContentView(),
-                  newContentView(),
-                ],
+                children: [lifeWidget(), hotWidget(), newWidget()],
               ),
             ),
           ),
@@ -638,7 +634,7 @@ class _ChannelPageState extends State<ChannelPage>
     );
   }
 
-  Widget allContentView() {
+  Widget lifeWidget() {
     return RefreshConfiguration(
       hideFooterWhenNotFull: true,
       child: RefreshTool(
@@ -650,7 +646,7 @@ class _ChannelPageState extends State<ChannelPage>
           itemBuilder: (context, index) {
             if (allArray[index].name == 'Recommend' &&
                 allArray[index].movieId.isEmpty) {
-              return _recommendTitleView();
+              return recommendHeadWidget();
             } else {
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -667,7 +663,7 @@ class _ChannelPageState extends State<ChannelPage>
     );
   }
 
-  Widget _recommendTitleView() {
+  Widget recommendHeadWidget() {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -689,12 +685,12 @@ class _ChannelPageState extends State<ChannelPage>
               child: Stack(
                 children: [
                   Positioned(
-                    left: 0,
+                    left: 20,
                     bottom: 16,
-                    child: Image.asset(Assets.iconTitle, width: 40, height: 14),
+                    child: Image.asset(Assets.iconTitle, width: 20, height: 20),
                   ),
                   Positioned(
-                    left: 0,
+                    left: 46,
                     top: 8,
                     child: Text(
                       'Recommend',
@@ -726,7 +722,7 @@ class _ChannelPageState extends State<ChannelPage>
     );
   }
 
-  Widget hotContentView() {
+  Widget hotWidget() {
     return Obx(
       () => ListView.builder(
         itemCount: otherChange.value ? hotArray.length : 0,
@@ -744,7 +740,7 @@ class _ChannelPageState extends State<ChannelPage>
     );
   }
 
-  Widget newContentView() {
+  Widget newWidget() {
     return Obx(
       () => ListView.builder(
         itemCount: otherChange.value ? newArray.length : 0,

@@ -10,7 +10,6 @@ import '../../generated/assets.dart';
 class HomeCell extends StatefulWidget {
   const HomeCell({super.key, required this.model, this.isHot = false});
   final VideoData model;
-
   final bool isHot;
 
   @override
@@ -22,49 +21,46 @@ class _HomeCellState extends State<HomeCell> {
   Widget build(BuildContext context) {
     return Container(
       height: 72,
-      padding: EdgeInsets.only(left: 12, right: 16),
+      padding: EdgeInsets.only(left: 16, right: 16),
       margin: EdgeInsets.only(bottom: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end, // 垂直下对齐
         children: [
           Stack(
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: 4),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(6)),
-                  child: widget.model.thumbnail.isNotEmpty
-                      ? CachedNetworkImage(
-                          imageUrl: widget.model.thumbnail,
-                          fit: BoxFit.cover,
-                          width: 128,
-                          height: 72,
-                          placeholder: (context, url) =>
-                              _setPlaceholder(widget.model.fileType),
-                          errorWidget: (context, url, error) =>
-                              _setPlaceholder(widget.model.fileType),
-                        )
-                      : SizedBox(
-                          width: 128,
-                          height: 72,
-                          child: _setPlaceholder(widget.model.fileType),
-                        ),
-                ),
+              ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                child: widget.model.thumbnail.isNotEmpty
+                    ? CachedNetworkImage(
+                        imageUrl: widget.model.thumbnail,
+                        fit: BoxFit.cover,
+                        width: 128,
+                        height: 72,
+                        placeholder: (context, url) =>
+                            _setPlaceholder(widget.model.fileType),
+                        errorWidget: (context, url, error) =>
+                            _setPlaceholder(widget.model.fileType),
+                      )
+                    : SizedBox(
+                        width: 128,
+                        height: 72,
+                        child: _setPlaceholder(widget.model.fileType),
+                      ),
               ),
               Visibility(
                 visible: widget.isHot,
                 child: Positioned(
-                  top: -1,
-                  left: 4,
-                  child: Image.asset(Assets.iconAvatar, width: 28, height: 14),
+                  top: -4,
+                  right: -4,
+                  child: Image.asset(Assets.channelHot, width: 34, height: 34),
                 ),
               ),
               Visibility(
                 visible: widget.model.recommend == 1,
                 child: Positioned(
-                  right: 0,
-                  top: 0,
-                  child: Image.asset(Assets.iconAvatar, width: 56, height: 18),
+                  right: -4,
+                  top: -4,
+                  child: Image.asset(Assets.channelHot, width: 34, height: 34),
                 ),
               ),
             ],

@@ -77,6 +77,10 @@ class _VideoPageState extends State<VideoPage>
   bool isUsePause = false;
   bool speedIsLoad = false;
 
+  void _onHorizontalDragStart(DragStartDetails details) async {}
+  void _onHorizontalDragUpdate(DragUpdateDetails details) {}
+  void _onHorizontalDragEnd(DragEndDetails details) async {}
+
   void _appendConfigTimer(DragEvent type) {
     _disTimer?.cancel();
     _disTimer = Timer(Duration(seconds: 2), () {
@@ -587,7 +591,8 @@ class _VideoPageState extends State<VideoPage>
             color: Colors.black,
             child: Stack(
               children: [
-                Center(child: Video(controller: controller, controls: null)),
+                // Center(child: Video(controller: controller, controls: null)), //remove activeStroy
+                Center(child: Video(controller: controller)),
                 videoWidget(),
                 // _appendSpeedWidget(),
               ],
@@ -696,7 +701,7 @@ class _VideoPageState extends State<VideoPage>
             Obx(
               () => Container(
                 color: isShowTool.value
-                    ? Color(0x59000000)
+                    ? Color(0x55000000)
                     : Colors.transparent,
                 child: GestureDetector(
                   onTap: () {
@@ -727,12 +732,12 @@ class _VideoPageState extends State<VideoPage>
                       }
                     }
                   },
-                  onVerticalDragStart: _onVerticalDragStart,
-                  onVerticalDragUpdate: _onVerticalDragUpdate,
-                  onVerticalDragEnd: _onVerticalDragEnd,
                   onHorizontalDragStart: _onHorizontalDragStart,
                   onHorizontalDragUpdate: _onHorizontalDragUpdate,
                   onHorizontalDragEnd: _onHorizontalDragEnd,
+                  onVerticalDragStart: _onVerticalDragStart,
+                  onVerticalDragUpdate: _onVerticalDragUpdate,
+                  onVerticalDragEnd: _onVerticalDragEnd,
                 ),
               ),
             ),
@@ -743,7 +748,7 @@ class _VideoPageState extends State<VideoPage>
                 child: SafeArea(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [topFirstWidget(), Spacer(), _lastBottomView()],
+                    children: [topFirstWidget(), Spacer(), lastBottomWidget()],
                   ),
                 ),
               ),
@@ -752,20 +757,14 @@ class _VideoPageState extends State<VideoPage>
             ///几个操作提示器
             addBrightView(),
             addVolumeView(),
-            addTenView(),
-            addForwardTenView(),
+            addBackView(),
+            addForwardView(),
             showDateInfoView(),
           ],
         );
       },
     );
   }
-
-  void _onHorizontalDragStart(DragStartDetails details) async {}
-
-  void _onHorizontalDragUpdate(DragUpdateDetails details) {}
-
-  void _onHorizontalDragEnd(DragEndDetails details) async {}
 
   Widget topFirstWidget() {
     return OrientationBuilder(
@@ -833,7 +832,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  Widget _lastBottomView() {
+  Widget lastBottomWidget() {
     return Container(
       alignment: Alignment.centerLeft,
       width: Get.width,
@@ -1122,7 +1121,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  Widget addTenView() {
+  Widget addBackView() {
     return Positioned(
       left: 0,
       right: 0,
@@ -1170,7 +1169,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  Widget addForwardTenView() {
+  Widget addForwardView() {
     return Positioned(
       left: 0,
       right: 0,

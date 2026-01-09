@@ -460,12 +460,12 @@ class _DeepPageState extends State<DeepPage>
                           width: 28,
                           height: 28,
                           placeholder: (context, url) => Image.asset(
-                            Assets.iconAvatar,
+                            Assets.channelAvatar,
                             width: 28,
                             height: 28,
                           ),
                           errorWidget: (context, url, error) => Image.asset(
-                            Assets.iconAvatar,
+                            Assets.channelAvatar,
                             width: 28,
                             height: 28,
                           ),
