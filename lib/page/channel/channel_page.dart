@@ -15,18 +15,21 @@ import 'package:munu/tools/event_tool.dart';
 import 'package:munu/tools/http_tool.dart';
 import 'package:munu/tools/play_tool.dart';
 import 'package:munu/tools/refresh_tool.dart';
+import 'package:munu/tools/service_tool.dart';
 import 'package:munu/tools/toast_tool.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../common/admob_native_page.dart';
 import '../../data/index_data.dart';
 import '../../data/user_pool_data.dart';
 import '../../data/video_data.dart';
 import '../../generated/assets.dart';
+import '../../tools/admob_tool.dart';
 import '../../tools/common_tool.dart';
 import '../home/file_list_page.dart';
 
 enum StationLabel {
-  video(0, 'All videos'),
+  video(0, 'Collection'),
   hot(1, 'Hot'),
   recently(2, 'Recently');
 
@@ -83,67 +86,67 @@ class _ChannelPageState extends State<ChannelPage>
       EventParaName.source.name: channelSource.name,
     });
     requestData();
-    // AdmobMaxTool.showAdsScreen(AdsSceneType.channel);
-    // AdmobMaxTool.addListener(hashCode.toString(), (
-    //     state, {
-    //       adsType,
-    //       ad,
-    //       sceneType,
-    //     }) async {
-    //   if (isCurrentPage == false) {
-    //     return;
-    //   }
-    //   if (state == AdsState.showing &&
-    //       AdmobMaxTool.scene == AdsSceneType.channel) {
-    //     BackEventManager.instance.getAdsValue(
-    //       BackEventName.advProfit,
-    //       widget.platform,
-    //       ad,
-    //       '',
-    //       '',
-    //       '',
-    //     );
-    //     if (adsType == AdsType.native) {
-    //       showDialog(
-    //         context: context,
-    //         builder: (context) => NativePage(
-    //           ad: ad,
-    //           sceneType: sceneType ?? AdsSceneType.channel,
-    //         ),
-    //       ).then((result) {
-    //         AdmobMaxTool.instance.nativeDismiss(
-    //           AdsState.dismissed,
-    //           adsType: AdsType.native,
-    //           ad: ad,
-    //           sceneType: sceneType ?? AdsSceneType.channel,
-    //         );
-    //       });
-    //     }
-    //   }
-    //   if (state == AdsState.dismissed &&
-    //       AdmobMaxTool.scene == AdsSceneType.channel) {
-    //     if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
-    //       PlayManager.showResult(true);
-    //     } else {
-    //       displayPlusAds();
-    //     }
-    //   }
-    // });
+    AdmobTool.showAdsScreen(AdsSceneType.channel);
+    AdmobTool.addListener(hashCode.toString(), (
+      state, {
+      adsType,
+      ad,
+      sceneType,
+    }) async {
+      if (isCurrentPage == false) {
+        return;
+      }
+      if (state == AdsState.showing &&
+          AdmobTool.scene == AdsSceneType.channel) {
+        ServiceTool.instance.getAdsValue(
+          ServiceEventName.advProfit,
+          widget.platform,
+          ad,
+          '',
+          '',
+          '',
+        );
+        if (adsType == AdsType.native) {
+          showDialog(
+            context: context,
+            builder: (context) => AdmobNativePage(
+              ad: ad,
+              sceneType: sceneType ?? AdsSceneType.channel,
+            ),
+          ).then((result) {
+            AdmobTool.instance.nativeDismiss(
+              AdsState.dismissed,
+              adsType: AdsType.native,
+              ad: ad,
+              sceneType: sceneType ?? AdsSceneType.channel,
+            );
+          });
+        }
+      }
+      if (state == AdsState.dismissed &&
+          AdmobTool.scene == AdsSceneType.channel) {
+        if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
+          PlayTool.showResult(true);
+        } else {
+          addTwoAds();
+        }
+      }
+    });
   }
 
-  // void displayPlusAds() async {
-  //   bool suc = await AdmobMaxTool.showAdsScreen(AdsSceneType.plus);
-  //   if (suc == false) {
-  //     PlayManager.showResult(true);
-  //   }
-  // }
+  void addTwoAds() async {
+    bool suc = await AdmobTool.showAdsScreen(AdsSceneType.plus);
+    if (suc == false) {
+      PlayTool.showResult(true);
+    }
+  }
 
   @override
   void dispose() {
     // TODO: implement dispose
     _refreshController.dispose();
     EasyLoading.dismiss();
-    // AdmobMaxTool.removeListener(hashCode.toString());
+    AdmobTool.removeListener(hashCode.toString());
     super.dispose();
   }
 
@@ -171,7 +174,7 @@ class _ChannelPageState extends State<ChannelPage>
   Future requestData() async {
     // uid: spasmodist channel_id:// varanger  link_id:// /pm57gqcgxs/norselled  version:// gangways
     if (loadRecommend) {
-      requestRecommendData();
+      loadRecommendInfo();
     } else {
       if (noMoreData) {
         _refreshController.loadNoData();
@@ -203,13 +206,13 @@ class _ChannelPageState extends State<ChannelPage>
               if (model.files.length < 5 && page == 1) {
                 randomUserId = user?.id;
                 loadRecommend = true;
-                requestRecommendData();
+                loadRecommendInfo();
               } else {
-                await _requestUserListInfo(user?.id ?? '');
+                await loadUserListInfo(user?.id ?? '');
               }
             }
             if (model.files.isNotEmpty) {
-              replaceModel(model);
+              replaceData(model);
               page = page + 1;
             }
           }
@@ -227,7 +230,7 @@ class _ChannelPageState extends State<ChannelPage>
     }
   }
 
-  void replaceModel(HomeData model) {
+  void replaceData(HomeData model) {
     if (model.files.isNotEmpty) {
       for (HomeListData item in model.files) {
         VideoData videoM = VideoData(
@@ -286,7 +289,7 @@ class _ChannelPageState extends State<ChannelPage>
     }
   }
 
-  Future<void> _requestUserListInfo(String uId) async {
+  Future<void> loadUserListInfo(String uId) async {
     await DbTool.instance.getPlatformUser(
       widget.platform == PlatformType.india ? 0 : 1,
     );
@@ -323,18 +326,18 @@ class _ChannelPageState extends State<ChannelPage>
             randomUserId = result.first['cipherable'];
           }
           loadRecommend = true;
-          requestRecommendData();
+          loadRecommendInfo();
         }
       },
       failHandle: (refresh, code, msg) {
         if (refresh) {
-          _requestUserListInfo(uId);
+          loadUserListInfo(uId);
         }
       },
     );
   }
 
-  Future requestRecommendData() async {
+  Future loadRecommendInfo() async {
     await HttpTool.recommendPostRequest(
       ApiKey.home,
       widget.platform,
@@ -383,7 +386,7 @@ class _ChannelPageState extends State<ChannelPage>
       },
       failHandle: (refresh, code, msg) {
         if (refresh) {
-          requestRecommendData();
+          loadRecommendInfo();
         } else {
           _refreshController.loadFailed();
           ToastTool.show(message: msg, type: ToastType.fail);
@@ -439,14 +442,14 @@ class _ChannelPageState extends State<ChannelPage>
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: navbar(),
-          body: headerView(),
+          appBar: cusNavbar(),
+          body: headWidget(),
         ),
       ],
     );
   }
 
-  AppBar navbar() {
+  AppBar cusNavbar() {
     return AppBar(
       backgroundColor: Colors.transparent,
       leading: Row(
@@ -477,7 +480,7 @@ class _ChannelPageState extends State<ChannelPage>
     );
   }
 
-  Widget headerView() {
+  Widget headWidget() {
     return Obx(
       () => Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -534,13 +537,13 @@ class _ChannelPageState extends State<ChannelPage>
             maxLines: 1,
           ),
           SizedBox(height: 16),
-          Expanded(child: Container(child: contentView())),
+          Expanded(child: Container(child: bodyWidget())),
         ],
       ),
     );
   }
 
-  Widget contentView() {
+  Widget bodyWidget() {
     return Container(
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(

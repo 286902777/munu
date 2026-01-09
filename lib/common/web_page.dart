@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:munu/common/munu_page.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
 import '../generated/assets.dart';
 
 class WebPage extends StatefulWidget {
@@ -32,14 +31,14 @@ class _WebPageState extends State<WebPage> {
         top: false,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: navbar(),
+          appBar: cusNavbar(),
           body: WebViewWidget(controller: _controller),
         ),
       ),
     );
   }
 
-  AppBar navbar() {
+  AppBar cusNavbar() {
     return AppBar(
       backgroundColor: Colors.transparent,
       leading: Row(

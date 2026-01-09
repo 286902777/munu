@@ -23,10 +23,9 @@ class ChannelDetailPage extends StatefulWidget {
 
 class _ChannelDetailPageState extends State<ChannelDetailPage> {
   PlatformType userPlatform = PlatformType.india;
-
+  var show = false.obs;
   List<UserPoolData> allUsers = <UserPoolData>[];
   List<Map<String, dynamic>> recommends = <Map<String, dynamic>>[];
-  var show = false.obs;
 
   @override
   void initState() {
@@ -92,17 +91,17 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
         top: false,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: navbar(),
+          appBar: cusNavbar(),
           body: Padding(
             padding: EdgeInsets.only(top: 12, left: 12, right: 12),
-            child: _listView(),
+            child: channelListWidget(),
           ),
         ),
       ),
     );
   }
 
-  AppBar navbar() {
+  AppBar cusNavbar() {
     return AppBar(
       backgroundColor: Colors.transparent,
       leading: Row(
@@ -122,7 +121,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
     );
   }
 
-  Widget _listView() {
+  Widget channelListWidget() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

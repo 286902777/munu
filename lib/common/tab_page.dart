@@ -2,12 +2,19 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:munu/page/set/set_page.dart';
 import 'package:munu/page/upload/upload_page.dart';
+import 'package:munu/tools/event_tool.dart';
+import 'package:munu/tools/play_tool.dart';
+import 'package:munu/tools/service_tool.dart';
 
 import '../generated/assets.dart';
+import '../page/channel/deep_page.dart';
 import '../page/home/home_page.dart';
+import '../tools/admob_tool.dart';
 import '../tools/common_tool.dart';
+import 'admob_native_page.dart';
 
 class TabPage extends StatefulWidget {
   const TabPage({super.key});
@@ -23,7 +30,7 @@ class _TabPageState extends State<TabPage>
   @override
   void initState() {
     super.initState();
-    // listenAppState();
+    listenAppState();
     clickTabItem = (i) {
       _tabPageController.jumpToPage(i);
       setState(() {
@@ -31,130 +38,132 @@ class _TabPageState extends State<TabPage>
       });
     };
 
-    // pushDeepPageInfo = () {
-    //   pushDeepVC();
-    // };
+    pushDeepPageInfo = () {
+      openDeepPage();
+    };
 
     WidgetsBinding.instance.addObserver(this);
-    // AdmobMaxTool.addListener(hashCode.toString(), (
-    //     state, {
-    //       adsType,
-    //       ad,
-    //       sceneType,
-    //     }) async {
-    //   if (state == AdsState.showing &&
-    //       AdmobMaxTool.scene == AdsSceneType.open) {
-    //     BackEventManager.instance.getAdsValue(
-    //       BackEventName.advProfit,
-    //       apiPlatform,
-    //       ad,
-    //       '',
-    //       '',
-    //       '',
-    //     );
-    //     if (adsType == AdsType.native) {
-    //       Get.to(
-    //             () => NativePage(ad: ad, sceneType: sceneType ?? AdsSceneType.open),
-    //       )?.then((result) {
-    //         AdmobMaxTool.instance.nativeDismiss(
-    //           AdsState.dismissed,
-    //           adsType: AdsType.native,
-    //           ad: ad,
-    //           sceneType: sceneType ?? AdsSceneType.open,
-    //         );
-    //       });
-    //     }
-    //   }
-    //   if (state == AdsState.dismissed &&
-    //       AdmobMaxTool.scene == AdsSceneType.open) {
-    //     if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
-    //       pushDeepVC();
-    //     } else {
-    //       loadPlusAds();
-    //     }
-    //   }
-    // });
-    // Future.delayed(Duration(milliseconds: 500), () {
-    //   pushDeepVC();
-    // });
+    AdmobTool.addListener(hashCode.toString(), (
+      state, {
+      adsType,
+      ad,
+      sceneType,
+    }) async {
+      if (state == AdsState.showing && AdmobTool.scene == AdsSceneType.open) {
+        ServiceTool.instance.getAdsValue(
+          ServiceEventName.advProfit,
+          apiPlatform,
+          ad,
+          '',
+          '',
+          '',
+        );
+        if (adsType == AdsType.native) {
+          Get.to(
+            () => AdmobNativePage(
+              ad: ad,
+              sceneType: sceneType ?? AdsSceneType.open,
+            ),
+          )?.then((result) {
+            AdmobTool.instance.nativeDismiss(
+              AdsState.dismissed,
+              adsType: AdsType.native,
+              ad: ad,
+              sceneType: sceneType ?? AdsSceneType.open,
+            );
+          });
+        }
+      }
+      if (state == AdsState.dismissed && AdmobTool.scene == AdsSceneType.open) {
+        if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
+          openDeepPage();
+        } else {
+          loadPlusAds();
+        }
+      }
+    });
+    Future.delayed(Duration(milliseconds: 500), () {
+      openDeepPage();
+    });
   }
 
-  // void loadPlusAds() async {
-  //   bool s = await AdmobMaxTool.showAdsScreen(AdsSceneType.plus);
-  //   if (s == false) {
-  //     pushDeepVC();
-  //   }
-  // }
+  void loadPlusAds() async {
+    bool s = await AdmobTool.showAdsScreen(AdsSceneType.plus);
+    if (s == false) {
+      openDeepPage();
+    }
+  }
 
-  // Future<bool> checkClock(String linkId) async {
-  //   bool openSimDeep = true;
-  //   bool openSimulatorDeep = true;
-  //   bool openVpnDeep = true;
-  //   bool openPadDeep = true;
-  //
-  //   if (linkId.isEmpty) {
-  //     return false;
-  //   }
-  //   bool hasSIM = await ClockUtils.isSimCard();
-  //   if (isSimCard) {
-  //     if (hasSIM) {
-  //       openSimDeep = !isSimLimit;
-  //     } else {
-  //       openSimDeep = isSimLimit;
-  //     }
-  //   }
-  //
-  //   bool hasSimulator = await ClockUtils.isEmulator();
-  //   if (isEmulator) {
-  //     if (hasSimulator) {
-  //       openSimulatorDeep = !isEmulatorLimit;
-  //     } else {
-  //       openSimulatorDeep = isEmulatorLimit;
-  //     }
-  //   }
-  //
-  //   bool hasPad = ClockUtils.isPad;
-  //   if (isPad) {
-  //     if (hasPad) {
-  //       openPadDeep = !isPadLimit;
-  //     } else {
-  //       openPadDeep = isPadLimit;
-  //     }
-  //   }
-  //
-  //   bool hasVpn = await ClockUtils.isVpn();
-  //   if (isVpn) {
-  //     if (hasVpn) {
-  //       openVpnDeep = !isVpnLimit;
-  //     } else {
-  //       openVpnDeep = isVpnLimit;
-  //     }
-  //   }
-  //
-  //   if (openSimDeep && openSimulatorDeep && openVpnDeep && openPadDeep) {
-  //     return true;
-  //   } else {
-  //     String errInfo = '';
-  //     if (openSimDeep) {
-  //       errInfo = 'IdPV';
-  //       simResult = true;
-  //     } else if (openSimulatorDeep) {
-  //       errInfo = 'XruUbmtsYH';
-  //       simulatorResult = true;
-  //     } else if (openPadDeep) {
-  //       errInfo = 'FkykQLsMIl';
-  //       padResult = true;
-  //     } else {
-  //       errInfo = 'AISgdNtG';
-  //       vpnResult = true;
-  //     }
-  //     EventManager.instance.eventUpload(EventApi.landpageFail, {
-  //       EventParaName.value.name: errInfo,
-  //       EventParaName.linkIdLandPage.name: linkId,
-  //     });
-  //     return false;
-  //   }
-  // }
+  Future<bool> checkClock(String linkId) async {
+    // bool openSimDeep = true;
+    // bool openSimulatorDeep = true;
+    // bool openVpnDeep = true;
+    // bool openPadDeep = true;
+    //
+    // if (linkId.isEmpty) {
+    //   return false;
+    // }
+    // bool hasSIM = await ClockUtils.isSimCard();
+    // if (isSimCard) {
+    //   if (hasSIM) {
+    //     openSimDeep = !isSimLimit;
+    //   } else {
+    //     openSimDeep = isSimLimit;
+    //   }
+    // }
+    //
+    // bool hasSimulator = await ClockUtils.isEmulator();
+    // if (isEmulator) {
+    //   if (hasSimulator) {
+    //     openSimulatorDeep = !isEmulatorLimit;
+    //   } else {
+    //     openSimulatorDeep = isEmulatorLimit;
+    //   }
+    // }
+    //
+    // bool hasPad = ClockUtils.isPad;
+    // if (isPad) {
+    //   if (hasPad) {
+    //     openPadDeep = !isPadLimit;
+    //   } else {
+    //     openPadDeep = isPadLimit;
+    //   }
+    // }
+    //
+    // bool hasVpn = await ClockUtils.isVpn();
+    // if (isVpn) {
+    //   if (hasVpn) {
+    //     openVpnDeep = !isVpnLimit;
+    //   } else {
+    //     openVpnDeep = isVpnLimit;
+    //   }
+    // }
+    //
+    // if (openSimDeep && openSimulatorDeep && openVpnDeep && openPadDeep) {
+    //   return true;
+    // } else {
+    //   String errInfo = '';
+    //   if (openSimDeep) {
+    //     errInfo = 'IdPV';
+    //     simResult = true;
+    //   } else if (openSimulatorDeep) {
+    //     errInfo = 'XruUbmtsYH';
+    //     simulatorResult = true;
+    //   } else if (openPadDeep) {
+    //     errInfo = 'FkykQLsMIl';
+    //     padResult = true;
+    //   } else {
+    //     errInfo = 'AISgdNtG';
+    //     vpnResult = true;
+    //   }
+    //   EventTool.instance.eventUpload(EventApi.landpageFail, {
+    //     EventParaName.value.name: errInfo,
+    //     EventParaName.linkIdLandPage.name: linkId,
+    //   });
+    //   return false;
+    // }
+    return false; // remove
+  }
 
   void openSelectIndex(int index) {
     _tabPageController.jumpToPage(index);
@@ -168,37 +177,36 @@ class _TabPageState extends State<TabPage>
     // TODO: implement dispose
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
-    // AdmobMaxTool.removeListener(hashCode.toString());
+    AdmobTool.removeListener(hashCode.toString());
   }
 
-  // void listenAppState() {
-  //   AppStateEventNotifier.startListening();
-  //   AppStateEventNotifier.appStateStream.listen((state) async {
-  //     if (state == AppState.foreground &&
-  //         AdmobMaxTool.adsState != AdsState.showing) {
-  //       eventAdsSource = AdmobSource.hot_open;
-  //       // UserVipTool.instance.restore(appStart: true);
-  //       await AdmobMaxTool.showAdsScreen(AdsSceneType.open);
-  //     }
-  //   });
-  // }
+  void listenAppState() {
+    AppStateEventNotifier.startListening();
+    AppStateEventNotifier.appStateStream.listen((state) async {
+      if (state == AppState.foreground &&
+          AdmobTool.adsState != AdsState.showing) {
+        eventAdsSource = AdmobSource.hotOpen;
+        await AdmobTool.showAdsScreen(AdsSceneType.open);
+      }
+    });
+  }
 
-  // void pushDeepVC() async {
-  //   if (deepLink.isNotEmpty) {
-  //     bool open = await checkClock(deepLink);
-  //     if (open == false) {
-  //       return;
-  //     }
-  //     Get.offAll(() => TabPage());
-  //     Get.to(() => DeepPage(linkId: deepLink))?.then((_) {
-  //       if (closeDeep == true) {
-  //         vipSource = VipSource.home;
-  //         // goCommentPage();
-  //         PlayManager.showResult(true);
-  //       }
-  //     });
-  //   }
-  // }
+  void openDeepPage() async {
+    if (deepLink.isNotEmpty) {
+      bool open = await checkClock(deepLink);
+      if (open == false) {
+        return;
+      }
+      Get.offAll(() => TabPage());
+      Get.to(() => DeepPage(linkId: deepLink))?.then((_) {
+        if (closeDeep == true) {
+          vipSource = VipSource.home;
+          // goCommentPage();
+          PlayTool.showResult(true);
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

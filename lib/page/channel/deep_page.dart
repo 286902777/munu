@@ -711,7 +711,7 @@ class _DeepPageState extends State<DeepPage>
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
                   playSource = PlaySource.landpage_file;
-                  openNextPage(allArray[index], allArray);
+                  pushPage(allArray[index], allArray);
                 },
                 child: HomeCell(model: allArray[index]),
               );
@@ -790,7 +790,7 @@ class _DeepPageState extends State<DeepPage>
             behavior: HitTestBehavior.opaque,
             onTap: () {
               playSource = PlaySource.landpage_hot;
-              openNextPage(hotArray[index], hotArray);
+              pushPage(hotArray[index], hotArray);
             },
             child: HomeCell(model: hotArray[index], isHot: true),
           );
@@ -809,7 +809,7 @@ class _DeepPageState extends State<DeepPage>
             behavior: HitTestBehavior.opaque,
             onTap: () {
               playSource = PlaySource.landpage_recently;
-              openNextPage(newArray[index], newArray);
+              pushPage(newArray[index], newArray);
             },
             child: HomeCell(model: newArray[index]),
           );
@@ -818,7 +818,7 @@ class _DeepPageState extends State<DeepPage>
     );
   }
 
-  void openNextPage(VideoData model, List<VideoData> list) async {
+  void pushPage(VideoData model, List<VideoData> list) async {
     switch (model.fileType) {
       case 0:
         if (model.recommend == 1) {

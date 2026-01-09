@@ -104,7 +104,7 @@ class _SetPageState extends State<SetPage>
                     ),
                   ),
                   SizedBox(height: 32),
-                  _contentV(),
+                  listWidget(),
                 ],
               ),
             ],
@@ -114,7 +114,7 @@ class _SetPageState extends State<SetPage>
     );
   }
 
-  Widget _contentV() {
+  Widget listWidget() {
     return Wrap(
       spacing: 0, // 主轴间距
       runSpacing: 0, // 换行间距
@@ -123,7 +123,7 @@ class _SetPageState extends State<SetPage>
         listArray.length,
         (index) => InkWell(
           onTap: () {
-            _setCell(index);
+            setCellWidget(index);
           },
           child: SizedBox(
             height: 56,
@@ -152,7 +152,7 @@ class _SetPageState extends State<SetPage>
     );
   }
 
-  void _setCell(int index) {
+  void setCellWidget(int index) {
     switch (index) {
       case 0:
         openEmail();
