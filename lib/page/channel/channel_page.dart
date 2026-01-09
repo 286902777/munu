@@ -28,14 +28,14 @@ import '../../tools/admob_tool.dart';
 import '../../tools/common_tool.dart';
 import '../home/file_list_page.dart';
 
-enum StationLabel {
+enum StationState {
   video(0, 'Collection'),
   hot(1, 'Hot'),
   recently(2, 'Recently');
 
   final int idx;
   final String value;
-  const StationLabel(this.idx, this.value);
+  const StationState(this.idx, this.value);
 }
 
 class ChannelPage extends StatefulWidget {
@@ -68,10 +68,10 @@ class _ChannelPageState extends State<ChannelPage>
   var otherChange = false.obs;
   var userInfoChange = false.obs;
   bool noMoreData = false;
-  final List<StationLabel> lists = [
-    StationLabel.video,
-    StationLabel.hot,
-    StationLabel.recently,
+  final List<StationState> lists = [
+    StationState.video,
+    StationState.hot,
+    StationState.recently,
   ];
 
   bool isCurrentPage = true;
@@ -544,77 +544,40 @@ class _ChannelPageState extends State<ChannelPage>
   }
 
   Widget bodyWidget() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-        gradient: LinearGradient(
-          colors: [Color(0xFFF5FAF9), Color(0xFFF9F9F9)], // 中心到边缘颜色
-          begin: Alignment.topCenter,
-          end: Alignment.center,
-        ),
-      ),
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            height: 72,
-            padding: EdgeInsets.only(left: 12),
-            child: Obx(
-              () => Wrap(
-                direction: Axis.horizontal,
-                spacing: 28,
-                children: List.generate(
-                  lists.length,
-                  (index) => GestureDetector(
-                    onTap: () {
-                      selectIndex.value = lists[index].idx;
-                      _controller.jumpToPage(index);
-                    },
-                    child: SizedBox(
-                      width: 80,
-                      child: Column(
-                        children: [
-                          SizedBox(height: 12),
-                          Container(
-                            height: 36,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              image: selectIndex.value == index
-                                  ? DecorationImage(
-                                      image: AssetImage(Assets.channelAvatar),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : null,
-                            ),
-                            child: Text(
-                              lists[index].value,
-                              style: TextStyle(
-                                letterSpacing: -0.5,
-                                fontSize: selectIndex.value == index ? 12 : 14,
-                                fontWeight: FontWeight.w500,
-                                color: selectIndex.value == index
-                                    ? Color(0xFFFFFFFF)
-                                    : Color(0xFF4C4C4C),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          if (selectIndex.value == index)
-                            Container(
-                              width: 4,
-                              height: 4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(2),
-                                ),
-                                color: Color(0xFF0C0C0C),
-                              ),
-                            ),
-                        ],
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          height: 70,
+          padding: EdgeInsets.all(18),
+          child: Obx(
+            () => Wrap(
+              direction: Axis.horizontal,
+              spacing: 24,
+              children: List.generate(
+                lists.length,
+                (index) => GestureDetector(
+                  onTap: () {
+                    selectIndex.value = lists[index].idx;
+                    _controller.jumpToPage(index);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      color: selectIndex.value == index
+                          ? Color(0xFFFD6B39)
+                          : Colors.transparent,
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      lists[index].value,
+                      style: TextStyle(
+                        letterSpacing: -0.5,
+                        fontSize: selectIndex.value == index ? 12 : 14,
+                        fontWeight: FontWeight.w500,
+                        color: selectIndex.value == index
+                            ? Color(0xFFFFFFFF)
+                            : Color(0xFF4C4C4C),
                       ),
                     ),
                   ),
@@ -622,18 +585,18 @@ class _ChannelPageState extends State<ChannelPage>
               ),
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: 12),
-              child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [lifeWidget(), hotWidget(), newWidget()],
-              ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(top: 12),
+            child: PageView(
+              controller: _controller,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [lifeWidget(), hotWidget(), newWidget()],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

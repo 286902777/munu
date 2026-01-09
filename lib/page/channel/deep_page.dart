@@ -63,10 +63,10 @@ class _DeepPageState extends State<DeepPage>
   final PageController _controller = PageController();
   bool noMoreData = false;
 
-  final List<StationLabel> lists = [
-    StationLabel.video,
-    StationLabel.hot,
-    StationLabel.recently,
+  final List<StationState> lists = [
+    StationState.video,
+    StationState.hot,
+    StationState.recently,
   ];
 
   @override
@@ -92,7 +92,7 @@ class _DeepPageState extends State<DeepPage>
     uploadServiceUserInfo();
 
     if (startRequest) {
-      requestNetworkData();
+      loadNetData();
       startRequest = false;
     }
   }
@@ -121,9 +121,9 @@ class _DeepPageState extends State<DeepPage>
     super.dispose();
   }
 
-  Future requestNetworkData() async {
+  Future loadNetData() async {
     if (loadRecommend) {
-      requestRecommendData();
+      loadRecommendInfo();
     } else {
       if (noMoreData) {
         _refreshController.loadNoData();
@@ -166,13 +166,13 @@ class _DeepPageState extends State<DeepPage>
               if (model.files.length < 5 && page == 1) {
                 randomUserId = user?.id;
                 loadRecommend = true;
-                requestRecommendData();
+                loadRecommendInfo();
               } else {
-                await _requestUserListInfo(userId);
+                await loadUserListInfo(userId);
               }
             }
             if (model.files.isNotEmpty) {
-              replaceModel(model);
+              replaceData(model);
               page = page + 1;
             }
           }
@@ -188,7 +188,7 @@ class _DeepPageState extends State<DeepPage>
         },
         failHandle: (refresh, code, msg) {
           if (refresh) {
-            requestNetworkData();
+            loadNetData();
           } else {
             EventTool.instance.eventUpload(EventApi.landpageFail, {
               EventParaName.value.name: 'request fail',
@@ -201,7 +201,7 @@ class _DeepPageState extends State<DeepPage>
     }
   }
 
-  void replaceModel(HomeData model) {
+  void replaceData(HomeData model) {
     for (HomeListData item in model.files) {
       VideoData videoM = VideoData(
         name: item.disPlayName.carrow,
@@ -263,7 +263,7 @@ class _DeepPageState extends State<DeepPage>
     }
   }
 
-  Future<void> _requestUserListInfo(String uId) async {
+  Future<void> loadUserListInfo(String uId) async {
     await DbTool.instance.getPlatformUser(
       apiPlatform == PlatformType.india ? 0 : 1,
     );
@@ -300,18 +300,18 @@ class _DeepPageState extends State<DeepPage>
             randomUserId = result.first['cipherable'];
           }
           loadRecommend = true;
-          requestRecommendData();
+          loadRecommendInfo();
         }
       },
       failHandle: (refresh, code, msg) {
         if (refresh) {
-          _requestUserListInfo(uId);
+          loadUserListInfo(uId);
         }
       },
     );
   }
 
-  Future requestRecommendData() async {
+  Future loadRecommendInfo() async {
     await HttpTool.recommendPostRequest(
       ApiKey.home,
       apiPlatform,
@@ -362,7 +362,7 @@ class _DeepPageState extends State<DeepPage>
       },
       failHandle: (refresh, code, msg) {
         if (refresh) {
-          requestRecommendData();
+          loadRecommendInfo();
         } else {
           _refreshController.loadFailed();
           ToastTool.show(message: msg, type: ToastType.fail);
@@ -376,7 +376,7 @@ class _DeepPageState extends State<DeepPage>
     return MunuPage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: navbar(),
+        appBar: cusNavbar(),
         body: Obx(
           () => Visibility(
             visible: allChange.value,
@@ -391,7 +391,7 @@ class _DeepPageState extends State<DeepPage>
                     backgroundColor: Colors.transparent,
                     leading: SizedBox(),
                     flexibleSpace: FlexibleSpaceBar(
-                      title: headerView(),
+                      title: headWidget(),
                       expandedTitleScale: 1,
                       titlePadding: EdgeInsetsDirectional.zero,
                     ),
@@ -406,7 +406,7 @@ class _DeepPageState extends State<DeepPage>
     );
   }
 
-  AppBar navbar() {
+  AppBar cusNavbar() {
     return AppBar(
       backgroundColor: Colors.transparent,
       leading: Row(
@@ -508,7 +508,7 @@ class _DeepPageState extends State<DeepPage>
     );
   }
 
-  Widget headerView() {
+  Widget headWidget() {
     return ValueListenableBuilder(
       valueListenable: _onOffSet,
       builder: (BuildContext context, offSet, Widget? child) {
@@ -589,84 +589,40 @@ class _DeepPageState extends State<DeepPage>
   }
 
   Widget contentView() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-        gradient: LinearGradient(
-          colors: [Color(0xFFF5FAF9), Color(0xFFF9F9F9)], // 中心到边缘颜色
-          begin: Alignment.topCenter,
-          end: Alignment.center,
-        ),
-      ),
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            height: 72,
-            padding: EdgeInsets.only(left: 12),
-            child: Obx(
-              () => Wrap(
-                direction: Axis.horizontal,
-                spacing: 28,
-                children: List.generate(
-                  lists.length,
-                  (index) => GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      selectIndex.value = lists[index].idx;
-                      if (index > 0) {
-                        EventTool.instance.eventUpload(
-                          EventApi.landpageUploadedExpose,
-                          null,
-                        );
-                      }
-                      _controller.jumpToPage(index);
-                    },
-                    child: SizedBox(
-                      width: 80,
-                      child: Column(
-                        children: [
-                          SizedBox(height: 12),
-                          Container(
-                            height: 36,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              image: selectIndex.value == index
-                                  ? DecorationImage(
-                                      image: AssetImage(Assets.iconAvatar),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : null,
-                            ),
-                            child: Text(
-                              lists[index].value,
-                              style: TextStyle(
-                                letterSpacing: -0.5,
-                                fontSize: selectIndex.value == index ? 12 : 14,
-                                fontWeight: FontWeight.w500,
-                                color: selectIndex.value == index
-                                    ? Color(0xFFFFFFFF)
-                                    : Color(0xFF4C4C4C),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          if (selectIndex.value == index)
-                            Container(
-                              width: 4,
-                              height: 4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(2),
-                                ),
-                                color: Color(0xFF0C0C0C),
-                              ),
-                            ),
-                        ],
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          height: 70,
+          padding: EdgeInsets.all(18),
+          child: Obx(
+            () => Wrap(
+              direction: Axis.horizontal,
+              spacing: 24,
+              children: List.generate(
+                lists.length,
+                (index) => GestureDetector(
+                  onTap: () {
+                    selectIndex.value = lists[index].idx;
+                    _controller.jumpToPage(index);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      color: selectIndex.value == index
+                          ? Color(0xFFFD6B39)
+                          : Colors.transparent,
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      lists[index].value,
+                      style: TextStyle(
+                        letterSpacing: -0.5,
+                        fontSize: selectIndex.value == index ? 12 : 14,
+                        fontWeight: FontWeight.w500,
+                        color: selectIndex.value == index
+                            ? Color(0xFFFFFFFF)
+                            : Color(0xFF4C4C4C),
                       ),
                     ),
                   ),
@@ -674,22 +630,18 @@ class _DeepPageState extends State<DeepPage>
               ),
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: 12),
-              child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  allContentView(),
-                  hotContentView(),
-                  newContentView(),
-                ],
-              ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(top: 12),
+            child: PageView(
+              controller: _controller,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [allContentView(), hotContentView(), newContentView()],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -699,7 +651,7 @@ class _DeepPageState extends State<DeepPage>
       child: RefreshTool(
         controller: _refreshController,
         itemNum: 1,
-        onLoading: requestNetworkData,
+        onLoading: loadNetData,
         child: ListView.builder(
           itemCount: allArray.length,
           itemBuilder: (context, index) {
