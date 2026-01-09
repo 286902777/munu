@@ -7,6 +7,8 @@ class AppKey {
 
   static const numCommend = 'numCommend';
 
+  static const appOnlyId = 'appOnlyId';
+
   static const commendTime = 'commendTime';
 
   static const commentPlayCount = 'commentPlayCount';

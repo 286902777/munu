@@ -98,12 +98,12 @@ class EventTool extends GetConnect {
     String uniqueId = '';
     if (Platform.isIOS) {
       final storage = FlutterSecureStorage();
-      String? unique_Id = await storage.read(key: 'app_unique_id');
+      String? unique_Id = await storage.read(key: AppKey.appOnlyId);
       if (unique_Id != null) {
         uniqueId = unique_Id;
       } else {
         uniqueId = Uuid().v4();
-        storage.write(key: 'app_unique_id', value: uniqueId);
+        storage.write(key: AppKey.appOnlyId, value: uniqueId);
       }
     }
     return uniqueId;

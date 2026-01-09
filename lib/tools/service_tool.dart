@@ -48,12 +48,12 @@ class ServiceTool {
 
     if (Platform.isIOS) {
       final storage = FlutterSecureStorage();
-      String? uniqueId = await storage.read(key: 'app_unique_id');
+      String? uniqueId = await storage.read(key: AppKey.appOnlyId);
       if (uniqueId != null) {
         unique_id = uniqueId;
       } else {
         unique_id = Uuid().v4();
-        storage.write(key: 'app_unique_id', value: unique_id);
+        storage.write(key: AppKey.appOnlyId, value: unique_id);
       }
     }
     PackageInfo info = await PackageInfo.fromPlatform();
