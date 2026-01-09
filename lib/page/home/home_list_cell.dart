@@ -58,7 +58,7 @@ class _HomeListCellState extends State<HomeListCell> {
               ],
             ),
           ),
-
+          SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
               itemCount: widget.lists.length,

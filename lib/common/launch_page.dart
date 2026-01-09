@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // import 'package:frame/vip_page/user_vip_tool.dart';
 import 'package:get/get.dart';
 import 'package:munu/common/tab_page.dart';
+import 'package:munu/tools/event_tool.dart';
 
 import '../generated/assets.dart';
 import '../keys/app_key.dart';
@@ -30,10 +31,10 @@ class _LaunchPageState extends State<LaunchPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    startCountTime();
+    sunTimes();
     // googleGMP();
     AppKey.save(AppKey.middlePlayCount, 0);
-    // EventManager.instance.session();
+    EventTool.instance.session();
     // AdmobMaxTool.addListener(hashCode.toString(), (
     //     state, {
     //       adsType,
@@ -147,7 +148,7 @@ class _LaunchPageState extends State<LaunchPage> {
     );
   }
 
-  void startCountTime() async {
+  void sunTimes() async {
     // bool noStart = await UserInfo.getBool(UserInfo.onceInstallApp) ?? false;
     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
       if (startTime > 0) {
