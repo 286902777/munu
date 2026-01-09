@@ -34,6 +34,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  applovin_max: ^4.6.1
+  google_mobile_ads: ^7.0.0
+  appsflyer_sdk: ^6.17.8
   get: ^4.7.3
   media_kit: ^1.2.6
   media_kit_video: ^2.0.1 # For video rendering.
@@ -58,6 +61,10 @@ dependencies:
   cached_network_image: ^3.4.1
   flutter_secure_storage: ^10.0.0
   intl: ^0.20.2
+  firebase_core: ^4.2.0
+  firebase_crashlytics: ^5.0.0
+  firebase_remote_config: ^6.0.0
+  firebase_analytics: ^12.0.0
   flutter_slidable: ^4.0.3
   screen_brightness: ^2.1.7
   pull_to_refresh: ^2.0.0

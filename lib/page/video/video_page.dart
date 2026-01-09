@@ -14,10 +14,12 @@ import 'package:screen_brightness/screen_brightness.dart';
 import 'package:volume_controller/volume_controller.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+import '../../common/admob_native_page.dart';
 import '../../common/db_tool.dart';
 import '../../data/video_data.dart';
 import '../../generated/assets.dart';
 import '../../keys/app_key.dart';
+import '../../tools/admob_tool.dart';
 import '../../tools/common_tool.dart';
 import '../../tools/event_tool.dart';
 import '../../tools/http_tool.dart';
@@ -180,32 +182,32 @@ class _VideoPageState extends State<VideoPage>
       isPlay.value = playing;
     });
 
-    // player.stream.buffering.listen((bool buffer) {
-    //   print(buffer);
-    //   if (speedIsLoad) {
-    //     if (buffer) {
-    //       _disPlaySpeedView();
-    //     } else {
-    //       _removeSpeed();
-    //     }
-    //   }
-    // });
+    player.stream.buffering.listen((bool buffer) {
+      print(buffer);
+      if (speedIsLoad) {
+        if (buffer) {
+          _disPlaySpeedView();
+        } else {
+          _removeSpeed();
+        }
+      }
+    });
 
-    // player.stream.videoParams.listen((VideoParams para) {
-    //   int w = para.w ?? 0;
-    //   int h = para.h ?? 0;
-    //   if (w > 0 && h > 0) {
-    //     speedIsLoad = true;
-    //     _removeSpeed();
-    //   }
-    // });
+    player.stream.videoParams.listen((VideoParams para) {
+      int w = para.w ?? 0;
+      int h = para.h ?? 0;
+      if (w > 0 && h > 0) {
+        speedIsLoad = true;
+        _removeSpeed();
+      }
+    });
     player.stream.position.listen((Duration position) async {
       if (position.inSeconds == 0) {
         return;
       }
-      // if (AdmobMaxTool.adsState == AdsState.showing) {
-      //   await player.pause();
-      // }
+      if (AdmobTool.adsState == AdsState.showing) {
+        await player.pause();
+      }
 
       start.value = position;
       if (total.value.inMicroseconds.toDouble() > 0) {
@@ -232,40 +234,39 @@ class _VideoPageState extends State<VideoPage>
         await AppKey.save(AppKey.middlePlayCount, middlePlayCount + 1);
         newVideoSuccess = true;
       }
-      // if (position.inSeconds.toInt() > total.value.inSeconds.toInt() * 0.3 &&
-      //     total.value.inSeconds.toInt() >= 15) {
-      //   if (isAutoLoadShow == false) {
-      //     _isShowSpeedView(model!);
-      //   }
-      // }
-      // if (AdmobMaxTool.instance.playMethod == 1) {
-      //   if (position.inSeconds.toInt() > AdmobMaxTool.instance.middlePlayTime) {
-      //     int middlePlayCount =
-      //         await AppKey.getInt(AppKey.middlePlayCount) ?? 0;
-      //     if (middlePlayCount == AdmobMaxTool.instance.middlePlayIdx) {
-      //       eventAdsSource = AdmobSource.play;
-      //       if (isCurrentPage && AdmobMaxTool.adsState != AdsState.showing) {
-      //         bool suc = await AdmobMaxTool.showAdsScreen(AdsSceneType.middle);
-      //         if (suc) {
-      //           await AppKey.save(AppKey.middlePlayCount, 0);
-      //           await player.pause();
-      //         }
-      //       }
-      //     }
-      //   }
-      // } else {
-      //   if (position.inSeconds.toInt() > 1 &&
-      //       position.inSeconds.toInt() % AdmobMaxTool.instance.playShowTime ==
-      //           0) {
-      //     eventAdsSource = AdmobSource.play_10;
-      //     if (isCurrentPage) {
-      //       bool suc = await AdmobMaxTool.showAdsScreen(AdsSceneType.play);
-      //       if (suc) {
-      //         player.pause();
-      //       }
-      //     }
-      //   }
-      // }
+      if (position.inSeconds.toInt() > total.value.inSeconds.toInt() * 0.3 &&
+          total.value.inSeconds.toInt() >= 15) {
+        if (isAutoLoadShow == false) {
+          _isShowSpeedView(model!);
+        }
+      }
+      if (AdmobTool.instance.playMethod == 1) {
+        if (position.inSeconds.toInt() > AdmobTool.instance.middlePlayTime) {
+          int middlePlayCount =
+              await AppKey.getInt(AppKey.middlePlayCount) ?? 0;
+          if (middlePlayCount == AdmobTool.instance.middlePlayIdx) {
+            eventAdsSource = AdmobSource.play;
+            if (isCurrentPage && AdmobTool.adsState != AdsState.showing) {
+              bool suc = await AdmobTool.showAdsScreen(AdsSceneType.middle);
+              if (suc) {
+                await AppKey.save(AppKey.middlePlayCount, 0);
+                await player.pause();
+              }
+            }
+          }
+        }
+      } else {
+        if (position.inSeconds.toInt() > 1 &&
+            position.inSeconds.toInt() % AdmobTool.instance.playShowTime == 0) {
+          eventAdsSource = AdmobSource.playTen;
+          if (isCurrentPage) {
+            bool suc = await AdmobTool.showAdsScreen(AdsSceneType.play);
+            if (suc) {
+              player.pause();
+            }
+          }
+        }
+      }
     });
     player.stream.duration.listen((Duration duration) {
       total.value = duration;
@@ -283,100 +284,101 @@ class _VideoPageState extends State<VideoPage>
       _goNextEvent(true);
     });
     eventAdsSource = AdmobSource.play;
-    // AdmobMaxTool.addListener(hashCode.toString(), (
-    //   state, {
-    //   adsType,
-    //   ad,
-    //   sceneType,
-    // }) async {
-    //   if (isCurrentPage == false) {
-    //     return;
-    //   }
-    //   if (state == AdsState.showing &&
-    //       AdmobMaxTool.scene == AdsSceneType.middle) {
-    //     if (adsType == AdsType.native) {
-    //       showDialog(
-    //         context: context,
-    //         builder: (context) =>
-    //             NativePage(ad: ad, sceneType: sceneType ?? AdsSceneType.middle),
-    //       ).then((result) async {
-    //         AdmobMaxTool.instance.nativeDismiss(
-    //           AdsState.dismissed,
-    //           adsType: AdsType.native,
-    //           ad: ad,
-    //           sceneType: sceneType ?? AdsSceneType.middle,
-    //         );
-    //       });
-    //     }
-    //   }
-    //   if (state == AdsState.showing &&
-    //       AdmobMaxTool.scene == AdsSceneType.play) {
-    //     String linkId = '';
-    //     String platform = await AppKey.getString(AppKey.appPlatform) ?? '';
-    //     PlatformType currentPlat = PlatformType.india;
-    //     if (model != null) {
-    //       if (model!.platform == 0) {
-    //         currentPlat = PlatformType.india;
-    //       } else {
-    //         currentPlat = PlatformType.east;
-    //       }
-    //       if (platform == currentPlat.name) {
-    //         linkId = model!.linkId;
-    //       }
-    //     }
-    //
-    //     ServiceTool.instance.getAdsValue(
-    //       model?.netMovie == 0
-    //           ? ServiceEventName.appAdvProfit
-    //           : ServiceEventName.advProfit,
-    //       model?.platform == 0 ? PlatformType.india : PlatformType.east,
-    //       ad,
-    //       linkId,
-    //       model?.userId ?? '',
-    //       model?.movieId ?? '',
-    //     );
-    //     if (adsType == AdsType.native) {
-    //       showDialog(
-    //         context: context,
-    //         builder: (context) =>
-    //             NativePage(ad: ad, sceneType: sceneType ?? AdsSceneType.play),
-    //       ).then((result) async {
-    //         AdmobMaxTool.instance.nativeDismiss(
-    //           AdsState.dismissed,
-    //           adsType: AdsType.native,
-    //           ad: ad,
-    //           sceneType: sceneType ?? AdsSceneType.play,
-    //         );
-    //       });
-    //     }
-    //   }
-    //
-    //   if (state == AdsState.dismissed &&
-    //       AdmobMaxTool.scene == AdsSceneType.play) {
-    //     if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
-    //       if (isBackPage) {
-    //         Get.back(result: true);
-    //       } else {
-    //         _showAlertVipView();
-    //       }
-    //     } else {
-    //       showPlusAds();
-    //     }
-    //   }
-    // });
+    AdmobTool.addListener(hashCode.toString(), (
+      state, {
+      adsType,
+      ad,
+      sceneType,
+    }) async {
+      if (isCurrentPage == false) {
+        return;
+      }
+      if (state == AdsState.showing && AdmobTool.scene == AdsSceneType.middle) {
+        if (adsType == AdsType.native) {
+          showDialog(
+            context: context,
+            builder: (context) => AdmobNativePage(
+              ad: ad,
+              sceneType: sceneType ?? AdsSceneType.middle,
+            ),
+          ).then((result) async {
+            AdmobTool.instance.nativeDismiss(
+              AdsState.dismissed,
+              adsType: AdsType.native,
+              ad: ad,
+              sceneType: sceneType ?? AdsSceneType.middle,
+            );
+          });
+        }
+      }
+      if (state == AdsState.showing && AdmobTool.scene == AdsSceneType.play) {
+        String linkId = '';
+        String platform = await AppKey.getString(AppKey.appPlatform) ?? '';
+        PlatformType currentPlat = PlatformType.india;
+        if (model != null) {
+          if (model!.platform == 0) {
+            currentPlat = PlatformType.india;
+          } else {
+            currentPlat = PlatformType.east;
+          }
+          if (platform == currentPlat.name) {
+            linkId = model!.linkId;
+          }
+        }
+
+        ServiceTool.instance.getAdsValue(
+          model?.netMovie == 0
+              ? ServiceEventName.appAdvProfit
+              : ServiceEventName.advProfit,
+          model?.platform == 0 ? PlatformType.india : PlatformType.east,
+          ad,
+          linkId,
+          model?.userId ?? '',
+          model?.movieId ?? '',
+        );
+        if (adsType == AdsType.native) {
+          showDialog(
+            context: context,
+            builder: (context) => AdmobNativePage(
+              ad: ad,
+              sceneType: sceneType ?? AdsSceneType.play,
+            ),
+          ).then((result) async {
+            AdmobTool.instance.nativeDismiss(
+              AdsState.dismissed,
+              adsType: AdsType.native,
+              ad: ad,
+              sceneType: sceneType ?? AdsSceneType.play,
+            );
+          });
+        }
+      }
+
+      if (state == AdsState.dismissed && AdmobTool.scene == AdsSceneType.play) {
+        if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
+          if (isBackPage) {
+            Get.back(result: true);
+          } else {
+            _showAlertVipView();
+          }
+        } else {
+          showPlusAds();
+        }
+      }
+    });
   }
 
-  // void showPlusAds() async {
-  //   bool s = await AdmobMaxTool.showAdsScreen(AdsSceneType.plus);
-  //   if (s == false) {
-  //     vipSource = VipSource.ad;
-  //     if (isBackPage) {
-  //       Get.back(result: true);
-  //     } else {
-  //       _showAlertVipView();
-  //     }
-  //   }
-  // }
+  void showPlusAds() async {
+    bool s = await AdmobTool.showAdsScreen(AdsSceneType.plus);
+    if (s == false) {
+      vipSource = VipSource.ad;
+      if (isBackPage) {
+        Get.back(result: true);
+      } else {
+        _showAlertVipView();
+      }
+    }
+  }
 
   @override
   void dispose() async {
@@ -394,7 +396,7 @@ class _VideoPageState extends State<VideoPage>
     _progressPromptEvent.dispose();
     _disTimer?.cancel();
     speedTimer?.cancel();
-    // AdmobMaxTool.removeListener(hashCode.toString());
+    AdmobTool.removeListener(hashCode.toString());
     WidgetsBinding.instance.removeObserver(this);
     VolumeController.instance.showSystemUI = true;
   }
@@ -407,9 +409,9 @@ class _VideoPageState extends State<VideoPage>
     if (isBackPage) {
       return;
     }
-    // if (isCurrentPage) {
-    //   await AdmobMaxTool.showAdsScreen(AdsSceneType.play);
-    // }
+    if (isCurrentPage) {
+      await AdmobTool.showAdsScreen(AdsSceneType.play);
+    }
 
     isAutoLoadShow = false;
     if (lists != null) {
@@ -448,10 +450,10 @@ class _VideoPageState extends State<VideoPage>
     reloadPlay = true;
     isAutoLoadShow = false;
     speedIsLoad = false;
-    // if (isLoadShow.value == false) {
-    //   isLoadShow.value = true;
-    //   _disPlaySpeedView();
-    // }
+    if (isLoadShow.value == false) {
+      isLoadShow.value = true;
+      _disPlaySpeedView();
+    }
     if (model?.netMovie == 0) {
       final dir = await getApplicationDocumentsDirectory();
       if (model!.playTime > 0) {
@@ -475,10 +477,9 @@ class _VideoPageState extends State<VideoPage>
         player.open(Media(model!.movieUrl), play: false);
       }
     }
-    // if (AdmobMaxTool.adsState != AdsState.showing) {
-    //   await player.play();
-    // }
-    await player.play();
+    if (AdmobTool.adsState != AdsState.showing) {
+      await player.play();
+    }
   }
 
   void uploadPlayEvent() async {
@@ -792,12 +793,10 @@ class _VideoPageState extends State<VideoPage>
                   } else {
                     Get.back(); // 和下面冲突
                   }
-                  // bool suc = await AdmobMaxTool.showAdsScreen(
-                  //   AdsSceneType.play,
-                  // );
-                  // if (suc == false) {
-                  //   Get.back();
-                  // }
+                  bool suc = await AdmobTool.showAdsScreen(AdsSceneType.play);
+                  if (suc == false) {
+                    Get.back();
+                  }
                 },
               ),
               SizedBox(width: 8),
@@ -1007,9 +1006,9 @@ class _VideoPageState extends State<VideoPage>
   }
 
   void fixVideoValue(Duration position) async {
-    // if (isBackPage || AdmobMaxTool.adsState == AdsState.showing) {
-    //   return;
-    // }
+    if (isBackPage || AdmobTool.adsState == AdsState.showing) {
+      return;
+    }
     if (position.inSeconds >= 0) {
       await player.seek(position);
     }
@@ -1368,204 +1367,204 @@ class _VideoPageState extends State<VideoPage>
   //   );
   // }
 
-  // Widget _vipSpeedView() {
-  //   return Container(
-  //     height: 40,
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.circular(12),
-  //       color: Color(0xFFD4E4FF),
-  //     ),
-  //     child: Padding(
-  //       padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-  //       child: Text(
-  //         'Loading extremely fast…',
-  //         style: const TextStyle(
-  //           letterSpacing: -0.5,
-  //           fontSize: 14,
-  //           fontWeight: FontWeight.w500,
-  //           color: Color(0xFF202020),
-  //         ),
-  //         textAlign: TextAlign.center,
-  //       ),
-  //     ),
-  //   );
-  // }
-  //
-  // void _disPlaySpeedView() {
-  //   if (model != null && model!.netMovie == 1) {
-  //     if (isLoadShow.value == true) {
-  //       speedTimer = Timer.periodic(const Duration(seconds: 2), (_) {
-  //         videoSpeed.value = Random().nextInt(80);
-  //       });
-  //     }
-  //
-  //     if (isAutoLoadShow) {
-  //       Future.delayed(Duration(seconds: 6), () async {
-  //         isAutoLoadShow = false;
-  //         isLoadShow.value = false;
-  //         speedTimer?.cancel();
-  //         if (isCurrentPage) {
-  //           if (isPlay.value == false) {
-  //             await player.play();
-  //           }
-  //         }
-  //       });
-  //     }
-  //   }
-  // }
-  //
-  // void _removeSpeed() async {
-  //   if (isLoadShow.value) {
-  //     isAutoLoadShow = false;
-  //     isLoadShow.value = false;
-  //     speedTimer?.cancel();
-  //     if (isCurrentPage) {
-  //       await player.play();
-  //     }
-  //   }
-  // }
-  //
-  // void _pushVipPage() async {
-  //   vipMethod = VipMethod.click;
-  //   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  //   await player.pause();
-  //   isCurrentPage = false;
-  //   Get.to(() => UserVipPage())?.then((_) async {
-  //     isCurrentPage = true;
-  //   });
-  // }
-  //
-  // void _showAlertVipView() async {
-  //   bool isSVip = await AppKey.getBool(AppKey.isVipUser) ?? false;
-  //   if (isSVip) {
-  //     return;
-  //   }
-  //   int? vipPlayCount = await AppKey.getInt(AppKey.vipPlayCount);
-  //   if ((vipPlayCount ?? 0) < 1) {
-  //     await AppKey.save(AppKey.vipPlayCount, 1);
-  //     return;
-  //   }
-  //   int? showCount = await AppKey.getInt(AppKey.vipAlertShowCount);
-  //   if ((showCount ?? 0) >= 3) {
-  //     return;
-  //   }
-  //   bool day = await isShowedVipAlert();
-  //   if (day) {
-  //     return;
-  //   }
-  //
-  //   await AppKey.save(AppKey.vipPlayCount, vipPlayCount ?? 0 + 1);
-  //   await AppKey.save(
-  //     AppKey.vipAlertPlayTime,
-  //     DateTime.now().millisecondsSinceEpoch.toInt(),
-  //   );
-  //   await AppKey.save(AppKey.vipAlertShowCount, (showCount ?? 0) + 1);
-  //   isCurrentPage = false;
-  //   vipSource = VipSource.ad;
-  //   vipMethod = VipMethod.auto;
-  //   vipType = VipType.popup;
-  //   EventTool.instance.eventUpload(EventApi.premiumExpose, {
-  //     EventParaName.type.name: vipType.value, //type
-  //     EventParaName.method.name: vipMethod.value, //method
-  //     EventParaName.source.name: vipSource.value,
-  //   });
-  //   if (isFullScreen) {
-  //     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  //     isFullScreen = false;
-  //   }
-  //   Future.delayed(Duration(milliseconds: 500), () {
-  //     showDialog(
-  //       context: context,
-  //       builder: (context) => AlertUserVipPage(),
-  //     ).then((_) async {
-  //       isCurrentPage = true;
-  //     });
-  //   });
-  // }
-  //
-  // void _isShowSpeedView(VideoData model) async {
-  //   if (UserVipTool.instance.vipData.value.status == VipStatus.vip) {
-  //     return;
-  //   }
-  //   if (model.netMovie == 0) {
-  //     return;
-  //   }
-  //   Map<String, dynamic>? showDict;
-  //   bool isToDay = await isSameDay();
-  //   if (isToDay == false) {
-  //     await AppKey.save(
-  //       AppKey.toDay,
-  //       DateTime.now().millisecondsSinceEpoch.toInt(),
-  //     );
-  //     await AppKey.save(AppKey.showSpeedVideo, {
-  //       '$model.movieId': '$model.movieUrl',
-  //     });
-  //     await AppKey.save(AppKey.showNum, 0);
-  //     showSpeed();
-  //   } else {
-  //     int? showNum = await AppKey.getInt(AppKey.showNum);
-  //     if ((showNum ?? 0) >= 5) {
-  //       return;
-  //     }
-  //
-  //     showDict = await AppKey.getMap(AppKey.showSpeedVideo);
-  //     if (showDict != null) {
-  //       for (String key in showDict.keys) {
-  //         if (key == model.movieId) {
-  //           return;
-  //         }
-  //       }
-  //     }
-  //     int? showRate = await AppKey.getInt(AppKey.showRate);
-  //     if ((showRate ?? 0) < 3) {
-  //       await AppKey.save(AppKey.showRate, (showRate ?? 0) + 1);
-  //     } else {
-  //       await AppKey.save(AppKey.showRate, 0);
-  //       return;
-  //     }
-  //     await AppKey.save(AppKey.showNum, (showNum ?? 0) + 1);
-  //     showDict?[model.movieId] = model.movieUrl;
-  //     await AppKey.save(AppKey.showSpeedVideo, showDict);
-  //     showSpeed();
-  //   }
-  // }
-  //
-  // void showSpeed() async {
-  //   isAutoLoadShow = true;
-  //   isLoadShow.value = true;
-  //   await player.pause();
-  //   _disPlaySpeedView();
-  // }
-  //
-  // Future<bool> isSameDay() async {
-  //   int? time = await AppKey.getInt(AppKey.toDay);
-  //   if (time != null && time > 0) {
-  //     DateTime date = DateTime.fromMillisecondsSinceEpoch(time);
-  //     final oneDay = Duration(days: 1);
-  //     return (DateTime.now().difference(date).abs() < oneDay);
-  //   } else {
-  //     return false;
-  //   }
-  // }
-  //
-  // Future<bool> isShowedVipAlert() async {
-  //   int? time = await AppKey.getInt(AppKey.vipAlertPlayTime);
-  //   if (time != null && time > 0) {
-  //     DateTime date = DateTime.fromMillisecondsSinceEpoch(time);
-  //     final day = Duration(days: 1);
-  //     return (DateTime.now().difference(date).abs() < day);
-  //   } else {
-  //     int? aTime = await AppKey.getInt(AppKey.vipAlertTime);
-  //     if (aTime != null && aTime > 0) {
-  //       DateTime date = DateTime.fromMillisecondsSinceEpoch(aTime);
-  //       final hours = Duration(hours: 1);
-  //       if (DateTime.now().difference(date).abs() <= hours) {
-  //         return true;
-  //       }
-  //     }
-  //     return false;
-  //   }
-  // }
+  Widget _vipSpeedView() {
+    return Container(
+      height: 40,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Color(0xFFD4E4FF),
+      ),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+        child: Text(
+          'Loading extremely fast…',
+          style: const TextStyle(
+            letterSpacing: -0.5,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF202020),
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  void _disPlaySpeedView() {
+    if (model != null && model!.netMovie == 1) {
+      if (isLoadShow.value == true) {
+        speedTimer = Timer.periodic(const Duration(seconds: 2), (_) {
+          videoSpeed.value = Random().nextInt(80);
+        });
+      }
+
+      if (isAutoLoadShow) {
+        Future.delayed(Duration(seconds: 6), () async {
+          isAutoLoadShow = false;
+          isLoadShow.value = false;
+          speedTimer?.cancel();
+          if (isCurrentPage) {
+            if (isPlay.value == false) {
+              await player.play();
+            }
+          }
+        });
+      }
+    }
+  }
+
+  void _removeSpeed() async {
+    if (isLoadShow.value) {
+      isAutoLoadShow = false;
+      isLoadShow.value = false;
+      speedTimer?.cancel();
+      if (isCurrentPage) {
+        await player.play();
+      }
+    }
+  }
+
+  void _pushVipPage() async {
+    vipMethod = VipMethod.click;
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    await player.pause();
+    isCurrentPage = false;
+    // Get.to(() => UserVipPage())?.then((_) async {
+    //   isCurrentPage = true;
+    // });
+  }
+
+  void _showAlertVipView() async {
+    bool isSVip = await AppKey.getBool(AppKey.isVipUser) ?? false;
+    if (isSVip) {
+      return;
+    }
+    int? vipPlayCount = await AppKey.getInt(AppKey.vipPlayCount);
+    if ((vipPlayCount ?? 0) < 1) {
+      await AppKey.save(AppKey.vipPlayCount, 1);
+      return;
+    }
+    int? showCount = await AppKey.getInt(AppKey.vipAlertShowCount);
+    if ((showCount ?? 0) >= 3) {
+      return;
+    }
+    bool day = await isShowedVipAlert();
+    if (day) {
+      return;
+    }
+
+    await AppKey.save(AppKey.vipPlayCount, vipPlayCount ?? 0 + 1);
+    await AppKey.save(
+      AppKey.vipAlertPlayTime,
+      DateTime.now().millisecondsSinceEpoch.toInt(),
+    );
+    await AppKey.save(AppKey.vipAlertShowCount, (showCount ?? 0) + 1);
+    isCurrentPage = false;
+    vipSource = VipSource.ad;
+    vipMethod = VipMethod.auto;
+    vipType = VipType.popup;
+    EventTool.instance.eventUpload(EventApi.premiumExpose, {
+      EventParaName.type.name: vipType.value, //type
+      EventParaName.method.name: vipMethod.value, //method
+      EventParaName.source.name: vipSource.value,
+    });
+    if (isFullScreen) {
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+      isFullScreen = false;
+    }
+    // Future.delayed(Duration(milliseconds: 500), () {
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) => AlertUserVipPage(),
+    //   ).then((_) async {
+    //     isCurrentPage = true;
+    //   });
+    // });
+  }
+
+  void _isShowSpeedView(VideoData model) async {
+    // if (UserVipTool.instance.vipData.value.status == VipStatus.vip) {
+    //   return;
+    // }
+    if (model.netMovie == 0) {
+      return;
+    }
+    Map<String, dynamic>? showDict;
+    bool isToDay = await isSameDay();
+    if (isToDay == false) {
+      await AppKey.save(
+        AppKey.toDay,
+        DateTime.now().millisecondsSinceEpoch.toInt(),
+      );
+      await AppKey.save(AppKey.showSpeedVideo, {
+        '$model.movieId': '$model.movieUrl',
+      });
+      await AppKey.save(AppKey.showNum, 0);
+      showSpeed();
+    } else {
+      int? showNum = await AppKey.getInt(AppKey.showNum);
+      if ((showNum ?? 0) >= 5) {
+        return;
+      }
+
+      showDict = await AppKey.getMap(AppKey.showSpeedVideo);
+      if (showDict != null) {
+        for (String key in showDict.keys) {
+          if (key == model.movieId) {
+            return;
+          }
+        }
+      }
+      int? showRate = await AppKey.getInt(AppKey.showRate);
+      if ((showRate ?? 0) < 3) {
+        await AppKey.save(AppKey.showRate, (showRate ?? 0) + 1);
+      } else {
+        await AppKey.save(AppKey.showRate, 0);
+        return;
+      }
+      await AppKey.save(AppKey.showNum, (showNum ?? 0) + 1);
+      showDict?[model.movieId] = model.movieUrl;
+      await AppKey.save(AppKey.showSpeedVideo, showDict);
+      showSpeed();
+    }
+  }
+
+  void showSpeed() async {
+    isAutoLoadShow = true;
+    isLoadShow.value = true;
+    await player.pause();
+    _disPlaySpeedView();
+  }
+
+  Future<bool> isSameDay() async {
+    int? time = await AppKey.getInt(AppKey.toDay);
+    if (time != null && time > 0) {
+      DateTime date = DateTime.fromMillisecondsSinceEpoch(time);
+      final oneDay = Duration(days: 1);
+      return (DateTime.now().difference(date).abs() < oneDay);
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> isShowedVipAlert() async {
+    int? time = await AppKey.getInt(AppKey.vipAlertPlayTime);
+    if (time != null && time > 0) {
+      DateTime date = DateTime.fromMillisecondsSinceEpoch(time);
+      final day = Duration(days: 1);
+      return (DateTime.now().difference(date).abs() < day);
+    } else {
+      int? aTime = await AppKey.getInt(AppKey.vipAlertTime);
+      if (aTime != null && aTime > 0) {
+        DateTime date = DateTime.fromMillisecondsSinceEpoch(aTime);
+        final hours = Duration(hours: 1);
+        if (DateTime.now().difference(date).abs() <= hours) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
 
   /// 倒退10s提示器动画
   late final AnimationController _backEvent = AnimationController(

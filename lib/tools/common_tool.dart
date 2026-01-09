@@ -65,47 +65,47 @@ enum AdmobSource {
   const AdmobSource(this.name);
 }
 
-// enum VipProduct {
-//   weekly('bprVmPWa'),
-//   yearly('bitXZmZJQ'),
-//   lifetime('eECjaM');
-//
-//   final String value;
-//   const VipProduct(this.value);
-// }
+enum VipProduct {
+  weekly('bs'),
+  yearly('sdf'),
+  lifetime('bxa');
 
-// enum VipType {
-//   page('poJH'),
-//   popup('vJETIg');
-//
-//   final String value;
-//   const VipType(this.value);
-// }
+  final String value;
+  const VipProduct(this.value);
+}
 
-// enum VipMethod {
-//   auto('YLQJVT'),
-//   click('TfWCbFKVP');
-//
-//   final String value;
-//   const VipMethod(this.value);
-// }
+enum VipType {
+  page('bawe'),
+  popup('tes');
 
-// enum VipSource {
-//   home('GURZ'),
-//   playPage('mIxniF'),
-//   channelPage('puYBNbZr'),
-//   landPage('yVQOjrKHd'),
-//   ad('MTuwX'),
-//   accelerate('sXigZ');
-//
-//   final String value;
-//   const VipSource(this.value);
-// }
-//
-// VipType vipType = VipType.page;
-// VipMethod vipMethod = VipMethod.auto;
-// VipProduct vipProduct = VipProduct.lifetime;
-// VipSource vipSource = VipSource.home;
+  final String value;
+  const VipType(this.value);
+}
+
+enum VipMethod {
+  auto('xb'),
+  click('te');
+
+  final String value;
+  const VipMethod(this.value);
+}
+
+enum VipSource {
+  home('bx'),
+  playPage('sgs'),
+  channelPage('ax'),
+  landPage('he'),
+  ad('jf'),
+  accelerate('ur');
+
+  final String value;
+  const VipSource(this.value);
+}
+
+VipType vipType = VipType.page;
+VipMethod vipMethod = VipMethod.auto;
+VipProduct vipProduct = VipProduct.lifetime;
+VipSource vipSource = VipSource.home;
 
 PlatformType apiPlatform = PlatformType.india;
 ServiceEventSource eventSource = ServiceEventSource.landPage;
