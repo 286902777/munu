@@ -62,22 +62,16 @@ class VideoTool {
     }
   }
 
-  void _cleanup(StreamSubscription? subscription, Timer? timer, Player player) {
-    subscription?.cancel();
-    timer?.cancel();
-    player.dispose();
-  }
-
   void openPage(bool photo) async {
     ImagePicker picker = ImagePicker();
     if (photo) {
       var video = await picker.pickVideo(source: ImageSource.gallery);
       if (video != null && video.path.isNotEmpty) {
-        var imageThumb = await getThumbnail(video.path);
+        var imageThumb = await setThumbnail(video.path);
         var size = await countVideoSize(video.path);
         var total = await countVideoDuration(video.path);
         if (imageThumb != null) {
-          final result = await _saveVideo(File(video.path));
+          final result = await videoDataSave(File(video.path));
           if (result != null) {
             VideoData model = VideoData(
               name: video.name,
@@ -101,10 +95,10 @@ class VideoTool {
       if (result != null) {
         PlatformFile file = result.files.first;
         if (file.path != null) {
-          var thumbnail = await getThumbnail(file.path!);
+          var thumbnail = await setThumbnail(file.path!);
           var total = await countVideoDuration(file.path!);
           if (thumbnail != null) {
-            final saveResult = await _saveVideo(File(file.path!));
+            final saveResult = await videoDataSave(File(file.path!));
             if (saveResult != null) {
               VideoData model = VideoData(
                 name: file.name,
@@ -113,7 +107,7 @@ class VideoTool {
                 ext: saveResult.split('.').last,
                 createDate: DateTime.now().millisecondsSinceEpoch,
                 totalTime: total.inSeconds.toInt(),
-                size: _subFileSize(file.size),
+                size: fileSumSize(file.size),
               );
               DataTool.instance.insertVideoData(model);
             }
@@ -126,10 +120,10 @@ class VideoTool {
   Future<String> countVideoSize(String path) async {
     final file = File(path);
     final size = await file.length();
-    return _subFileSize(size);
+    return fileSumSize(size);
   }
 
-  Future<Uint8List?> getThumbnail(String path) async {
+  Future<Uint8List?> setThumbnail(String path) async {
     final thumbnail = await VideoThumbnail.thumbnailData(
       video: path,
       imageFormat: ImageFormat.PNG,
@@ -140,7 +134,7 @@ class VideoTool {
   }
 
   // 格式化文件大小（如 12.3 MB）
-  String _subFileSize(int bytes) {
+  String fileSumSize(int bytes) {
     if (bytes < 1024) return '${bytes}B';
     final kb = (bytes / 1024).toInt();
     if (kb < 1024) return '${kb.toStringAsFixed(0)}K';
@@ -150,11 +144,11 @@ class VideoTool {
     return '${gb.toStringAsFixed(0)}G';
   }
 
-  Future<String?> _saveVideo(File video) async {
+  Future<String?> videoDataSave(File video) async {
     try {
-      final dir = await getApplicationDocumentsDirectory();
       final url = video.uri.pathSegments.last;
-      final path = File('${dir.path}/videos/$url');
+      final root = await getApplicationDocumentsDirectory();
+      final path = File('${root.path}/videos/$url');
       if (!path.existsSync()) {
         path.createSync(recursive: true);
         path.writeAsBytesSync(video.readAsBytesSync());
@@ -167,5 +161,11 @@ class VideoTool {
       ToastTool.show(message: 'Save failed', type: ToastType.fail);
       return null;
     }
+  }
+
+  void _cleanup(StreamSubscription? subscription, Timer? timer, Player player) {
+    subscription?.cancel();
+    timer?.cancel();
+    player.dispose();
   }
 }
