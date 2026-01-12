@@ -709,7 +709,7 @@ class _VideoPageState extends State<VideoPage>
                     displayTool(false);
                   },
                   onDoubleTapDown: (TapDownDetails details) async {
-                    if (newVideoSuccess == true) {
+                    if (newVideoSuccess == false) {
                       return;
                     }
                     final x = details.globalPosition.dx; // 全局X坐标
@@ -911,7 +911,7 @@ class _VideoPageState extends State<VideoPage>
                 ),
               ),
               SizedBox(height: 10),
-              _sliderView(),
+              sliderWidget(),
               SizedBox(height: 10),
               Text(
                 total.value.inSeconds.toInt() == 0
@@ -949,7 +949,7 @@ class _VideoPageState extends State<VideoPage>
     }
   }
 
-  Widget _sliderView() {
+  Widget sliderWidget() {
     return Flexible(
       child: SliderTheme(
         data: SliderThemeData(
