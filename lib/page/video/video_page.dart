@@ -200,9 +200,9 @@ class _VideoPageState extends State<VideoPage>
     //   }
     // });
     player.stream.position.listen((Duration position) async {
-      if (position.inSeconds == 0) {
-        return;
-      }
+      // if (position.inSeconds == 0) {
+      //   return;
+      // }
       // if (AdmobMaxTool.adsState == AdsState.showing) {
       //   await player.pause();
       // }
@@ -215,6 +215,7 @@ class _VideoPageState extends State<VideoPage>
       } else {
         sliderValue.value = 0;
       }
+
       if (newVideoSuccess == false) {
         uploadPlayEvent();
         EventTool.instance.eventUpload(EventApi.playStartAll, {
@@ -939,8 +940,12 @@ class _VideoPageState extends State<VideoPage>
       isUsePause = true;
       await player.pause();
     } else {
-      isUsePause = false;
-      await player.play();
+      if (model?.playTime == 0) {
+        _initMovie();
+      } else {
+        isUsePause = false;
+        await player.play();
+      }
     }
   }
 
