@@ -50,18 +50,7 @@ class _HomePageState extends State<HomePage>
   @override
   void didPopNext() {
     requestChannelData();
-    indexServiceEvent();
     super.didPopNext();
-  }
-
-  @override
-  void didPop() {
-    super.didPop();
-  }
-
-  @override
-  void didPushNext() {
-    super.didPushNext();
   }
 
   @override
@@ -71,7 +60,7 @@ class _HomePageState extends State<HomePage>
     TrackTool.instance.config();
     isNetwork.value = NetworkTool.instance.netStatus;
     requestChannelData();
-    indexServiceEvent();
+    uploadEvent();
     uploadOpenApp();
   }
 
@@ -541,17 +530,13 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  void indexServiceEvent() async {
-    if (DataTool.instance.users.isNotEmpty) {
-      EventTool.instance.eventUpload(EventApi.homeChannelExpose, {
-        EventParaName.sub.name: DataTool.instance.users.length,
-      });
-    }
-    if (DataTool.instance.historyItems.isNotEmpty) {
-      EventTool.instance.eventUpload(EventApi.homeHistoryExpose, {
-        EventParaName.history.name: DataTool.instance.historyItems.length,
-      });
-    }
+  void uploadEvent() async {
+    EventTool.instance.eventUpload(EventApi.homeChannelExpose, {
+      EventParaName.sub.name: DataTool.instance.users.length,
+    });
+    EventTool.instance.eventUpload(EventApi.homeHistoryExpose, {
+      EventParaName.history.name: DataTool.instance.historyItems.length,
+    });
     EventTool.instance.eventUpload(EventApi.homeExpose, null);
   }
 }

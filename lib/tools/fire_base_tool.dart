@@ -23,13 +23,13 @@ import 'admob_tool.dart';
 import 'common_tool.dart';
 
 class FireConfigKey {
-  static String maxiOSConfigKey = 'ios_frame_ads';
+  static String maxiOSConfigKey = 'ios_lens_ads';
 
-  static String maxAndroidConfigKey = 'android_frame_ads';
+  static String maxAndroidConfigKey = 'android_lens_ads';
 
-  static String maxiOSPlusConfigKey = 'ios_frame_plus';
+  static String maxiOSPlusConfigKey = 'ios_lens_plus';
 
-  static String maxAndroidPlusConfigKey = 'android_frame_plus';
+  static String maxAndroidPlusConfigKey = 'android_lens_plus';
 
   static String maxKey =
       'GfQnlat0NBNnAweifSxxL5Z5z8ILJg2xAqWoDCTnH1Mpk0HSeVtfFlzIeMTwr7HcIFtdOX6HmJGTsfaUIV_KON';
@@ -54,13 +54,15 @@ class FireConfigKey {
 
   static String middlePlayCloseClick = 'middlePlayCloseClick';
 
-  static String levelKey = 'frame_Level';
+  static String levelKey = 'lens_Level';
 
-  static String typeKey = 'frame_type';
+  static String typeKey = 'lens_type';
 
-  static String sourceKey = 'frame_source';
+  static String sourceKey = 'lens_source';
 
-  static String adsIdKey = 'frame_id';
+  static String adsIdKey = 'lens_id';
+
+  static String adsTwoIdKey = 'lens_tid';
 
   static String clockFileName = 'clock_config';
 
@@ -81,21 +83,21 @@ class FireBaseTool {
   static Map userVipFile = {
     FireConfigKey.userVipInfoName: [
       {
-        FireConfigKey.userVipProductId: 'rme_lifetime',
+        FireConfigKey.userVipProductId: 'lens_lifetime',
         FireConfigKey.userVipIndex: 0,
         FireConfigKey.userVipHot: true,
         FireConfigKey.userVipSelect: true,
         FireConfigKey.userVipType: 'Permanent',
       },
       {
-        FireConfigKey.userVipProductId: 'rme_yearly',
+        FireConfigKey.userVipProductId: 'lens_yearly',
         FireConfigKey.userVipIndex: 1,
         FireConfigKey.userVipHot: false,
         FireConfigKey.userVipSelect: false,
         FireConfigKey.userVipType: 'Annually',
       },
       {
-        FireConfigKey.userVipProductId: 'rme_weekly',
+        FireConfigKey.userVipProductId: 'lens_weekly',
         FireConfigKey.userVipIndex: 2,
         FireConfigKey.userVipHot: false,
         FireConfigKey.userVipSelect: false,
@@ -120,19 +122,7 @@ class FireBaseTool {
         FireConfigKey.levelKey: 5,
         FireConfigKey.typeKey: AdsType.rewarded.value,
         FireConfigKey.sourceKey: AdsSourceType.max.value,
-        FireConfigKey.adsIdKey: '04c3fcf8b00d56b4',
-      },
-      {
-        FireConfigKey.levelKey: 4,
-        FireConfigKey.typeKey: AdsType.interstitial.value,
-        FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/9555844867',
-      },
-      {
-        FireConfigKey.levelKey: 2,
-        FireConfigKey.typeKey: AdsType.interstitial.value,
-        FireConfigKey.sourceKey: AdsSourceType.max.value,
-        FireConfigKey.adsIdKey: '3b3b3f6e3fad773b',
+        FireConfigKey.adsIdKey: '04c3fc232300d56b4',
       },
     ],
     AdsSceneType.play.value: [
@@ -140,19 +130,7 @@ class FireBaseTool {
         FireConfigKey.levelKey: 7,
         FireConfigKey.typeKey: AdsType.rewarded.value,
         FireConfigKey.sourceKey: AdsSourceType.max.value,
-        FireConfigKey.adsIdKey: '04c3fcf8b00d56b4',
-      },
-      {
-        FireConfigKey.levelKey: 4,
-        FireConfigKey.typeKey: AdsType.interstitial.value,
-        FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/9555844867',
-      },
-      {
-        FireConfigKey.levelKey: 5,
-        FireConfigKey.typeKey: AdsType.interstitial.value,
-        FireConfigKey.sourceKey: AdsSourceType.max.value,
-        FireConfigKey.adsIdKey: '3b3b3f6e3fad773b',
+        FireConfigKey.adsIdKey: '04c12300d56b4',
       },
     ],
     AdsSceneType.channel.value: [
@@ -160,29 +138,10 @@ class FireBaseTool {
         FireConfigKey.levelKey: 6,
         FireConfigKey.typeKey: AdsType.rewarded.value,
         FireConfigKey.sourceKey: AdsSourceType.max.value,
-        FireConfigKey.adsIdKey: '04c3fcf8b00d56b4',
-      },
-      {
-        FireConfigKey.levelKey: 4,
-        FireConfigKey.typeKey: AdsType.interstitial.value,
-        FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/9555844867',
-      },
-      {
-        FireConfigKey.levelKey: 5,
-        FireConfigKey.typeKey: AdsType.interstitial.value,
-        FireConfigKey.sourceKey: AdsSourceType.max.value,
-        FireConfigKey.adsIdKey: '3b3b3f6e3fad773b',
+        FireConfigKey.adsIdKey: '04123418b00d56b4',
       },
     ],
-    // AdsSceneType.middle.value: [
-    //   {
-    //     FireConfigKey.levelKey: 5,
-    //     FireConfigKey.typeKey: AdsType.native.value,
-    //     FireConfigKey.sourceKey: AdsSourceType.admob.value,
-    //     FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/7831645754',
-    //   },
-    // ],
+    AdsSceneType.middle.value: [],
   };
 
   static Map adsPlusFile = {
@@ -442,8 +401,8 @@ class DefaultOptions {
       );
     }
     switch (defaultTargetPlatform) {
-      // case TargetPlatform.android:
-      //   return android;
+      case TargetPlatform.android:
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -478,21 +437,10 @@ class DefaultOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'ixislU',
-    appId: '1:425765129418:ios:b360724df8e7db5b96e863',
-    projectId: 'frame-ios-734dd',
-    iosBundleId: 'com.frame.lumistream',
-    storageBucket: 'frame-ios-734dd.firebasestorage.app',
-    messagingSenderId: '42589235759418',
+    appId: '1:425762359418:ios:b360724235225b96e863',
+    projectId: 'lens-ios-734dd',
+    iosBundleId: 'com.lens.oxs',
+    storageBucket: 'lens-ios-754dd.firebaxge.app',
+    messagingSenderId: '429418',
   );
-}
-
-class AdsUnitId {
-  static String admobOpenAdsUnitId = '';
-  static String admobInterstitialAdsUnitId = '';
-  static String admobRewardedAdsUnitId = '';
-  static String admobNativeAdsUnitId = '';
-
-  static String maxOpenAdsUnitId = '';
-  static String maxInterstitialAdsUnitId = '';
-  static String maxRewardedAdsUnitId = '';
 }

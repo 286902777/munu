@@ -372,10 +372,6 @@ class AdmobTool {
   }
 
   void showFailUpload(AdsSceneType sceneType, String msg) {
-    // EventTool.instance.eventUpload(EventApi.adNeedShow, {
-    //   EventParaName.value.name: eventAdsSource.name,
-    //   EventParaName.type.name: sceneType == AdsSceneType.plus ? 2 : 1,
-    // });
     EventTool.instance.eventUpload(EventApi.adShowFail, {
       EventParaName.value.name: eventAdsSource.name,
       EventParaName.type.name: sceneType == AdsSceneType.plus ? 2 : 1,
@@ -950,4 +946,16 @@ class AdmobTool {
     }
     lastDisplayTime = DateTime.now().millisecondsSinceEpoch;
   }
+}
+
+class AdsUnitId {
+  static String admobOpenAdsUnitId = '';
+  static String admobInterstitialAdsUnitId = '';
+  static String admobRewardedAdsUnitId = '';
+  static String admobNativeAdsUnitId = '';
+  static String admobNativeAdsUnitTwoId = '';
+
+  static String maxOpenAdsUnitId = '';
+  static String maxInterstitialAdsUnitId = '';
+  static String maxRewardedAdsUnitId = '';
 }
