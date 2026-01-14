@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RefreshTool extends StatefulWidget {
-  final bool enUseUpPull;
-  final bool enUseDownPull;
   final RefreshController? controller;
   final int? itemNum;
-  final Widget child;
+  final bool enUseUpPull;
+  final bool enUseDownPull;
   final VoidCallback? onRefresh;
   final VoidCallback? onLoading;
   final VoidCallback? onRetry;
+  final Widget child;
 
   const RefreshTool({
     super.key,
@@ -29,7 +29,7 @@ class RefreshTool extends StatefulWidget {
 }
 
 class _RefreshToolState extends State<RefreshTool> {
-  late int? _dataNum = widget.itemNum;
+  late int? _pageNum = widget.itemNum;
   late final RefreshController _controller =
       widget.controller ?? RefreshController();
 
@@ -37,7 +37,7 @@ class _RefreshToolState extends State<RefreshTool> {
   void didUpdateWidget(covariant RefreshTool oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
-    _dataNum = widget.itemNum;
+    _pageNum = widget.itemNum;
   }
 
   @override
@@ -63,9 +63,10 @@ class _RefreshToolState extends State<RefreshTool> {
   }
 
   Widget _contentView() {
-    if (_dataNum == null) {
+    if (_pageNum == null) {
       return Container();
+    } else {
+      return widget.child;
     }
-    return widget.child;
   }
 }

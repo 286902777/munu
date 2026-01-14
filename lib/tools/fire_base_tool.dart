@@ -195,6 +195,14 @@ class FireBaseTool {
       );
     };
 
+    final AppsFlyerOptions afiOS = AppsFlyerOptions(
+      afDevKey: 'vJ612xK58yGZamTRTZZj',
+      appId: '614122',
+      showDebug: true,
+      timeToWaitForATTUserAuthorization: 15,
+      manualStart: true,
+    );
+
     updateRemoteSet() async {
       String mfile = remote.getString(
         Platform.isIOS
@@ -231,6 +239,14 @@ class FireBaseTool {
         AdmobTool.instance.nativeClick = adsFile[FireConfigKey.nativeClickKey]
             .toInt();
       }
+      if (adsFile[FireConfigKey.doubleNativeTimeKey] != null) {
+        AdmobTool.instance.doubleNativeTime =
+            adsFile[FireConfigKey.doubleNativeTimeKey].toInt();
+      }
+      if (adsFile[FireConfigKey.doubleNativeClickKey] != null) {
+        AdmobTool.instance.doubleNativeClick =
+            adsFile[FireConfigKey.doubleNativeClickKey].toInt();
+      }
       if (adsFile[FireConfigKey.appStartTime] != null) {
         AdmobTool.instance.startLoadTime = adsFile[FireConfigKey.appStartTime]
             .toInt();
@@ -260,9 +276,9 @@ class FireBaseTool {
       }
 
       for (AdsSceneType type in AdsSceneType.values) {
-        dynamic adsList = FireBaseTool.adsFile[type.value];
-        if (adsList is List) {
-          adsList.sort((x, y) {
+        dynamic adsArrs = FireBaseTool.adsFile[type.value];
+        if (adsArrs is List) {
+          adsArrs.sort((x, y) {
             return (y[FireConfigKey.levelKey]).compareTo(
               x[FireConfigKey.levelKey],
             );
@@ -271,9 +287,9 @@ class FireBaseTool {
       }
 
       for (AdsSceneType type in AdsSceneType.values) {
-        dynamic adsList = FireBaseTool.adsPlusFile[type.value];
-        if (adsList is List) {
-          adsList.sort((x, y) {
+        dynamic adsArrs = FireBaseTool.adsPlusFile[type.value];
+        if (adsArrs is List) {
+          adsArrs.sort((x, y) {
             return (y[FireConfigKey.levelKey]).compareTo(
               x[FireConfigKey.levelKey],
             );
@@ -336,25 +352,17 @@ class FireBaseTool {
 
     AppLovinMAX.initialize(FireConfigKey.maxKey);
 
-    final AppsFlyerOptions afiOS = AppsFlyerOptions(
-      afDevKey: 'vJ612xK58yGZamTRTZZj',
-      appId: '614122',
-      showDebug: true,
-      timeToWaitForATTUserAuthorization: 15,
-      manualStart: true,
-    );
-
-    late AppsflyerSdk _appsflyerSdk = AppsflyerSdk(afiOS);
+    late AppsflyerSdk _afSdk = AppsflyerSdk(afiOS);
 
     // Deep linking callback
-    _appsflyerSdk.onDeepLinking((DeepLinkResult dp) async {
+    _afSdk.onDeepLinking((DeepLinkResult dp) async {
       switch (dp.status) {
         case Status.FOUND:
           print(dp.deepLink?.deepLinkValue);
           String? link = dp.deepLink?.deepLinkValue;
           isDeepLink = dp.deepLink?.isDeferred ?? false;
           if (link != null) {
-            await getDeepDetails(link);
+            await readDeepInfo(link);
           }
           break;
         case Status.NOT_FOUND:
@@ -370,13 +378,13 @@ class FireBaseTool {
     });
 
     // Init of AppsFlyer SDK
-    await _appsflyerSdk.initSdk(
+    await _afSdk.initSdk(
       registerConversionDataCallback: true,
       registerOnAppOpenAttributionCallback: true,
       registerOnDeepLinkingCallback: true,
     );
 
-    _appsflyerSdk.startSDK(
+    _afSdk.startSDK(
       onSuccess: () {
         print("onSuccess");
       },
@@ -387,7 +395,7 @@ class FireBaseTool {
   }
 }
 
-Future<void> getDeepDetails(String info) async {
+Future<void> readDeepInfo(String info) async {
   Uri uri = Uri.parse(info);
   Map<String, String> para = uri.queryParameters;
   String? linkId = para['levanto'];

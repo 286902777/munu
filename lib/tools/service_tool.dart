@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'dart:ui';
 
-// import 'package:applovin_max/applovin_max.dart' hide NativeAdListener;
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:applovin_max/applovin_max.dart' hide NativeAdListener;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:munu/tools/http_tool.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:uuid/uuid.dart';
-
 import '../keys/app_key.dart';
 import 'common_tool.dart';
 
@@ -126,21 +126,21 @@ class ServiceTool {
     String userId,
     String fileId,
   ) {
-    // if (ad is MaxAd) {
-    //   addEvent(event, source, ad.revenue * 1000000, linkId, userId, fileId);
-    // }
-    // if (ad is AdWithoutView) {
-    //   ad.onPaidEvent =
-    //       (Ad ad, double value, PrecisionType precision, String code) {
-    //     addEvent(event, source, value, linkId, userId, fileId);
-    //   };
-    // }
-    // if (ad is NativeAd) {
-    //   BackEventManager.instance.ad_event = event;
-    //   BackEventManager.instance.ad_source = source;
-    //   BackEventManager.instance.ad_linkId = linkId;
-    //   BackEventManager.instance.ad_userId = userId;
-    //   BackEventManager.instance.ad_fileId = fileId;
-    // }
+    if (ad is MaxAd) {
+      addEvent(event, source, ad.revenue * 1000000, linkId, userId, fileId);
+    }
+    if (ad is AdWithoutView) {
+      ad.onPaidEvent =
+          (Ad ad, double value, PrecisionType precision, String code) {
+            addEvent(event, source, value, linkId, userId, fileId);
+          };
+    }
+    if (ad is NativeAd) {
+      ServiceTool.instance.ad_event = event;
+      ServiceTool.instance.ad_source = source;
+      ServiceTool.instance.ad_linkId = linkId;
+      ServiceTool.instance.ad_userId = userId;
+      ServiceTool.instance.ad_fileId = fileId;
+    }
   }
 }

@@ -3,6 +3,32 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppKey {
+  static const vipAlertShowCount = 'vipAlertShowCount';
+
+  static const vipAlertPlayTime = 'vipAlertPlayTime';
+
+  static const vipAlertTime = 'vipAlertTime';
+
+  static const vipPlayCount = 'vipPlayCount'; //成功展示2次广告后，关闭广告展示弹窗；
+
+  static const isVipUser = 'isVipUser';
+
+  static const vipProductId = 'vipProductId';
+
+  static const appNewUserPlay = 'appNewUserPlay';
+
+  static const appInstall = 'appInstall';
+
+  static const openDeepInstall = 'openDeepInstall';
+
+  static const eventList = 'eventList';
+
+  static const email = 'email';
+
+  static const toDay = 'toDay';
+
+  static const middlePlayCount = 'middlePlayCount';
+
   static const clickCommendStar = 'clickCommendStar';
 
   static const numCommend = 'numCommend';
@@ -33,32 +59,6 @@ class AppKey {
 
   static const showRate = 'showRate'; //间隔三个视频
 
-  static const vipAlertShowCount = 'vipAlertShowCount';
-
-  static const vipAlertPlayTime = 'vipAlertPlayTime';
-
-  static const vipAlertTime = 'vipAlertTime';
-
-  static const vipPlayCount = 'vipPlayCount'; //成功展示2次广告后，关闭广告展示弹窗；
-
-  static const isVipUser = 'isVipUser';
-
-  static const vipProductId = 'vipProductId';
-
-  static const appNewUserPlay = 'appNewUserPlay';
-
-  static const appInstall = 'appInstall';
-
-  static const openDeepInstall = 'openDeepInstall';
-
-  static const eventList = 'eventList';
-
-  static const email = 'email';
-
-  static const toDay = 'toDay';
-
-  static const middlePlayCount = 'middlePlayCount';
-
   static Future<bool> save(String key, dynamic value) async {
     SharedPreferences ns = await SharedPreferences.getInstance();
     if (value is Map) {
@@ -75,6 +75,16 @@ class AppKey {
     } else {
       return ns.setString(key, value.toString());
     }
+  }
+
+  static Future<Map<String, dynamic>?> getMap(String key) async {
+    SharedPreferences user = await SharedPreferences.getInstance();
+    String? value = user.getString(key);
+    if (value != null) {
+      Map<String, dynamic>? map = jsonDecode(value);
+      return map;
+    }
+    return null;
   }
 
   static Future<String?> getString(String key) async {
@@ -99,15 +109,5 @@ class AppKey {
     SharedPreferences user = await SharedPreferences.getInstance();
     double? value = user.getDouble(key);
     return value;
-  }
-
-  static Future<Map<String, dynamic>?> getMap(String key) async {
-    SharedPreferences ns = await SharedPreferences.getInstance();
-    String? value = ns.getString(key);
-    if (value != null) {
-      Map<String, dynamic>? map = jsonDecode(value);
-      return map;
-    }
-    return null;
   }
 }

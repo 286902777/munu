@@ -1,3 +1,48 @@
+class CommonTool {
+  static CommonTool instance = CommonTool();
+
+  String disPlayTime(Duration duration) {
+    bool isNa = duration.isNegative;
+    Duration dur = duration.abs();
+    String tow(int n) => n.toString().padLeft(2, '0');
+    final h = tow(dur.inHours);
+    final m = tow(dur.inMinutes.remainder(60));
+    final s = tow(dur.inSeconds.remainder(60));
+    if (dur.inHours > 0) {
+      return '[${isNa ? '-' : '+'}$h:$m:$s]';
+    } else {
+      return '[${isNa ? '-' : '+'}$m:$s]';
+    }
+  }
+
+  String countFile(int size) {
+    if (size / 1024 < 1) {
+      return '${size}B';
+    } else if (size / 1024 < 1024) {
+      String fileSize = (size / 1024).toStringAsFixed(2);
+      return '${fileSize}KB';
+    } else if (size / 1024 / 1024 < 1024) {
+      String fileSize = (size / 1024 / 1024).toStringAsFixed(2);
+      return '${fileSize}MB';
+    } else {
+      String fileSize = (size / 1024 / 1024 / 1024).toStringAsFixed(2);
+      return '${fileSize}GB';
+    }
+  }
+
+  String formatHMS(Duration duration) {
+    String two(int n) => n.toString().padLeft(2, '0');
+    final h = two(duration.inHours);
+    final m = two(duration.inMinutes.remainder(60));
+    final s = two(duration.inSeconds.remainder(60));
+    if (duration.inHours > 0) {
+      return '$h:$m:$s';
+    } else {
+      return '$m:$s';
+    }
+  }
+}
+
 enum PlatformType {
   india('a'), // cashsnap
   middle('b'); //quickearn
@@ -145,48 +190,3 @@ Function(int index)? clickTabItem;
 Function()? pushDeepPageInfo;
 
 // Function(VipData mod, bool isPay)? vipDoneBlock;
-
-class CommonTool {
-  static CommonTool instance = CommonTool();
-
-  String disPlayTime(Duration duration) {
-    bool isNa = duration.isNegative;
-    Duration dur = duration.abs();
-    String tow(int n) => n.toString().padLeft(2, '0');
-    final h = tow(dur.inHours);
-    final m = tow(dur.inMinutes.remainder(60));
-    final s = tow(dur.inSeconds.remainder(60));
-    if (dur.inHours > 0) {
-      return '[${isNa ? '-' : '+'}$h:$m:$s]';
-    } else {
-      return '[${isNa ? '-' : '+'}$m:$s]';
-    }
-  }
-
-  String countFile(int size) {
-    if (size / 1024 < 1) {
-      return '${size}B';
-    } else if (size / 1024 < 1024) {
-      String fileSize = (size / 1024).toStringAsFixed(2);
-      return '${fileSize}KB';
-    } else if (size / 1024 / 1024 < 1024) {
-      String fileSize = (size / 1024 / 1024).toStringAsFixed(2);
-      return '${fileSize}MB';
-    } else {
-      String fileSize = (size / 1024 / 1024 / 1024).toStringAsFixed(2);
-      return '${fileSize}GB';
-    }
-  }
-
-  String formatHMS(Duration duration) {
-    String two(int n) => n.toString().padLeft(2, '0');
-    final h = two(duration.inHours);
-    final m = two(duration.inMinutes.remainder(60));
-    final s = two(duration.inSeconds.remainder(60));
-    if (duration.inHours > 0) {
-      return '$h:$m:$s';
-    } else {
-      return '$m:$s';
-    }
-  }
-}
