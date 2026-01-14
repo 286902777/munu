@@ -58,9 +58,13 @@ class _HomeCellState extends State<HomeCell> {
               Visibility(
                 visible: widget.model.recommend == 1,
                 child: Positioned(
-                  right: -4,
-                  top: -4,
-                  child: Image.asset(Assets.channelHot, width: 34, height: 34),
+                  right: 4,
+                  top: 4,
+                  child: Image.asset(
+                    Assets.channelRecommend,
+                    width: 72,
+                    height: 18,
+                  ),
                 ),
               ),
             ],

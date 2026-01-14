@@ -396,20 +396,20 @@ class _VideoFullPageState extends State<VideoFullPage> {
                         height: 14,
                       ),
                     ),
-                  // if (model.recommend == 1)
-                  //   Positioned(
-                  //     top: 2,
-                  //     right: 2,
-                  //     child: Image.asset(
-                  //       Assets.homeCellRecommend,
-                  //       width: 56,
-                  //       height: 18,
-                  //     ),
-                  //   ),
+                  if (model.recommend == 1)
+                    Positioned(
+                      top: 4,
+                      right: 4,
+                      child: Image.asset(
+                        Assets.channelRecommend,
+                        width: 72,
+                        height: 18,
+                      ),
+                    ),
                 ],
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 12),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

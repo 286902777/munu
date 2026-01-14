@@ -328,7 +328,7 @@ class _VideoListPageState extends State<VideoListPage> {
             child: Image.asset(Assets.iconTitle, width: 20, height: 20),
           ),
           Positioned(
-            left: 26,
+            right: 26,
             top: 8,
             child: Text(
               'Recommend',
@@ -403,20 +403,20 @@ class _VideoListPageState extends State<VideoListPage> {
                       bottom: 6,
                       child: Image.asset(Assets.playPlayIng, width: 14),
                     ),
-                  // if (model.recommend == 1)
-                  //   Positioned(
-                  //     top: 2,
-                  //     right: 2,
-                  //     child: Image.asset(
-                  //       Assets.homeCellRecommend,
-                  //       width: 56,
-                  //       height: 18,
-                  //     ),
-                  //   ),
+                  if (model.recommend == 1)
+                    Positioned(
+                      top: 4,
+                      right: 4,
+                      child: Image.asset(
+                        Assets.channelRecommend,
+                        width: 72,
+                        height: 18,
+                      ),
+                    ),
                 ],
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 12),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

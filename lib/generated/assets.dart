@@ -5,6 +5,7 @@ class Assets {
   static const String channelAvatar = 'image/channel/avatar.webp';
   static const String channelDown = 'image/channel/down.webp';
   static const String channelHot = 'image/channel/hot.webp';
+  static const String channelRecommend = 'image/channel/recommend.webp';
   static const String channelUp = 'image/channel/up.webp';
   static const String iconAlertBg = 'image/icon/alert_bg.webp';
   static const String iconAvatar = 'image/icon/avatar.webp';
