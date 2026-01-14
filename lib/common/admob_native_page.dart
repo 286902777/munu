@@ -139,7 +139,7 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
                             ),
                             Positioned(
                               top: 4,
-                              left: 4,
+                              right: 4,
                               child: Obx(
                                 () => Visibility(
                                   visible: showTime.value,

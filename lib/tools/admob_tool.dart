@@ -154,7 +154,9 @@ class AdmobTool {
       //设置广告单元id为远程获取的
       String adsId = adConfig[FireConfigKey.adsIdKey];
       String adsDoubleId = adConfig[FireConfigKey.adsIdKey];
-      if (adsId.isNotEmpty) {
+      if (adsId.isEmpty) {
+        return {'ad': null, 'doubleAd': null};
+      } else {
         if (adSourceType == AdsSourceType.admob) {
           if (adType == AdsType.open) {
             AdsUnitId.admobOpenAdsUnitId = adsId;
@@ -176,8 +178,6 @@ class AdmobTool {
           }
         }
       }
-    } else {
-      return {'ad': null, 'doubleAd': null};
     }
     dynamic admobOrMaxAd;
     dynamic admobDoubleAd;

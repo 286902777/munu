@@ -164,7 +164,7 @@ class _TabPageState extends State<TabPage>
     // } else {
     //   return false;
     // }
-    return false; // remove
+    return true; // remove
   }
 
   void openSelectIndex(int index) {
