@@ -202,9 +202,6 @@ class _VideoPageState extends State<VideoPage>
       }
     });
     player.stream.position.listen((Duration position) async {
-      if (position.inSeconds == 0) {
-        return;
-      }
       if (AdmobTool.adsState == AdsState.showing) {
         await player.pause();
       }
@@ -217,6 +214,7 @@ class _VideoPageState extends State<VideoPage>
       } else {
         sliderValue.value = 0;
       }
+
       if (newVideoSuccess == false) {
         uploadPlayEvent();
         EventTool.instance.eventUpload(EventApi.playStartAll, {
@@ -730,7 +728,7 @@ class _VideoPageState extends State<VideoPage>
                     displayTool(false);
                   },
                   onDoubleTapDown: (TapDownDetails details) async {
-                    if (newVideoSuccess == true) {
+                    if (newVideoSuccess == false) {
                       return;
                     }
                     final x = details.globalPosition.dx; // 全局X坐标
@@ -930,7 +928,7 @@ class _VideoPageState extends State<VideoPage>
                 ),
               ),
               SizedBox(height: 10),
-              _sliderView(),
+              sliderWidget(),
               SizedBox(height: 10),
               Text(
                 total.value.inSeconds.toInt() == 0
@@ -959,12 +957,16 @@ class _VideoPageState extends State<VideoPage>
       isUsePause = true;
       await player.pause();
     } else {
-      isUsePause = false;
-      await player.play();
+      if (model?.playTime == 0) {
+        _initMovie();
+      } else {
+        isUsePause = false;
+        await player.play();
+      }
     }
   }
 
-  Widget _sliderView() {
+  Widget sliderWidget() {
     return Flexible(
       child: SliderTheme(
         data: SliderThemeData(

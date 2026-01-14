@@ -415,7 +415,7 @@ class _DeepPageState extends State<DeepPage>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 12),
+          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               isDeepComment = true;
@@ -423,7 +423,7 @@ class _DeepPageState extends State<DeepPage>
               Get.back();
             },
             padding: EdgeInsets.zero,
-            child: Image.asset(Assets.iconBack, width: 34),
+            child: Image.asset(Assets.iconBack, width: 24),
           ),
         ],
       ),

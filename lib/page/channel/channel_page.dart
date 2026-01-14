@@ -480,7 +480,7 @@ class _ChannelPageState extends State<ChannelPage>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 12),
+          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               Get.back();
