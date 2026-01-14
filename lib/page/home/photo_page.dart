@@ -44,13 +44,13 @@ class _PhotoPageState extends State<PhotoPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 12),
+          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               Get.back();
             },
             padding: EdgeInsets.zero,
-            child: Image.asset(Assets.iconBack, width: 32),
+            child: Image.asset(Assets.iconBack, width: 24),
           ),
         ],
       ),
