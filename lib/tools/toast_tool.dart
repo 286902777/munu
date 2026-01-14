@@ -24,7 +24,7 @@ class ToastTool {
           color: Colors.transparent,
           child: Center(
             child: Container(
-              constraints: BoxConstraints(maxWidth: 280), // 设置最大宽度为200
+              constraints: BoxConstraints(maxWidth: 310), // 设置最大宽度为310
               padding: EdgeInsets.fromLTRB(24, 16, 24, 16),
               decoration: BoxDecoration(
                 color: bgColor,
@@ -45,7 +45,7 @@ class ToastTool {
                           width: 20,
                           height: 20,
                         ),
-                        SizedBox(width: 16),
+                        SizedBox(width: 10),
                       ],
                     ),
                   ),
@@ -58,7 +58,7 @@ class ToastTool {
                         fontSize: 14,
                         color: textColor,
                       ),
-                      // maxLines: 10,
+                      maxLines: 6,
                     ),
                   ),
                 ],

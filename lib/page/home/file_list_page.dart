@@ -174,7 +174,7 @@ class _FileListPageState extends State<FileListPage> {
             return GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                openNextPage(data, lists);
+                clickOpenPage(data, lists);
               },
               child: HomeCell(model: data),
             );
@@ -184,7 +184,7 @@ class _FileListPageState extends State<FileListPage> {
     );
   }
 
-  void openNextPage(VideoData data, List<VideoData> list) async {
+  void clickOpenPage(VideoData data, List<VideoData> list) async {
     switch (data.fileType) {
       case 0:
         PlayTool.pushPage(data, list, true);

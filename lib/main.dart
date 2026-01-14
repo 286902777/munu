@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
               //安卓底部系统导航条
               systemNavigationBarIconBrightness: Brightness.light,
             ), // 状态栏字体颜色（dark: 白色，light: 黑色）
-            color: Colors.white,
+            backgroundColor: Colors.white,
           ),
         ),
         home: LaunchPage(),

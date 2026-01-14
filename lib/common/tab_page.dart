@@ -203,8 +203,7 @@ class _TabPageState extends State<TabPage>
       Get.to(() => DeepPage(linkId: deepLink))?.then((_) {
         if (closeDeep == true) {
           vipSource = VipSource.home;
-          // goCommentPage();
-          PlayTool.showResult(true);
+          PlayTool.showPrimunmPage(true);
         }
       });
     }

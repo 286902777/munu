@@ -138,7 +138,7 @@ class _ChannelPageState extends State<ChannelPage>
       if (state == AdsState.dismissed &&
           AdmobTool.scene == AdsSceneType.channel) {
         if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
-          PlayTool.showResult(true);
+          PlayTool.showPrimunmPage(true);
         } else {
           addTwoAds(adsType ?? AdsType.interstitial);
         }
@@ -150,12 +150,12 @@ class _ChannelPageState extends State<ChannelPage>
     if (type == AdsType.rewarded) {
       bool suc = await AdmobTool.showAdsScreen(AdsSceneType.three);
       if (suc == false) {
-        PlayTool.showResult(true);
+        PlayTool.showPrimunmPage(true);
       }
     } else {
       bool suc = await AdmobTool.showAdsScreen(AdsSceneType.plus);
       if (suc == false) {
-        PlayTool.showResult(true);
+        PlayTool.showPrimunmPage(true);
       }
     }
   }

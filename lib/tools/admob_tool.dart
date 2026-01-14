@@ -70,6 +70,13 @@ class AdmobTool {
   static bool showed = false;
   static int? lastDisplayTime;
 
+  ///计算广告是否过期的timer，目前一个广告有效期是50分钟
+  static Timer? adTimer;
+
+  static AdsState adsState = AdsState.normal;
+
+  static AdsSceneType scene = AdsSceneType.open;
+
   ///广告当前请求层级
   static final Map<String, int> adsRequestIdxMap = {
     AdsSceneType.open.value: 0,
@@ -99,13 +106,6 @@ class AdmobTool {
     AdsSceneType.plus.value: null,
     AdsSceneType.three.value: null,
   };
-
-  ///计算广告是否过期的timer，目前一个广告有效期是50分钟
-  static Timer? adTimer;
-
-  static AdsState adsState = AdsState.normal;
-
-  static AdsSceneType scene = AdsSceneType.open;
 
   ///加载广告
   ///非必要不必调用此方法(除冷启动和需要重新加载广告外（比如admob横竖屏切换后）)，因为缓存里面会有广告，只需要调用showAds即可

@@ -9,12 +9,12 @@ class PlayTool {
     Get.to(() => VideoPage(data: model, playList: lists))?.then((result) {
       if (result != null) {
         vipSource = VipSource.ad;
-        showResult(result);
+        showPrimunmPage(result);
       }
     });
   }
 
-  static showResult(bool result) async {
+  static showPrimunmPage(bool result) async {
     //   bool isSVip = await AppKey.getBool(AppKey.isVipUser) ?? false;
     //   if (result && isSVip == false) {
     //     int? showCount = await AppKey.getInt(AppKey.vipAlertShowCount);

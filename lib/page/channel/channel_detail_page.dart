@@ -290,7 +290,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        show.value ? 'Close' : 'See All',
+                        'See All',
                         style: const TextStyle(
                           letterSpacing: -0.5,
                           fontWeight: FontWeight.w500,
@@ -374,7 +374,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 8),
         ],
       ),
     );
