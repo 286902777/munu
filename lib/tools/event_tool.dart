@@ -14,9 +14,9 @@ enum EventApi {
   homeExpose('iow'),
   homeChannelExpose('ixow'),
   homeHistoryExpose('idxb'),
-  landpageExpose('zwb'),
-  landpageFail('x23'),
-  landpageUploadedExpose('bxs'),
+  landPageExpose('zwb'),
+  landPageFail('x23'),
+  landPageUploadedExpose('bxs'),
 
   playStartAll('bxer'),
   playSource('bxwer'),
@@ -33,9 +33,9 @@ enum EventApi {
   historyExpose('boiwjng'),
 
   deeplinkOpen('oibxb'),
-  channellistExpose('oil'),
-  channellistClick('los'),
-  channelpageExpose('bowkgas'),
+  channelListExpose('oil'),
+  channelListClick('los'),
+  channelPageExpose('bowkgas'),
   session('session'),
   ads('ads'),
   install('install'),
@@ -66,6 +66,32 @@ enum EventParaName {
 
   final String name;
   const EventParaName(this.name);
+}
+
+enum EventParaValue {
+  type('oiwjg'),
+  sValue('blxjb'),
+  method('bpsujb'),
+  sub('lbix'),
+  code('pabaowjg'),
+  noPadding('ss'),
+  cash('powxsajg'),
+  quick('poawjg'),
+  history('pxswojh'),
+  list('ssd'),
+  recommend('s'),
+  delayLink('sdas'),
+  link('sdas'),
+  entrance('lilubsx'),
+  linkIdLandPage('iog'),
+  linkSource('bix'),
+  isFirstLink('a'),
+  iPlayerUid('b'),
+
+  source('x');
+
+  final String value;
+  const EventParaValue(this.value);
 }
 
 class EventTool extends GetConnect {

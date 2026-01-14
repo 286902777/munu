@@ -38,6 +38,7 @@ class _LaunchPageState extends State<LaunchPage> {
       state, {
       adsType,
       ad,
+      twoAd,
       sceneType,
     }) async {
       if (isSetRoot == true) {
@@ -53,12 +54,24 @@ class _LaunchPageState extends State<LaunchPage> {
           '',
           '',
         );
+        if (twoAd != null) {
+          ServiceTool.instance.getAdsValue(
+            ServiceEventName.advProfit,
+            apiPlatform,
+            twoAd,
+            linkId,
+            '',
+            '',
+          );
+        }
+
         if (adsType == AdsType.native) {
           _timer?.cancel();
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.open,
             ),
           ).then((result) {
@@ -66,6 +79,7 @@ class _LaunchPageState extends State<LaunchPage> {
               AdsState.dismissed,
               adsType: AdsType.native,
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.open,
             );
           });

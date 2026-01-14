@@ -8,15 +8,16 @@ import '../data/user_pool_data.dart';
 import '../data/video_data.dart';
 
 class DbTool extends GetxService {
-  static const _dataName = 'app_data.db';
+  DbTool._privateConstructor();
+
+  static const _dataName = 'lens_data.db';
   static const _version = 1;
   static const table = 'data_tb';
   static const user_table = 'user_tb';
 
-  DbTool._privateConstructor();
+  static Database? _database;
   static final DbTool instance = DbTool._privateConstructor();
 
-  static Database? _database;
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
@@ -135,7 +136,7 @@ class DbTool extends GetxService {
     final db = await instance.database;
     final maps = await db.query(table);
     List<VideoData> items = maps.map((map) => VideoData.fromJson(map)).toList();
-    items.sort((a, b) => (b.createDate ?? 0).compareTo(a.createDate ?? 0));
+    items.sort((a, b) => (b.createDate).compareTo(a.createDate));
     return items;
   }
 
@@ -214,9 +215,7 @@ class DataTool extends GetxController {
     final data = await DbTool.instance.getAllDatas();
     items.assignAll(data);
     historyItems.assignAll(data.where((m) => m.isHistory == 1));
-    historyItems.sort(
-      (a, b) => (b.updateDate ?? 0).compareTo(a.updateDate ?? 0),
-    );
+    historyItems.sort((a, b) => (b.updateDate).compareTo(a.updateDate));
   }
 
   Future<void> loadUsers() async {
@@ -227,13 +226,8 @@ class DataTool extends GetxController {
       user.platform = data['platform'];
       tempUsers.add(user);
     }
-    // userList.forEach((mod) {
-    //   UserPoolData user = UserPoolData.fromJson(jsonDecode(mod['info']));
-    //   user.platform = mod['platform'];
-    //   tempUsers.add(user);
-    // });
     users.assignAll(tempUsers);
-    users.sort((a, b) => (b.updateDate ?? 0).compareTo(a.updateDate ?? 0));
+    users.sort((a, b) => (b.updateDate).compareTo(a.updateDate));
   }
 
   // 添加新数据并刷新 UI

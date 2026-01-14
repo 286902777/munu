@@ -108,7 +108,7 @@ class _VideoListPageState extends State<VideoListPage> {
       });
       await HttpTool.postRequest(
         ApiKey.userPools,
-        mod.platform == 0 ? PlatformType.india : PlatformType.east,
+        mod.platform == 0 ? PlatformType.india : PlatformType.middle,
         para: {
           'faquir': {'thermopile': labelArr},
           'insinking': Platform.isIOS ? 'ios' : 'android',
@@ -141,7 +141,7 @@ class _VideoListPageState extends State<VideoListPage> {
     }
     await HttpTool.recommendPostRequest(
       ApiKey.playRecommend,
-      platform == 0 ? PlatformType.india : PlatformType.east,
+      platform == 0 ? PlatformType.india : PlatformType.middle,
       isRequested ? (idsList.isNotEmpty ? true : false) : false,
       para: {
         'zpn0h3yl2d': resultUserId,

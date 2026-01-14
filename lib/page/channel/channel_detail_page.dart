@@ -32,7 +32,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
     // TODO: implement initState
     super.initState();
     loadUserInfo();
-    EventTool.instance.eventUpload(EventApi.channellistExpose, null);
+    EventTool.instance.eventUpload(EventApi.channelListExpose, null);
   }
 
   Future<void> loadUserInfo() async {
@@ -40,7 +40,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
     allUsers = DataTool.instance.users;
     String userId = allUsers.first.id;
     int platform = allUsers.first.platform;
-    userPlatform = platform == 0 ? PlatformType.india : PlatformType.east;
+    userPlatform = platform == 0 ? PlatformType.india : PlatformType.middle;
     List<UserPoolData> result = allUsers
         .where((user) => user.platform == platform)
         .toList();
@@ -58,7 +58,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
     });
     await HttpTool.postRequest(
       ApiKey.userPools,
-      platform == 0 ? PlatformType.india : PlatformType.east,
+      platform == 0 ? PlatformType.india : PlatformType.middle,
       para: {
         'faquir': {'thermopile': labelArr},
         'insinking': Platform.isIOS ? 'ios' : 'android',
@@ -213,16 +213,16 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
                   channelSource = ChannelSource.channellist;
-                  EventTool.instance.eventUpload(EventApi.channellistClick, {
-                    EventParaName.value.name: 'pEpNEF',
-                    EventParaName.entrance.name: 'fiVZL',
+                  EventTool.instance.eventUpload(EventApi.channelListClick, {
+                    EventParaName.value.name: EventParaValue.history.value,
+                    EventParaName.entrance.name: EventParaValue.list.value,
                   });
                   Get.to(
                     () => ChannelPage(
                       userId: allUsers[index].id,
                       platform: allUsers[index].platform == 0
                           ? PlatformType.india
-                          : PlatformType.east,
+                          : PlatformType.middle,
                     ),
                   );
                 },
@@ -321,9 +321,9 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
       behavior: HitTestBehavior.opaque,
       onTap: () {
         channelSource = ChannelSource.channelpage_recommend;
-        EventTool.instance.eventUpload(EventApi.channellistClick, {
-          EventParaName.value.name: 'pEpNEF',
-          EventParaName.entrance.name: 'refcWIw',
+        EventTool.instance.eventUpload(EventApi.channelListClick, {
+          EventParaName.value.name: EventParaValue.history.value,
+          EventParaName.entrance.name: EventParaValue.recommend.value,
         });
         Get.to(
           () => ChannelPage(userId: map['cipherable'], platform: userPlatform),

@@ -44,6 +44,11 @@ class FireConfigKey {
   // 原生广告关闭机率
   static String nativeClickKey = 'nativeClickKey';
 
+  // 原生广告显示时长
+  static String doubleNativeTimeKey = 'doubleNativeTimeKey';
+  // 原生广告关闭机率
+  static String doubleNativeClickKey = 'doubleNativeClickKey';
+
   static String playMethod = 'playMethod';
 
   static String middlePlayKey = 'middlePlayKey';
@@ -111,6 +116,9 @@ class FireBaseTool {
     FireConfigKey.adsTimeKey: 60,
     FireConfigKey.nativeTimeKey: 7,
     FireConfigKey.nativeClickKey: 80,
+    FireConfigKey.doubleNativeTimeKey: 7,
+    FireConfigKey.doubleNativeClickKey: 50,
+    FireConfigKey.nativeClickKey: 80,
     FireConfigKey.playWaitKey: 600,
     FireConfigKey.playMethod: 0,
     FireConfigKey.middlePlayKey: 5,
@@ -152,6 +160,15 @@ class FireBaseTool {
       //   FireConfigKey.sourceKey: AdsSourceType.admob.value,
       //   FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/7831645754',
       // },
+    ],
+    AdsSceneType.three.value: [
+      {
+        FireConfigKey.levelKey: 5,
+        FireConfigKey.typeKey: AdsType.native.value,
+        FireConfigKey.sourceKey: AdsSourceType.admob.value,
+        FireConfigKey.adsIdKey: 'ca-app-pub-11243120652519/783754',
+        FireConfigKey.adsTwoIdKey: 'ca-app-pub-84520652519/123759',
+      },
     ],
   };
   static Map clockFile = {};
@@ -265,6 +282,8 @@ class FireBaseTool {
       }
 
       adsFile[AdsSceneType.plus.value] = adsPlusFile[AdsSceneType.plus.value];
+      adsFile[AdsSceneType.three.value] = adsPlusFile[AdsSceneType.three.value];
+
       // if (cflie.isNotEmpty) {
       //   FireBaseTool.clockFile = jsonDecode(cflie);
       //   isSimCard = FireBaseTool.clockFile['sim'];
@@ -318,8 +337,8 @@ class FireBaseTool {
     AppLovinMAX.initialize(FireConfigKey.maxKey);
 
     final AppsFlyerOptions afiOS = AppsFlyerOptions(
-      afDevKey: 'vJ6Sax2yK58yGZamTRTZZj',
-      appId: '6755174122',
+      afDevKey: 'vJ612xK58yGZamTRTZZj',
+      appId: '614122',
       showDebug: true,
       timeToWaitForATTUserAuthorization: 15,
       manualStart: true,
@@ -381,12 +400,14 @@ Future<void> getDeepDetails(String info) async {
   if (plat == PlatformType.india.name) {
     apiPlatform = PlatformType.india;
   } else {
-    apiPlatform = PlatformType.east;
+    apiPlatform = PlatformType.middle;
   }
   await AppKey.save(AppKey.appPlatform, plat);
   bool isFirst = await AppKey.getBool('getDeepLink') ?? false;
   EventTool.instance.eventUpload(EventApi.deeplinkOpen, {
-    EventParaName.linkSource.name: isDeepLink ? 'HuN' : 'ExzSkQi',
+    EventParaName.linkSource.name: isDeepLink
+        ? EventParaValue.delayLink.value
+        : EventParaValue.link.value,
     EventParaName.isFirstLink.name: isFirst,
   });
   pushDeepPageInfo?.call();

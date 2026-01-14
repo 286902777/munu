@@ -1,6 +1,6 @@
 enum PlatformType {
   india('a'), // cashsnap
-  east('b'); //quickearn
+  middle('b'); //quickearn
 
   final String name;
   const PlatformType(this.name);

@@ -288,6 +288,7 @@ class _VideoPageState extends State<VideoPage>
       state, {
       adsType,
       ad,
+      twoAd,
       sceneType,
     }) async {
       if (isCurrentPage == false) {
@@ -299,6 +300,7 @@ class _VideoPageState extends State<VideoPage>
             context: context,
             builder: (context) => AdmobNativePage(
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.middle,
             ),
           ).then((result) async {
@@ -306,6 +308,7 @@ class _VideoPageState extends State<VideoPage>
               AdsState.dismissed,
               adsType: AdsType.native,
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.middle,
             );
           });
@@ -319,7 +322,7 @@ class _VideoPageState extends State<VideoPage>
           if (model!.platform == 0) {
             currentPlat = PlatformType.india;
           } else {
-            currentPlat = PlatformType.east;
+            currentPlat = PlatformType.middle;
           }
           if (platform == currentPlat.name) {
             linkId = model!.linkId;
@@ -330,17 +333,30 @@ class _VideoPageState extends State<VideoPage>
           model?.netMovie == 0
               ? ServiceEventName.appAdvProfit
               : ServiceEventName.advProfit,
-          model?.platform == 0 ? PlatformType.india : PlatformType.east,
+          model?.platform == 0 ? PlatformType.india : PlatformType.middle,
           ad,
           linkId,
           model?.userId ?? '',
           model?.movieId ?? '',
         );
+        if (twoAd != null) {
+          ServiceTool.instance.getAdsValue(
+            model?.netMovie == 0
+                ? ServiceEventName.appAdvProfit
+                : ServiceEventName.advProfit,
+            model?.platform == 0 ? PlatformType.india : PlatformType.middle,
+            twoAd,
+            linkId,
+            model?.userId ?? '',
+            model?.movieId ?? '',
+          );
+        }
         if (adsType == AdsType.native) {
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.play,
             ),
           ).then((result) async {
@@ -348,6 +364,7 @@ class _VideoPageState extends State<VideoPage>
               AdsState.dismissed,
               adsType: AdsType.native,
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.play,
             );
           });
@@ -355,21 +372,25 @@ class _VideoPageState extends State<VideoPage>
       }
 
       if (state == AdsState.dismissed && AdmobTool.scene == AdsSceneType.play) {
-        if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
+        if (sceneType == AdsSceneType.plus ||
+            sceneType == AdsSceneType.three ||
+            sceneType == AdsSceneType.middle) {
           if (isBackPage) {
             Get.back(result: true);
           } else {
             _showAlertVipView();
           }
         } else {
-          showPlusAds();
+          showPlusAds(adsType ?? AdsType.interstitial);
         }
       }
     });
   }
 
-  void showPlusAds() async {
-    bool s = await AdmobTool.showAdsScreen(AdsSceneType.plus);
+  void showPlusAds(AdsType type) async {
+    bool s = await AdmobTool.showAdsScreen(
+      type == AdsType.rewarded ? AdsSceneType.three : AdsSceneType.plus,
+    );
     if (s == false) {
       vipSource = VipSource.ad;
       if (isBackPage) {
@@ -486,7 +507,7 @@ class _VideoPageState extends State<VideoPage>
     if (model?.netMovie == 0) {
       ServiceTool.instance.addEvent(
         ServiceEventName.appPlayVideo,
-        model?.platform == 0 ? PlatformType.india : PlatformType.east,
+        model?.platform == 0 ? PlatformType.india : PlatformType.middle,
         0,
         '',
         '',
@@ -495,7 +516,7 @@ class _VideoPageState extends State<VideoPage>
     } else {
       ServiceTool.instance.addEvent(
         ServiceEventName.playVideo,
-        model?.platform == 0 ? PlatformType.india : PlatformType.east,
+        model?.platform == 0 ? PlatformType.india : PlatformType.middle,
         0,
         model?.linkId ?? '',
         model?.userId ?? '',
@@ -506,7 +527,7 @@ class _VideoPageState extends State<VideoPage>
     if (newUserPlay == null || newUserPlay == false) {
       ServiceTool.instance.addEvent(
         ServiceEventName.newUserActiveByPlayVideo,
-        model?.platform == 0 ? PlatformType.india : PlatformType.east,
+        model?.platform == 0 ? PlatformType.india : PlatformType.middle,
         0,
         model?.linkId ?? '',
         model?.userId ?? '',
@@ -519,7 +540,7 @@ class _VideoPageState extends State<VideoPage>
   Future<void> requestVideoAddress() async {
     await HttpTool.getRequest(
       ApiKey.video,
-      model?.platform == 0 ? PlatformType.india : PlatformType.east,
+      model?.platform == 0 ? PlatformType.india : PlatformType.middle,
       '/${model?.userId}/${model?.movieId}',
       false,
       para: {},

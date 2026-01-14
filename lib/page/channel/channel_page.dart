@@ -81,7 +81,7 @@ class _ChannelPageState extends State<ChannelPage>
     super.initState();
     eventSource = ServiceEventSource.channelPage;
     eventAdsSource = AdmobSource.channelPage;
-    EventTool.instance.eventUpload(EventApi.channelpageExpose, {
+    EventTool.instance.eventUpload(EventApi.channelPageExpose, {
       EventParaName.source.name: channelSource.name,
     });
     requestData();
@@ -90,6 +90,7 @@ class _ChannelPageState extends State<ChannelPage>
       state, {
       adsType,
       ad,
+      twoAd,
       sceneType,
     }) async {
       if (isCurrentPage == false) {
@@ -105,11 +106,22 @@ class _ChannelPageState extends State<ChannelPage>
           '',
           '',
         );
+        if (twoAd != null) {
+          ServiceTool.instance.getAdsValue(
+            ServiceEventName.advProfit,
+            widget.platform,
+            twoAd,
+            '',
+            '',
+            '',
+          );
+        }
         if (adsType == AdsType.native) {
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.channel,
             ),
           ).then((result) {
@@ -117,6 +129,7 @@ class _ChannelPageState extends State<ChannelPage>
               AdsState.dismissed,
               adsType: AdsType.native,
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.channel,
             );
           });
@@ -124,19 +137,26 @@ class _ChannelPageState extends State<ChannelPage>
       }
       if (state == AdsState.dismissed &&
           AdmobTool.scene == AdsSceneType.channel) {
-        if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
+        if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
           PlayTool.showResult(true);
         } else {
-          addTwoAds();
+          addTwoAds(adsType ?? AdsType.interstitial);
         }
       }
     });
   }
 
-  void addTwoAds() async {
-    bool suc = await AdmobTool.showAdsScreen(AdsSceneType.plus);
-    if (suc == false) {
-      PlayTool.showResult(true);
+  void addTwoAds(AdsType type) async {
+    if (type == AdsType.rewarded) {
+      bool suc = await AdmobTool.showAdsScreen(AdsSceneType.three);
+      if (suc == false) {
+        PlayTool.showResult(true);
+      }
+    } else {
+      bool suc = await AdmobTool.showAdsScreen(AdsSceneType.plus);
+      if (suc == false) {
+        PlayTool.showResult(true);
+      }
     }
   }
 

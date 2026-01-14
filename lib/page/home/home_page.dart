@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage>
       });
       await HttpTool.postRequest(
         ApiKey.userPools,
-        platform == 0 ? PlatformType.india : PlatformType.east,
+        platform == 0 ? PlatformType.india : PlatformType.middle,
         para: {
           'faquir': {'thermopile': labelArr},
           'insinking': Platform.isIOS ? 'ios' : 'android',
@@ -331,12 +331,13 @@ class _HomePageState extends State<HomePage>
                     channelSource = ChannelSource.home_channel;
                     if (userLists.length > index) {
                       EventTool.instance
-                          .eventUpload(EventApi.channellistClick, {
+                          .eventUpload(EventApi.channelListClick, {
                             EventParaName.value.name:
                                 userLists[index].recommend == 0
-                                ? 'IqYl'
-                                : 'oAkJkCeuEa',
-                            EventParaName.entrance.name: 'ayiqpkj',
+                                ? EventParaValue.history.value
+                                : EventParaValue.recommend.value,
+                            EventParaName.entrance.name:
+                                EventParaValue.entrance.value,
                           });
                     }
                     Get.to(
@@ -344,7 +345,7 @@ class _HomePageState extends State<HomePage>
                         userId: userLists[index].id,
                         platform: userLists[index].platform == 0
                             ? PlatformType.india
-                            : PlatformType.east,
+                            : PlatformType.middle,
                       ),
                     );
                   },

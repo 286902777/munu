@@ -177,11 +177,13 @@ class _DeepPageState extends State<DeepPage>
             }
           }
           bool isFirst = await AppKey.getBool(AppKey.isFirstLink) ?? false;
-          EventTool.instance.eventUpload(EventApi.landpageExpose, {
+          EventTool.instance.eventUpload(EventApi.landPageExpose, {
             EventParaName.value.name: apiPlatform == PlatformType.india
-                ? 'cSCCcAmHL'
-                : 'LlEFAXhIW',
-            EventParaName.linkSource.name: isDeepLink ? 'HuN' : 'ExzSkQi',
+                ? EventParaValue.cash.value
+                : EventParaValue.quick.value,
+            EventParaName.linkSource.name: isDeepLink
+                ? EventParaValue.delayLink.value
+                : EventParaValue.link.value,
             EventParaName.isFirstLink.name: !isFirst,
           });
           _refreshController.loadComplete();
@@ -190,7 +192,7 @@ class _DeepPageState extends State<DeepPage>
           if (refresh) {
             loadNetData();
           } else {
-            EventTool.instance.eventUpload(EventApi.landpageFail, {
+            EventTool.instance.eventUpload(EventApi.landPageFail, {
               EventParaName.value.name: 'request fail',
             });
             _refreshController.loadFailed();

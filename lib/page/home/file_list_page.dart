@@ -62,7 +62,7 @@ class _FileListPageState extends State<FileListPage> {
   Future requestNetworkData() async {
     HttpTool.getRequest(
       ApiKey.folder,
-      widget.platform == 0 ? PlatformType.india : PlatformType.east,
+      widget.platform == 0 ? PlatformType.india : PlatformType.middle,
       '/${widget.userId}/${widget.folderId}',
       true,
       para: {'page': '$page', 'pageSize': '20'},

@@ -47,6 +47,7 @@ class _TabPageState extends State<TabPage>
       state, {
       adsType,
       ad,
+      twoAd,
       sceneType,
     }) async {
       if (state == AdsState.showing && AdmobTool.scene == AdsSceneType.open) {
@@ -58,10 +59,21 @@ class _TabPageState extends State<TabPage>
           '',
           '',
         );
+        if (twoAd != null) {
+          ServiceTool.instance.getAdsValue(
+            ServiceEventName.advProfit,
+            apiPlatform,
+            twoAd,
+            '',
+            '',
+            '',
+          );
+        }
         if (adsType == AdsType.native) {
           Get.to(
             () => AdmobNativePage(
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.open,
             ),
           )?.then((result) {
@@ -69,16 +81,17 @@ class _TabPageState extends State<TabPage>
               AdsState.dismissed,
               adsType: AdsType.native,
               ad: ad,
+              doubleAd: twoAd,
               sceneType: sceneType ?? AdsSceneType.open,
             );
           });
         }
       }
       if (state == AdsState.dismissed && AdmobTool.scene == AdsSceneType.open) {
-        if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
+        if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
           openDeepPage();
         } else {
-          loadPlusAds();
+          loadPlusAds(adsType ?? AdsType.interstitial);
         }
       }
     });
@@ -87,10 +100,17 @@ class _TabPageState extends State<TabPage>
     });
   }
 
-  void loadPlusAds() async {
-    bool s = await AdmobTool.showAdsScreen(AdsSceneType.plus);
-    if (s == false) {
-      openDeepPage();
+  void loadPlusAds(AdsType type) async {
+    if (type == AdsType.rewarded) {
+      bool s = await AdmobTool.showAdsScreen(AdsSceneType.three);
+      if (s == false) {
+        openDeepPage();
+      }
+    } else {
+      bool s = await AdmobTool.showAdsScreen(AdsSceneType.plus);
+      if (s == false) {
+        openDeepPage();
+      }
     }
   }
 
@@ -103,18 +123,18 @@ class _TabPageState extends State<TabPage>
     // if (linkId.isEmpty) {
     //   return false;
     // }
-    // bool hasSIM = await ClockUtils.isSimCard();
+    // bool simHas = await ClockUtils.isSimCard();
     // if (isSimCard) {
-    //   if (hasSIM) {
+    //   if (simHas) {
     //     openSimDeep = !isSimLimit;
     //   } else {
     //     openSimDeep = isSimLimit;
     //   }
     // }
     //
-    // bool hasSimulator = await ClockUtils.isEmulator();
+    // bool simHasulator = await ClockUtils.isEmulator();
     // if (isEmulator) {
-    //   if (hasSimulator) {
+    //   if (simHasulator) {
     //     openSimulatorDeep = !isEmulatorLimit;
     //   } else {
     //     openSimulatorDeep = isEmulatorLimit;
@@ -142,24 +162,6 @@ class _TabPageState extends State<TabPage>
     // if (openSimDeep && openSimulatorDeep && openVpnDeep && openPadDeep) {
     //   return true;
     // } else {
-    //   String errInfo = '';
-    //   if (openSimDeep) {
-    //     errInfo = 'IdPV';
-    //     simResult = true;
-    //   } else if (openSimulatorDeep) {
-    //     errInfo = 'XruUbmtsYH';
-    //     simulatorResult = true;
-    //   } else if (openPadDeep) {
-    //     errInfo = 'FkykQLsMIl';
-    //     padResult = true;
-    //   } else {
-    //     errInfo = 'AISgdNtG';
-    //     vpnResult = true;
-    //   }
-    //   EventTool.instance.eventUpload(EventApi.landpageFail, {
-    //     EventParaName.value.name: errInfo,
-    //     EventParaName.linkIdLandPage.name: linkId,
-    //   });
     //   return false;
     // }
     return false; // remove
