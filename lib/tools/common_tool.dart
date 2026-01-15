@@ -44,8 +44,8 @@ class CommonTool {
 }
 
 enum PlatformType {
-  india('a'), // cashsnap
-  middle('b'); //quickearn
+  india('rafe'), // cashsnap
+  middle('demophil'); //quickearn
 
   final String name;
   const PlatformType(this.name);

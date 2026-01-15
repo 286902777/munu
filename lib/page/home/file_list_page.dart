@@ -127,7 +127,7 @@ class _FileListPageState extends State<FileListPage> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: navbar(),
-          body: Padding(padding: EdgeInsets.only(top: 12), child: listWidget()),
+          body: Padding(padding: EdgeInsets.only(top: 16), child: listWidget()),
         ),
       ),
     );
