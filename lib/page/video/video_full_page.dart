@@ -66,20 +66,20 @@ class _VideoFullPageState extends State<VideoFullPage> {
     widget.lists.forEach((m) {
       dataList.add(m);
     });
-    // for (VideoData m in dataList) {
-    //   if (m.recommend == 1) {
-    //     recommendList.add(m);
-    //   }
-    // }
-    // if (recommendList.isEmpty) {
-    //   try {
-    //     VideoData mod = dataList.firstWhere((m) => m.netMovie == 1);
-    //     _getChannel(mod);
-    //   } catch (_) {}
-    // } else {
-    //   resultUserId = recommendList.last.userId;
-    //   _loadUserInfo();
-    // }
+    for (VideoData m in dataList) {
+      if (m.recommend == 1) {
+        recommendList.add(m);
+      }
+    }
+    if (recommendList.isEmpty) {
+      try {
+        VideoData mod = dataList.firstWhere((m) => m.netMovie == 1);
+        _getChannel(mod);
+      } catch (_) {}
+    } else {
+      resultUserId = recommendList.last.userId;
+      _loadUserInfo();
+    }
   }
 
   Future<void> _getChannel(VideoData mod) async {

@@ -193,7 +193,7 @@ class _ChannelPageState extends State<ChannelPage>
   Future requestData() async {
     // uid: spasmodist channel_id:// varanger  link_id:// /pm57gqcgxs/norselled  version:// gangways
     if (loadRecommend) {
-      // loadRecommendInfo();
+      loadRecommendInfo();
     } else {
       if (noMoreData) {
         _refreshController.loadNoData();
@@ -221,19 +221,19 @@ class _ChannelPageState extends State<ChannelPage>
                 jsonEncode(model.user!.toJson()),
               );
             }
-            // if (model.files.length < pageSize) {
-            //   if (model.files.length < 5 && page == 1) {
-            //     randomUserId = user?.id;
-            //     loadRecommend = true;
-            //     loadRecommendInfo();
-            //   } else {
-            //     await loadUserListInfo(user?.id ?? '');
-            //   }
-            // }
-            // if (model.files.isNotEmpty) {
-            //   replaceData(model);
-            //   page = page + 1;
-            // }
+            if (model.files.length < pageSize) {
+              if (model.files.length < 5 && page == 1) {
+                randomUserId = user?.id;
+                loadRecommend = true;
+                loadRecommendInfo();
+              } else {
+                await loadUserListInfo(user?.id ?? '');
+              }
+            }
+            if (model.files.isNotEmpty) {
+              replaceData(model);
+              page = page + 1;
+            }
           }
           _refreshController.loadComplete();
         },

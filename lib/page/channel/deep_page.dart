@@ -123,7 +123,7 @@ class _DeepPageState extends State<DeepPage>
 
   Future loadNetData() async {
     if (loadRecommend) {
-      // loadRecommendInfo();
+      loadRecommendInfo();
     } else {
       if (noMoreData) {
         _refreshController.loadNoData();
@@ -161,15 +161,15 @@ class _DeepPageState extends State<DeepPage>
                 AppKey.save(AppKey.openDeepInstall, true);
               }
             }
-            // if (model.files.length < pageSize) {
-            //   if (model.files.length < 5 && page == 1) {
-            //     randomUserId = user?.id;
-            //     loadRecommend = true;
-            //     loadRecommendInfo();
-            //   } else {
-            //     await loadUserListInfo(userId);
-            //   }
-            // }
+            if (model.files.length < pageSize) {
+              if (model.files.length < 5 && page == 1) {
+                randomUserId = user?.id;
+                loadRecommend = true;
+                loadRecommendInfo();
+              } else {
+                await loadUserListInfo(userId);
+              }
+            }
             if (model.files.isNotEmpty) {
               replaceData(model);
               page = page + 1;
