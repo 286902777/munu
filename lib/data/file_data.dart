@@ -10,9 +10,9 @@ class FileData {
 
   factory FileData.fromJson(Map<String, dynamic> json) => FileData(
     files: List<FileListData>.from(
-      json["pastor"] != null
-          ? json["pastor"].map((x) => FileListData.fromJson(x))
-          : [],
+      json["urosomatic"] == null
+          ? []
+          : json["urosomatic"].map((x) => FileListData.fromJson(x)),
     ),
   );
 
@@ -26,7 +26,6 @@ class FileListData {
   int createTime;
   int updateTime;
   FolderFileMeta fileMeta;
-  FolderNamespace namespace;
   FolderDisPlayName disPlayName;
   bool finished;
   bool invalid;
@@ -41,7 +40,6 @@ class FileListData {
     required this.finished,
     required this.invalid,
     required this.fileMeta,
-    required this.namespace,
     required this.disPlayName,
     required this.directory,
     required this.video,
@@ -49,19 +47,16 @@ class FileListData {
   });
 
   factory FileListData.fromJson(Map<String, dynamic> json) => FileListData(
-    id: json["q6cs2hkmtg"] ?? '',
-    createTime: json["myoprotein"] ?? 0,
-    updateTime: json["wolfhounds"] ?? 0,
-    video: json["doctrinist"] ?? false,
-    vidQty: json["waxings"] ?? 0,
-    finished: json["dalesman"] ?? false,
-    invalid: json["metif"] ?? false,
-    directory: json["morgan"] ?? false,
-    fileMeta: FolderFileMeta.fromJson(json["akey"]),
-    namespace: FolderNamespace.fromJson(
-      json["immense"],
-    ), //tlvv7erulh/territelae
-    disPlayName: FolderDisPlayName.fromJson(json["sodomy"]), //fiberizes/uncanny
+    id: json["queans"] ?? '',
+    createTime: json["underward"] ?? 0,
+    updateTime: json["voigcgrgns"] ?? 0,
+    finished: json["leucyl"] ?? false,
+    invalid: json["knarl"] ?? false,
+    video: json["reclang"] ?? false,
+    vidQty: json["midribs"] ?? 0,
+    directory: json["cn2jdb0ogp"] ?? false,
+    fileMeta: FolderFileMeta.fromJson(json["omelette"]),
+    disPlayName: FolderDisPlayName.fromJson(json["tempyo"]), //tempyo/epithets
   );
 
   Map<String, dynamic> toJson() => {
@@ -70,9 +65,9 @@ class FileListData {
     "update_time": updateTime,
     "finished": finished,
     "invalid": invalid,
+    "video": video,
     "vid_qty": vidQty,
     "file_meta": fileMeta.toJson(),
-    "namespace": namespace.toJson(),
     "disPlayName": disPlayName.toJson(),
   };
 }
@@ -93,11 +88,11 @@ class FolderFileMeta {
   });
 
   factory FolderFileMeta.fromJson(Map<String, dynamic> json) => FolderFileMeta(
-    type: json["abubble"] ?? '',
-    extension: json["u"] ?? '',
-    thumbnail: json["byronics"] ?? '',
-    size: json["jabot"] ?? 0,
-    mimeType: json["oxtail"] ?? '',
+    type: json["zoraptera"] ?? '',
+    extension: json["drumline"] ?? '',
+    thumbnail: json["electrojet"] ?? '',
+    size: json["cowedly"] ?? 0,
+    mimeType: json["pastorize"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
@@ -110,68 +105,11 @@ class FolderFileMeta {
 }
 
 class FolderDisPlayName {
-  String ritchey;
-  FolderDisPlayName({required this.ritchey});
+  String epithets;
+  FolderDisPlayName({required this.epithets});
 
   factory FolderDisPlayName.fromJson(Map<String, dynamic> json) =>
-      FolderDisPlayName(ritchey: json["ritchey"] ?? '');
+      FolderDisPlayName(epithets: json["epithets"] ?? '');
 
-  Map<String, dynamic> toJson() => {"ritchey": ritchey};
-}
-
-class FolderNamespace {
-  Teachers teachers;
-  FolderNamespace({required this.teachers});
-
-  factory FolderNamespace.fromJson(Map<String, dynamic> json) =>
-      FolderNamespace(teachers: Teachers.fromJson(json["teachers"]));
-
-  Map<String, dynamic> toJson() => {"teachers": teachers.toJson()};
-}
-
-class Inducts {
-  String id;
-  int createTime;
-  String name;
-
-  Inducts({required this.id, required this.createTime, required this.name});
-
-  factory Inducts.fromJson(Map<String, dynamic> json) => Inducts(
-    id: json["q6cs2hkmtg"] ?? '',
-    createTime: json["myoprotein"] ?? 0,
-    name: json["fewer"] ?? '',
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "create_time": createTime,
-    "name": name,
-  };
-}
-
-class Teachers {
-  Inducts inducts;
-  int createTime;
-  String name;
-  String id;
-
-  Teachers({
-    required this.inducts,
-    required this.createTime,
-    required this.id,
-    required this.name,
-  });
-
-  Map<String, dynamic> toJson() => {
-    "inducts": inducts.toJson(),
-    "id": id,
-    "create_time": createTime,
-    "name": name,
-  };
-  factory Teachers.fromJson(Map<String, dynamic> json) => Teachers(
-    inducts: Inducts.fromJson(json["inducts"]),
-    id: json["q6cs2hkmtg"] ?? '',
-    createTime: json["myoprotein"] ?? 0,
-    name: json["fewer"] ?? '',
-  );
+  Map<String, dynamic> toJson() => {"epithets": epithets};
 }
