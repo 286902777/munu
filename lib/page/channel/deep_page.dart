@@ -711,12 +711,10 @@ class _DeepPageState extends State<DeepPage>
                 children: [
                   Positioned(
                     left: 0,
-                    bottom: 16,
-                    child: Image.asset(Assets.iconTitle, width: 40, height: 14),
+                    child: Image.asset(Assets.iconTitle, width: 20, height: 20),
                   ),
                   Positioned(
-                    left: 0,
-                    top: 8,
+                    left: 42,
                     child: Text(
                       'Recommend',
                       style: const TextStyle(

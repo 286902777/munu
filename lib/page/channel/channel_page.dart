@@ -712,13 +712,11 @@ class _ChannelPageState extends State<ChannelPage>
               child: Stack(
                 children: [
                   Positioned(
-                    left: 20,
-                    bottom: 16,
+                    left: 0,
                     child: Image.asset(Assets.iconTitle, width: 20, height: 20),
                   ),
                   Positioned(
-                    left: 46,
-                    top: 8,
+                    left: 42,
                     child: Text(
                       'Recommend',
                       style: const TextStyle(
