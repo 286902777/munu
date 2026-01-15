@@ -173,6 +173,9 @@ class _DeepPageState extends State<DeepPage>
             if (model.files.isNotEmpty) {
               replaceData(model);
               page = page + 1;
+            } else {
+              _refreshController.loadNoData();
+              noMoreData = true;
             }
           }
           bool isFirst = await AppKey.getBool(AppKey.isFirstLink) ?? false;

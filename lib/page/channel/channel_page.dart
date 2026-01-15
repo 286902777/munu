@@ -230,10 +230,13 @@ class _ChannelPageState extends State<ChannelPage>
             //     await loadUserListInfo(user?.id ?? '');
             //   }
             // }
-            // if (model.files.isNotEmpty) {
-            //   replaceData(model);
-            //   page = page + 1;
-            // }
+            if (model.files.isNotEmpty) {
+              replaceData(model);
+              page = page + 1;
+            } else {
+              _refreshController.loadNoData();
+              noMoreData = true;
+            }
           }
           _refreshController.loadComplete();
         },
