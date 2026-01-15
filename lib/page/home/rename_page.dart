@@ -216,7 +216,10 @@ class _RenamePageState extends State<RenamePage> {
                   type: ToastType.fail,
                 );
               } else {
-                ToastTool.show(message: "Rename successfully!");
+                ToastTool.show(
+                  message: "Rename successfully!",
+                  type: ToastType.success,
+                );
                 widget.model.name = _controller.text;
                 DataTool.instance.updateVideoData(widget.model);
                 Get.back();

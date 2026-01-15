@@ -16,7 +16,6 @@ import 'clear_alert_page.dart';
 
 class RecordPage extends StatefulWidget {
   const RecordPage({super.key});
-
   @override
   State<RecordPage> createState() => _RecordPageState();
 }
@@ -29,6 +28,22 @@ class _RecordPageState extends State<RecordPage> {
     TrackTool.instance.config();
     eventSource = ServiceEventSource.history;
     EventTool.instance.eventUpload(EventApi.historyExpose, null);
+  }
+
+  void showAlertPlay() {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // 点击背景是否关闭
+      builder: (context) => ClearAlertPage(),
+    ).then((result) {
+      if (result) {
+        for (VideoData m in DataTool.instance.historyItems) {
+          m.playTime = 0;
+          m.isHistory = 0;
+          DataTool.instance.updateVideoData(m);
+        }
+      }
+    });
   }
 
   @override
@@ -98,7 +113,7 @@ class _RecordPageState extends State<RecordPage> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    _displayAlert();
+                    showAlertPlay();
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -145,21 +160,5 @@ class _RecordPageState extends State<RecordPage> {
         ),
       ],
     );
-  }
-
-  void _displayAlert() {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // 点击背景是否关闭
-      builder: (context) => ClearAlertPage(),
-    ).then((result) {
-      if (result) {
-        for (VideoData m in DataTool.instance.historyItems) {
-          m.playTime = 0;
-          m.isHistory = 0;
-          DataTool.instance.updateVideoData(m);
-        }
-      }
-    });
   }
 }
