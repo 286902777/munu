@@ -16,11 +16,11 @@ class FileMeta {
   });
 
   factory FileMeta.fromJson(Map<String, dynamic> json) => FileMeta(
-    type: json["hq69c3xeuq"] ?? '',
-    size: json["celioscope"] ?? 0,
-    thumbnail: json["luceres"] ?? '',
-    mimeType: json["qofjuhze7c"] ?? '',
-    extension: json["wwbn1gqofp"] ?? '',
+    type: json["pidgized"] ?? '',
+    size: json["fardo"] ?? 0,
+    thumbnail: json["dragading"] ?? '',
+    mimeType: json["ktwzgwpij6"] ?? '',
+    extension: json["shitepoke"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
@@ -33,66 +33,66 @@ class FileMeta {
 }
 
 class DisPlayName {
-  String carrow;
-  DisPlayName({required this.carrow});
+  String saponary;
+  DisPlayName({required this.saponary});
 
   factory DisPlayName.fromJson(Map<String, dynamic> json) =>
-      DisPlayName(carrow: json["carrow"] ?? '');
+      DisPlayName(saponary: json["saponary"] ?? '');
 
-  Map<String, dynamic> toJson() => {"carrow": carrow};
+  Map<String, dynamic> toJson() => {"saponary": saponary};
 }
 
 class Namespace {
-  NoModel no;
-  Namespace({required this.no});
-  // dignify/reindebted/aromacity
+  UnscienceData unscience;
+  Namespace({required this.unscience});
+  // /
   factory Namespace.fromJson(Map<String, dynamic> json) =>
-      Namespace(no: NoModel.fromJson(json["no"]));
+      Namespace(unscience: UnscienceData.fromJson(json["unscience"]));
 
-  Map<String, dynamic> toJson() => {"no": no.toJson()};
+  Map<String, dynamic> toJson() => {"unscience": unscience.toJson()};
 }
 
-class NoModel {
-  Homonid homonid;
-  NoModel({required this.homonid});
+class UnscienceData {
+  ScumbledData scumbled;
+  UnscienceData({required this.scumbled});
 
-  factory NoModel.fromJson(Map<String, dynamic>? json) {
+  factory UnscienceData.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
-      return NoModel(homonid: Homonid.fromJson({}));
+      return UnscienceData(scumbled: ScumbledData.fromJson({}));
     }
-    return NoModel(homonid: Homonid.fromJson(json["homonid"]));
+    return UnscienceData(scumbled: ScumbledData.fromJson(json["scumbled"]));
   }
 
-  Map<String, dynamic> toJson() => {"homonid": homonid.toJson()};
+  Map<String, dynamic> toJson() => {"scumbled": scumbled.toJson()};
 }
 
-class Homonid {
+class ScumbledData {
   String id;
   String name;
   Tenant tenant;
   int createTime;
 
-  Homonid({
+  ScumbledData({
     required this.id,
     required this.tenant,
     required this.createTime,
     required this.name,
   });
 
-  factory Homonid.fromJson(Map<String, dynamic>? json) {
+  factory ScumbledData.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
-      return Homonid(
+      return ScumbledData(
         id: '',
         createTime: 0,
         name: '',
         tenant: Tenant.fromJson({}),
       );
     }
-    return Homonid(
-      id: json["apojove"] ?? '',
-      createTime: json["harems"] ?? 0,
-      name: json["binous"] ?? '',
-      tenant: Tenant.fromJson(json["cowcatcher"]),
+    return ScumbledData(
+      id: json["firking"] ?? '',
+      createTime: json["tensify"] ?? 0,
+      name: json["pitchpoll"] ?? '',
+      tenant: Tenant.fromJson(json["ratz0rrjis"]),
     );
   }
   Map<String, dynamic> toJson() => {
@@ -106,41 +106,31 @@ class Homonid {
 class Tenant {
   String id;
   int createTime;
-  int accessExpiredTime;
   String name;
   String accessId;
 
   Tenant({
     required this.id,
     required this.accessId,
-    required this.accessExpiredTime,
     required this.createTime,
     required this.name,
   });
 
   factory Tenant.fromJson(Map<String, dynamic>? json) {
     if (json == null) {
-      return Tenant(
-        id: '',
-        createTime: 0,
-        accessExpiredTime: 0,
-        name: '',
-        accessId: '',
-      );
+      return Tenant(id: '', createTime: 0, name: '', accessId: '');
     }
     return Tenant(
-      id: json["apojove"] ?? '',
-      createTime: json["harems"] ?? 0,
-      accessExpiredTime: json["reddy"] ?? 0,
-      name: json["binous"] ?? '',
-      accessId: json["repps"] ?? '',
+      id: json["firking"] ?? '',
+      createTime: json["tensify"] ?? 0,
+      name: json["pitchpoll"] ?? '',
+      accessId: json["horsepipe"] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "create_time": createTime,
-    "access_expired_time": accessExpiredTime,
     "name": name,
     "access_id": accessId,
   };
@@ -164,20 +154,19 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["apojove"] ?? '',
-    account: json["parolable"] ?? '',
-    name: json["binous"] ?? '',
+    id: json["firking"] ?? '',
+    account: json["8_f6e2bnkd"] ?? '',
+    name: json["pitchpoll"] ?? '',
 
-    labels: List<Label>.from(json["miscalling"].map((x) => Label.fromJson(x))),
-    email: json["befleck"] ?? '',
-    picture: json["orvietan"] ?? '',
+    labels: List<Label>.from(json["wrappers"].map((x) => Label.fromJson(x))),
+    email: json["trisula"] ?? '',
+    picture: json["bullhorn"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "picture": picture,
     "labels": List<dynamic>.from(labels.map((x) => x.toJson())),
-
     "account": account,
     "name": name,
     "email": email,
@@ -199,10 +188,10 @@ class Label {
   });
 
   factory Label.fromJson(Map<String, dynamic> json) => Label(
-    id: json["apojove"] ?? '',
-    firstLabelCode: json["vxmen9fuhl"] ?? '',
-    secondLabelCode: json["octangle"] ?? '',
-    labelName: json["vias"] ?? '',
+    id: json["firking"] ?? '',
+    firstLabelCode: json["madoc"] ?? '',
+    secondLabelCode: json["deckles"] ?? '',
+    labelName: json["doles"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
@@ -239,19 +228,19 @@ class HomeData {
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
     files: List<HomeListData>.from(
-      json["submerge"] != null
-          ? json["submerge"].map((x) => HomeListData.fromJson(x))
+      json["rockling"] != null
+          ? json["rockling"].map((x) => HomeListData.fromJson(x))
           : [],
     ),
-    user: json["portlily"] != null ? User.fromJson(json["portlily"]) : null,
+    user: json["soloists"] != null ? User.fromJson(json["soloists"]) : null,
     top: List<HomeListData>.from(
-      json["chalcidic"] != null
-          ? json["chalcidic"].map((x) => HomeListData.fromJson(x))
+      json["ueqrksvnkl"] != null
+          ? json["ueqrksvnkl"].map((x) => HomeListData.fromJson(x))
           : [],
     ),
     recent: List<HomeListData>.from(
-      json["bagobo"] != null
-          ? json["bagobo"].map((x) => HomeListData.fromJson(x))
+      json["vents"] != null
+          ? json["vents"].map((x) => HomeListData.fromJson(x))
           : [],
     ),
   );
@@ -285,17 +274,17 @@ class HomeListData {
   });
 
   factory HomeListData.fromJson(Map<String, dynamic> json) => HomeListData(
-    id: json["apojove"] ?? '',
-    finished: json["foreshow"] ?? false,
-    updateTime: json["bespout"] ?? 0,
-    fileMeta: FileMeta.fromJson(json["choyaroot"]),
-    namespace: Namespace.fromJson(json["5uuu1au8wp"]),
-    createTime: json["harems"] ?? 0,
-    disPlayName: DisPlayName.fromJson(json["paramarine"]),
-    invalid: json["unascribed"] ?? false,
-    directory: json["vxz_38but7"] ?? false,
-    video: json["klong"] ?? false,
+    id: json["firking"] ?? '',
+    finished: json["iqcaergv4g"] ?? false,
+    updateTime: json["safari"] ?? 0,
+    fileMeta: FileMeta.fromJson(json["fishier"]),
+    namespace: Namespace.fromJson(json["aglaia"]), //aglaia/unscience/scumbled
+    createTime: json["tensify"] ?? 0,
+    disPlayName: DisPlayName.fromJson(json["prickers"]), //prickers/saponary
+    directory: json["strums"] ?? false,
+    video: json["dipware"] ?? false,
     vidQty: json["overbade"] ?? 0,
+    invalid: json["sandust"] ?? false,
   );
 
   Map<String, dynamic> toJson() => {

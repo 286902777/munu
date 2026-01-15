@@ -204,7 +204,7 @@ class _DeepPageState extends State<DeepPage>
   void replaceModel(HomeData model) {
     for (HomeListData item in model.files) {
       VideoData videoM = VideoData(
-        name: item.disPlayName.carrow,
+        name: item.disPlayName.saponary,
         linkId: widget.linkId,
         movieId: item.id,
         size: CommonTool.instance.countFile(item.fileMeta.size),
@@ -227,7 +227,7 @@ class _DeepPageState extends State<DeepPage>
     if (page == 1) {
       for (HomeListData item in model.top) {
         VideoData videoM = VideoData(
-          name: item.disPlayName.carrow,
+          name: item.disPlayName.saponary,
           linkId: widget.linkId,
           movieId: item.id,
           size: CommonTool.instance.countFile(item.fileMeta.size),
@@ -244,7 +244,7 @@ class _DeepPageState extends State<DeepPage>
       }
       for (HomeListData item in model.recent) {
         VideoData videoM = VideoData(
-          name: item.disPlayName.carrow,
+          name: item.disPlayName.saponary,
           linkId: widget.linkId,
           movieId: item.id,
           size: CommonTool.instance.countFile(item.fileMeta.size),
@@ -333,7 +333,7 @@ class _DeepPageState extends State<DeepPage>
             }
             for (HomeListData item in model.files) {
               VideoData videoM = VideoData(
-                name: item.disPlayName.carrow,
+                name: item.disPlayName.saponary,
                 movieId: item.id,
                 size: CommonTool.instance.countFile(item.fileMeta.size),
                 ext: item.fileMeta.extension,
