@@ -253,7 +253,7 @@ class _ChannelPageState extends State<ChannelPage>
     if (model.files.isNotEmpty) {
       for (HomeListData item in model.files) {
         VideoData videoM = VideoData(
-          name: item.disPlayName.carrow,
+          name: item.disPlayName.saponary,
           movieId: item.id,
           size: CommonTool.instance.countFile(item.fileMeta.size),
           ext: item.fileMeta.extension,
@@ -274,7 +274,7 @@ class _ChannelPageState extends State<ChannelPage>
     if (page == 1) {
       for (HomeListData item in model.top) {
         VideoData videoM = VideoData(
-          name: item.disPlayName.carrow,
+          name: item.disPlayName.saponary,
           movieId: item.id,
           size: CommonTool.instance.countFile(item.fileMeta.size),
           ext: item.fileMeta.extension,
@@ -290,7 +290,7 @@ class _ChannelPageState extends State<ChannelPage>
       }
       for (HomeListData item in model.recent) {
         VideoData videoM = VideoData(
-          name: item.disPlayName.carrow,
+          name: item.disPlayName.saponary,
           movieId: item.id,
           size: CommonTool.instance.countFile(item.fileMeta.size),
           ext: item.fileMeta.extension,
@@ -378,7 +378,7 @@ class _ChannelPageState extends State<ChannelPage>
             }
             for (HomeListData item in model.files) {
               VideoData videoM = VideoData(
-                name: item.disPlayName.carrow,
+                name: item.disPlayName.saponary,
                 linkId: '',
                 movieId: item.id,
                 size: CommonTool.instance.countFile(item.fileMeta.size),

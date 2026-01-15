@@ -140,7 +140,7 @@ class _VideoListPageState extends State<VideoListPage> {
       ];
     }
     await HttpTool.recommendPostRequest(
-      ApiKey.playRecommend,
+      ApiKey.recommend,
       platform == 0 ? PlatformType.india : PlatformType.middle,
       isRequested ? (idsList.isNotEmpty ? true : false) : false,
       para: {

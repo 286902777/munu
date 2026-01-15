@@ -11,23 +11,29 @@ enum HttpState { success, fail, start, end }
 
 enum ApiKey {
   home(
-    'c',
-    '/v1/b/w/b',
-  ), // /v1/app/open/data  current_page:nitering page_size: prereport
+    'hagenia',
+    '/v1/quinina/ped_3sk9ej/gestalten',
+  ), // /v1/app/open/data  current_page:jills page_size: koan
   folder(
-    'bvx',
-    '/v1/sa/bx/sdf',
-  ), // /v1/app/open/file/{uid}/{dirId} current_page:meature page_size: shopmaid
-  video('bc', '/v1/se/bxbs/sfd'), // 视频资源/v1/app/download/file/{uid}/{fileId}
+    'ironhard',
+    '/v1/bombloads/snottiness/lungfish',
+  ), // /v1/app/open/file/{uid}/{dirId} current_page:kiaugh page_size: craterous
+  video(
+    'abhinaya',
+    '/v1/accruals/myst/lecanora',
+  ), // 视频资源/v1/app/download/file/{uid}/{fileId}
   userPools(
-    'bas',
-    '/v1/ta/bx',
+    'connexivum',
+    '/v1/dbmomb72af/kerogens',
   ), //拉取运营推荐数据 HTTP POST /v1/app/push_operation_pools
 
-  playRecommend('gx', '/v1/wg/bx'), //app端推荐接口 HTTP POST /v1/app/recommend
+  recommend(
+    'genre',
+    '/v1/feces/_xlk1rh_wl',
+  ), //app端推荐接口 HTTP POST /v1/app/recommend
 
-  report('ghnb', '/v1/x/gs'), //app违规举报事件  HTTP POST /v1/app/violate_report
-  event('bxd', '/v1/wt/bxsd'); //app端事件上报 HTTP POST  v1/app/events
+  // report('ghnb', '/v1/x/gs'), //app违规举报事件  HTTP POST /v1/app/violate_report
+  event('sewans', '/v1/hothouse/method'); //app端事件上报 HTTP POST  /v1/app/events
 
   final String headName;
   final String address;
@@ -95,7 +101,10 @@ class HttpTool extends GetConnect {
       Response response = await instance.get(
         '${api.address}$url',
         query: newPara,
-        headers: {'sd': api.headName, 'Content-Type': HttpTool.contentType},
+        headers: {
+          'uxorious': api.headName,
+          'Content-Type': HttpTool.contentType,
+        },
       );
       _handleResult(
         response.statusCode,
@@ -147,7 +156,10 @@ class HttpTool extends GetConnect {
       Response response = await instance.post(
         api.address,
         newPara,
-        headers: {'sdg': api.headName, 'Content-Type': HttpTool.contentType},
+        headers: {
+          'uxorious': api.headName,
+          'Content-Type': HttpTool.contentType,
+        },
       );
       _handleResult(
         response.statusCode,
@@ -195,7 +207,10 @@ class HttpTool extends GetConnect {
       Response response = await instance.post(
         api.address,
         newPara,
-        headers: {'sdga': api.headName, 'Content-Type': HttpTool.contentType},
+        headers: {
+          'uxorious': api.headName,
+          'Content-Type': HttpTool.contentType,
+        },
       );
       _handleResult(
         response.statusCode,
@@ -235,14 +250,13 @@ class HttpTool extends GetConnect {
     );
     try {
       Map<String, dynamic> newPara = {}..addAll(para ?? {});
-      // print(HttpTool.instance.sshToKey(jsonEncode([newPara])));
       Response response = await instance.post(
         ApiKey.event.address,
         {
-          'bsgsgs': HttpTool.instance.sshToKey(jsonEncode([newPara])),
+          'laridae': HttpTool.instance.sshToKey(jsonEncode([newPara])),
         },
         headers: {
-          'bxxx': ApiKey.event.headName,
+          'uxorious': ApiKey.event.headName,
           'Content-Type': HttpTool.contentType,
         },
       );

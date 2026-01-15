@@ -92,7 +92,7 @@ class _FileListPageState extends State<FileListPage> {
   void replaceModel(FileData model) {
     for (FileListData item in model.files) {
       VideoData videoM = VideoData(
-        name: item.disPlayName.ritchey,
+        name: item.disPlayName.epithets,
         linkId: widget.linkId,
         movieId: item.id,
         size: CommonTool.instance.countFile(item.fileMeta.size),

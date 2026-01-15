@@ -206,7 +206,7 @@ class _DeepPageState extends State<DeepPage>
   void replaceData(HomeData model) {
     for (HomeListData item in model.files) {
       VideoData videoM = VideoData(
-        name: item.disPlayName.carrow,
+        name: item.disPlayName.saponary,
         linkId: widget.linkId,
         movieId: item.id,
         size: CommonTool.instance.countFile(item.fileMeta.size),
@@ -229,7 +229,7 @@ class _DeepPageState extends State<DeepPage>
     if (page == 1) {
       for (HomeListData item in model.top) {
         VideoData videoM = VideoData(
-          name: item.disPlayName.carrow,
+          name: item.disPlayName.saponary,
           linkId: widget.linkId,
           movieId: item.id,
           size: CommonTool.instance.countFile(item.fileMeta.size),
@@ -246,7 +246,7 @@ class _DeepPageState extends State<DeepPage>
       }
       for (HomeListData item in model.recent) {
         VideoData videoM = VideoData(
-          name: item.disPlayName.carrow,
+          name: item.disPlayName.saponary,
           linkId: widget.linkId,
           movieId: item.id,
           size: CommonTool.instance.countFile(item.fileMeta.size),
@@ -335,7 +335,7 @@ class _DeepPageState extends State<DeepPage>
             }
             for (HomeListData item in model.files) {
               VideoData videoM = VideoData(
-                name: item.disPlayName.carrow,
+                name: item.disPlayName.saponary,
                 movieId: item.id,
                 size: CommonTool.instance.countFile(item.fileMeta.size),
                 ext: item.fileMeta.extension,
@@ -594,6 +594,13 @@ class _DeepPageState extends State<DeepPage>
     return Column(
       children: [
         Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(32),
+            ),
+            color: Colors.white,
+          ),
           alignment: Alignment.centerLeft,
           height: 70,
           padding: EdgeInsets.all(18),
@@ -634,12 +641,19 @@ class _DeepPageState extends State<DeepPage>
           ),
         ),
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: 12),
-            child: PageView(
-              controller: _controller,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [allContentView(), hotContentView(), newContentView()],
+          child: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.only(top: 12),
+              child: PageView(
+                controller: _controller,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  allContentView(),
+                  hotContentView(),
+                  newContentView(),
+                ],
+              ),
             ),
           ),
         ),
