@@ -4,7 +4,6 @@ import 'package:encrypt/encrypt.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:munu/tools/toast_tool.dart';
-
 import 'common_tool.dart';
 
 enum HttpState { success, fail, start, end }
@@ -63,6 +62,26 @@ class HttpTool extends GetConnect {
   List<String> india = ['https://api.xc.com', 'https://api.xs.com'];
 
   String hostUrl = '';
+
+  String sshToResult(String addressUrl) {
+    String baseStr = 'xT8bwhcjlL8ba9I0wCvSvjWAz6A==';
+    final token = Key.fromBase64(baseStr.substring(5));
+    // final key = Key.fromBase64('2QRaKUXg8Y/RqBPJJiAyVA==');
+    final result = Encrypter(AES(token, mode: AESMode.ecb));
+    return result.decrypt64(addressUrl);
+  }
+
+  String sshToKey(String text) {
+    String baseStr = 'bxlcNodheqTX1HbwVHWJyFGy0Gnt3qKUBgGD';
+    // String baseStr = 'gi29bkCXpPZnxCut7LohE6J1r5tHL75CwBMQU';
+
+    String offStr = 'xQlx2Xk4dLo38c9Z2Q2a';
+    final token = Key.fromUtf8(baseStr.substring(4));
+    final secret = IV.fromUtf8(offStr.substring(4));
+    final res = Encrypter(AES(token, mode: AESMode.cbc));
+    final bey = res.encrypt(text, iv: secret);
+    return bey.base64;
+  }
 
   void setHost(PlatformType? source) {
     hostUrl = source == PlatformType.india
@@ -184,7 +203,7 @@ class HttpTool extends GetConnect {
     }
   }
 
-  static recommendPostRequest(
+  static operationPostRequest(
     ApiKey api,
     PlatformType source,
     bool show, {
@@ -366,19 +385,19 @@ class HttpTool extends GetConnect {
         }
       }
     } else {
-      String retMsg = 'request failed!';
+      String message = 'request failed!';
       if (result != null) {
-        retMsg = result['msg'] ?? result['detail'] ?? 'request failed!';
+        message = result['msg'] ?? result['detail'] ?? 'request failed!';
       }
       if (failHandle != null) {
         bool newApi = HttpTool.instance.fixApiURLAddress(source);
-        failHandle(newApi, code ?? 404, retMsg);
+        failHandle(newApi, code ?? 404, message);
       }
       HttpTool.instance.noticeHttpListeners(
         key.address,
         HttpState.fail,
         code: code,
-        msg: retMsg,
+        msg: message,
       );
     }
   }
@@ -406,18 +425,18 @@ class HttpTool extends GetConnect {
     );
   }
 
-  static final Map<String, HttpStateListener> _listenersMap = {};
+  static final Map<String, HttpStateListener> _obserMap = {};
 
   static addListener(String key, HttpStateListener listener) {
-    _listenersMap[key] = listener;
+    _obserMap[key] = listener;
   }
 
   static removeListener(String key) {
-    _listenersMap.remove(key);
+    _obserMap.remove(key);
   }
 
   static removeAllListener() {
-    _listenersMap.clear();
+    _obserMap.clear();
     // ValueNotifier
   }
 
@@ -429,7 +448,7 @@ class HttpTool extends GetConnect {
     int? code,
     String? msg,
   }) {
-    _listenersMap.forEach((key, value) {
+    _obserMap.forEach((key, value) {
       value(
         url,
         httpState,
@@ -439,26 +458,5 @@ class HttpTool extends GetConnect {
         msg: msg,
       );
     });
-  }
-
-  String sshToResult(String videoAddress) {
-    String baseStr = 'xT8bwhcjlL8ba9I0wCvSvjWAz6A==';
-    final token = Key.fromBase64(baseStr.substring(5));
-    // final key = Key.fromBase64('2QRaKUXg8Y/RqBPJJiAyVA==');
-    final result = Encrypter(AES(token, mode: AESMode.ecb));
-    return result.decrypt64(videoAddress);
-  }
-
-  String sshToKey(String data) {
-    String baseStr = 'bxlcNodheqTX1HbwVHWJyFGy0Gnt3qKUBgGD';
-    // String tokenStr = 'gi29bkCXpPZnxCut7LohE6J1r5tHL75CwBMQU';
-
-    String offStr = 'xQlx2Xk4dLo38c9Z2Q2a';
-    final token = Key.fromUtf8(baseStr.substring(4));
-    final secret = IV.fromUtf8(offStr.substring(4));
-
-    final res = Encrypter(AES(token, mode: AESMode.cbc));
-    final bey = res.encrypt(data, iv: secret);
-    return bey.base64;
   }
 }

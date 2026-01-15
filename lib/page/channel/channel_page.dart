@@ -360,7 +360,7 @@ class _ChannelPageState extends State<ChannelPage>
   }
 
   Future loadRecommendInfo() async {
-    await HttpTool.recommendPostRequest(
+    await HttpTool.operationPostRequest(
       ApiKey.home,
       widget.platform,
       randomPage > 1,

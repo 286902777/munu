@@ -316,7 +316,7 @@ class _DeepPageState extends State<DeepPage>
   }
 
   Future loadRecommendInfo() async {
-    await HttpTool.recommendPostRequest(
+    await HttpTool.operationPostRequest(
       ApiKey.home,
       apiPlatform,
       randomPage > 1,
