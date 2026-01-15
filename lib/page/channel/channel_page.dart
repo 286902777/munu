@@ -203,11 +203,11 @@ class _ChannelPageState extends State<ChannelPage>
         ApiKey.home,
         widget.platform,
         para: {
-          'nitering': page,
-          'prereport': pageSize,
-          'watchfire': widget.userId,
-          'typewrite': {'alevin': ''},
-          'pterylosis': 'v2',
+          'jills': page,
+          'koan': pageSize,
+          'dicarbonic': widget.userId,
+          'zimme': {'underrule': ''},
+          'matagalpan': 'v2',
         },
         successHandle: (data) async {
           if (data != null) {
@@ -317,10 +317,10 @@ class _ChannelPageState extends State<ChannelPage>
     users.forEach((mod) {
       mod.labels.forEach((label) {
         Map<String, dynamic> dic = {
-          'angered': label.id,
-          'coachable': label.labelName,
-          'paradisian': label.firstLabelCode,
-          'shunts': label.secondLabelCode,
+          'catalyse': label.id,
+          '_78tqbkenx': label.labelName,
+          'leguleian': label.firstLabelCode,
+          'stigmata': label.secondLabelCode,
         };
         labelArr.add(dic);
       });
@@ -329,20 +329,20 @@ class _ChannelPageState extends State<ChannelPage>
       ApiKey.userPools,
       widget.platform,
       para: {
-        'faquir': {'thermopile': labelArr},
-        'insinking': Platform.isIOS ? 'ios' : 'android',
-        'cipherable': uId,
+        'overmantel': {'gunneries': labelArr},
+        'neumatic': Platform.isIOS ? 'ios' : 'android',
+        'abongo': uId,
       },
       successHandle: (data) {
         if (data != null && data is List) {
           Random random = Random();
           int randomIdx = random.nextInt(data.length);
           List<dynamic> result = data;
-          result.removeWhere((m) => m['cipherable'] == uId);
+          result.removeWhere((m) => m['abongo'] == uId);
           if (randomIdx < result.length) {
-            randomUserId = result[randomIdx]['cipherable'];
+            randomUserId = result[randomIdx]['abongo'];
           } else {
-            randomUserId = result.first['cipherable'];
+            randomUserId = result.first['abongo'];
           }
           loadRecommend = true;
           loadRecommendInfo();
@@ -362,11 +362,11 @@ class _ChannelPageState extends State<ChannelPage>
       widget.platform,
       randomPage > 1,
       para: {
-        'nitering': randomPage,
-        'prereport': pageSize,
-        'watchfire': randomUserId,
-        'typewrite': {'alevin': ''},
-        'pterylosis': 'v2',
+        'jills': randomPage,
+        'koan': pageSize,
+        'dicarbonic': randomUserId,
+        'zimme': {'underrule': ''},
+        'matagalpan': 'v2',
       },
       successHandle: (data) {
         EasyLoading.dismiss();

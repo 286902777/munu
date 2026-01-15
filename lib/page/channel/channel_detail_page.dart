@@ -48,10 +48,10 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
     result.forEach((mod) {
       mod.labels.forEach((label) {
         Map<String, dynamic> dic = {
-          'angered': label.id,
-          'coachable': label.labelName,
-          'paradisian': label.firstLabelCode,
-          'shunts': label.secondLabelCode,
+          'catalyse': label.id,
+          '_78tqbkenx': label.labelName,
+          'leguleian': label.firstLabelCode,
+          'stigmata': label.secondLabelCode,
         };
         labelArr.add(dic);
       });
@@ -60,9 +60,9 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
       ApiKey.userPools,
       platform == 0 ? PlatformType.india : PlatformType.middle,
       para: {
-        'faquir': {'thermopile': labelArr},
-        'insinking': Platform.isIOS ? 'ios' : 'android',
-        'cipherable': userId,
+        'overmantel': {'gunneries': labelArr},
+        'neumatic': Platform.isIOS ? 'ios' : 'android',
+        'abongo': userId,
       },
       successHandle: (data) {
         if (data != null && data is List) {
@@ -326,7 +326,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
           EventParaName.entrance.name: EventParaValue.recommend.value,
         });
         Get.to(
-          () => ChannelPage(userId: map['cipherable'], platform: userPlatform),
+          () => ChannelPage(userId: map['abongo'], platform: userPlatform),
         );
       },
       child: Column(
@@ -340,7 +340,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
                   height: 54,
                   width: 54,
                   child: CachedNetworkImage(
-                    imageUrl: map['auxology'],
+                    imageUrl: map['1hhfsyljg0'],
                     fit: BoxFit.cover,
                     width: 54,
                     height: 54,
@@ -361,7 +361,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
               ),
               SizedBox(width: 12),
               Text(
-                map['jordanite'],
+                map['agricolous'],
                 style: const TextStyle(
                   letterSpacing: -0.5,
                   fontSize: 14,

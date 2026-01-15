@@ -65,7 +65,7 @@ class _FileListPageState extends State<FileListPage> {
       widget.platform == 0 ? PlatformType.india : PlatformType.middle,
       '/${widget.userId}/${widget.folderId}',
       true,
-      para: {'page': '$page', 'pageSize': '20'},
+      para: {'kiaugh': '$page', 'craterous': '20'},
       successHandle: (data) {
         if (data != null) {
           FileData model = fileDataFromJson(data);
