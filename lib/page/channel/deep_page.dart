@@ -123,7 +123,7 @@ class _DeepPageState extends State<DeepPage>
 
   Future loadNetData() async {
     if (loadRecommend) {
-      loadRecommendInfo();
+      // loadRecommendInfo();
     } else {
       if (noMoreData) {
         _refreshController.loadNoData();
@@ -161,15 +161,15 @@ class _DeepPageState extends State<DeepPage>
                 AppKey.save(AppKey.openDeepInstall, true);
               }
             }
-            if (model.files.length < pageSize) {
-              if (model.files.length < 5 && page == 1) {
-                randomUserId = user?.id;
-                loadRecommend = true;
-                loadRecommendInfo();
-              } else {
-                await loadUserListInfo(userId);
-              }
-            }
+            // if (model.files.length < pageSize) {
+            //   if (model.files.length < 5 && page == 1) {
+            //     randomUserId = user?.id;
+            //     loadRecommend = true;
+            //     loadRecommendInfo();
+            //   } else {
+            //     await loadUserListInfo(userId);
+            //   }
+            // }
             if (model.files.isNotEmpty) {
               replaceData(model);
               page = page + 1;
@@ -399,7 +399,7 @@ class _DeepPageState extends State<DeepPage>
                   ),
                 ];
               },
-              body: contentView(),
+              body: ContentWidget(),
             ),
           ),
         ),
@@ -589,7 +589,7 @@ class _DeepPageState extends State<DeepPage>
     );
   }
 
-  Widget contentView() {
+  Widget ContentWidget() {
     return Column(
       children: [
         Container(
@@ -648,9 +648,9 @@ class _DeepPageState extends State<DeepPage>
                 controller: _controller,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  allContentView(),
-                  hotContentView(),
-                  newContentView(),
+                  allContentWidget(),
+                  hotContentWidget(),
+                  newContentWidget(),
                 ],
               ),
             ),
@@ -660,7 +660,7 @@ class _DeepPageState extends State<DeepPage>
     );
   }
 
-  Widget allContentView() {
+  Widget allContentWidget() {
     return RefreshConfiguration(
       hideFooterWhenNotFull: true,
       child: RefreshTool(
@@ -745,7 +745,7 @@ class _DeepPageState extends State<DeepPage>
     );
   }
 
-  Widget hotContentView() {
+  Widget hotContentWidget() {
     return Obx(
       () => ListView.builder(
         physics: NeverScrollableScrollPhysics(),
@@ -764,7 +764,7 @@ class _DeepPageState extends State<DeepPage>
     );
   }
 
-  Widget newContentView() {
+  Widget newContentWidget() {
     return Obx(
       () => ListView.builder(
         physics: NeverScrollableScrollPhysics(),
