@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:munu/common/clack_tool.dart';
 import 'package:munu/page/set/set_page.dart';
 import 'package:munu/page/upload/upload_page.dart';
-import 'package:munu/tools/event_tool.dart';
 import 'package:munu/tools/play_tool.dart';
 import 'package:munu/tools/service_tool.dart';
 
@@ -115,56 +115,55 @@ class _TabPageState extends State<TabPage>
   }
 
   Future<bool> checkClock(String linkId) async {
-    // bool openSimDeep = true;
-    // bool openSimulatorDeep = true;
-    // bool openVpnDeep = true;
-    // bool openPadDeep = true;
-    //
-    // if (linkId.isEmpty) {
-    //   return false;
-    // }
-    // bool simHas = await ClockUtils.isSimCard();
-    // if (isSimCard) {
-    //   if (simHas) {
-    //     openSimDeep = !isSimLimit;
-    //   } else {
-    //     openSimDeep = isSimLimit;
-    //   }
-    // }
-    //
-    // bool simHasulator = await ClockUtils.isEmulator();
-    // if (isEmulator) {
-    //   if (simHasulator) {
-    //     openSimulatorDeep = !isEmulatorLimit;
-    //   } else {
-    //     openSimulatorDeep = isEmulatorLimit;
-    //   }
-    // }
-    //
-    // bool hasPad = ClockUtils.isPad;
-    // if (isPad) {
-    //   if (hasPad) {
-    //     openPadDeep = !isPadLimit;
-    //   } else {
-    //     openPadDeep = isPadLimit;
-    //   }
-    // }
-    //
-    // bool hasVpn = await ClockUtils.isVpn();
-    // if (isVpn) {
-    //   if (hasVpn) {
-    //     openVpnDeep = !isVpnLimit;
-    //   } else {
-    //     openVpnDeep = isVpnLimit;
-    //   }
-    // }
-    //
-    // if (openSimDeep && openSimulatorDeep && openVpnDeep && openPadDeep) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-    return true; // remove
+    bool openSimDeep = true;
+    bool openSimulatorDeep = true;
+    bool openVpnDeep = true;
+    bool openPadDeep = true;
+
+    if (linkId.isEmpty) {
+      return false;
+    }
+    bool simHas = await ClackTool.isSimCard();
+    if (isSimCard) {
+      if (simHas) {
+        openSimDeep = !isSimLimit;
+      } else {
+        openSimDeep = isSimLimit;
+      }
+    }
+
+    bool simHasulator = await ClackTool.isEmulator();
+    if (isEmulator) {
+      if (simHasulator) {
+        openSimulatorDeep = !isEmulatorLimit;
+      } else {
+        openSimulatorDeep = isEmulatorLimit;
+      }
+    }
+
+    bool hasPad = ClackTool.isPad;
+    if (isPad) {
+      if (hasPad) {
+        openPadDeep = !isPadLimit;
+      } else {
+        openPadDeep = isPadLimit;
+      }
+    }
+
+    bool hasVpn = await ClackTool.isVpn();
+    if (isVpn) {
+      if (hasVpn) {
+        openVpnDeep = !isVpnLimit;
+      } else {
+        openVpnDeep = isVpnLimit;
+      }
+    }
+
+    if (openSimDeep && openSimulatorDeep && openVpnDeep && openPadDeep) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void openSelectIndex(int index) {
@@ -196,16 +195,15 @@ class _TabPageState extends State<TabPage>
   void openDeepPage() async {
     if (deepLink.isNotEmpty) {
       bool open = await checkClock(deepLink);
-      if (open == false) {
-        return;
+      if (open == true) {
+        Get.offAll(() => TabPage());
+        Get.to(() => DeepPage(linkId: deepLink))?.then((_) {
+          if (closeDeep == true) {
+            vipSource = VipSource.home;
+            PlayTool.showPrimunmPage(true);
+          }
+        });
       }
-      Get.offAll(() => TabPage());
-      Get.to(() => DeepPage(linkId: deepLink))?.then((_) {
-        if (closeDeep == true) {
-          vipSource = VipSource.home;
-          PlayTool.showPrimunmPage(true);
-        }
-      });
     }
   }
 

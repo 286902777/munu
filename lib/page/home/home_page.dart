@@ -489,7 +489,6 @@ class _HomePageState extends State<HomePage>
     return Column(
       children: [
         SizedBox(height: 8),
-
         Row(
           children: [
             SizedBox(width: 16),

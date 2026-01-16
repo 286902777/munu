@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:munu/common/tab_page.dart';
 import 'package:munu/tools/event_tool.dart';
 import 'package:munu/tools/service_tool.dart';
+import 'package:munu/vip/premium_tool.dart';
 
 import '../generated/assets.dart';
 import '../keys/app_key.dart';
@@ -201,10 +202,10 @@ class _LaunchPageState extends State<LaunchPage> {
     if (isVip == false) {
       requestAds();
     }
-    // UserVipTool.instance.restore(appStart: true);
-    // if (UserVipTool.instance.productResultList.value.isEmpty) {
-    //   await UserVipTool.instance.queryProductInfo();
-    // }
+    PremiumTool.instance.restore(appStart: true);
+    if (PremiumTool.instance.productResultList.value.isEmpty) {
+      await PremiumTool.instance.queryProductInfo();
+    }
   }
 
   void requestAds() async {

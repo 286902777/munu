@@ -300,17 +300,17 @@ class FireBaseTool {
       adsFile[AdsSceneType.plus.value] = adsPlusFile[AdsSceneType.plus.value];
       adsFile[AdsSceneType.three.value] = adsPlusFile[AdsSceneType.three.value];
 
-      // if (cflie.isNotEmpty) {
-      //   FireBaseTool.clockFile = jsonDecode(cflie);
-      //   isSimCard = FireBaseTool.clockFile['sim'];
-      //   isSimLimit = FireBaseTool.clockFile['simlimit'];
-      //   isEmulator = FireBaseTool.clockFile['emulator'];
-      //   isEmulatorLimit = FireBaseTool.clockFile['emulatorlimit'];
-      //   isPad = FireBaseTool.clockFile['pad'];
-      //   isPadLimit = FireBaseTool.clockFile['padlimit'];
-      //   isVpn = FireBaseTool.clockFile['vpn'];
-      //   isVpnLimit = FireBaseTool.clockFile['vpnlimit'];
-      // }
+      if (cflie.isNotEmpty) {
+        FireBaseTool.clockFile = jsonDecode(cflie);
+        isSimCard = FireBaseTool.clockFile['sim'];
+        isSimLimit = FireBaseTool.clockFile['sim_Limit'];
+        isEmulator = FireBaseTool.clockFile['emulator'];
+        isEmulatorLimit = FireBaseTool.clockFile['emulator_Limit'];
+        isPad = FireBaseTool.clockFile['pad'];
+        isPadLimit = FireBaseTool.clockFile['pad_Limit'];
+        isVpn = FireBaseTool.clockFile['vpn'];
+        isVpnLimit = FireBaseTool.clockFile['vpn_Limit'];
+      }
 
       if ((remote.getString(FireConfigKey.userVipName)).isNotEmpty) {
         userVipFile = jsonDecode(remote.getString(FireConfigKey.userVipName));

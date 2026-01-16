@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:applovin_max/applovin_max.dart' hide NativeAdListener;
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:munu/tools/service_tool.dart';
+import 'package:munu/vip/premium_tool.dart';
+import '../data/premium_data.dart';
+import '../keys/app_key.dart';
 import 'common_tool.dart';
 import 'event_tool.dart';
 import 'fire_base_tool.dart';
@@ -114,10 +117,10 @@ class AdmobTool {
     AdsSceneType sceneType, {
     int? levelIndex,
   }) async {
-    // bool isSVip = await AppKey.getBool(AppKey.isVipUser) ?? false;
-    // if (UserVipTool.instance.vipData.value.status != VipStatus.none || isSVip) {
-    //   return false;
-    // }
+    bool isPremium = await AppKey.getBool(AppKey.isVipUser) ?? false;
+    if (PremiumTool.instance.premiumData.value.status != PremiumStatus.none || isPremium) {
+      return {};
+    }
     if (levelIndex == null) {
       //重置请求index
       levelIndex = 0;
@@ -283,12 +286,11 @@ class AdmobTool {
   ///显示广告
   ///返回是否显示成功
   static Future<bool> showAdsScreen(AdsSceneType sceneType) async {
-    // //如果是vip则不展示广告
-    // bool isSVip = await AppKey.getBool(AppKey.isVipUser) ?? false;
-    // if (UserVipTool.instance.vipData.value.status != VipStatus.none || isSVip) {
-    //   return false;
-    // }
-
+    //如果是vip则不展示广告
+    bool isPremium = await AppKey.getBool(AppKey.isVipUser) ?? false;
+    if (PremiumTool.instance.premiumData.value.status != PremiumStatus.none || isPremium) {
+      return false;
+    }
     if (sceneType != AdsSceneType.plus) {
       AdmobTool.startLoadingPlus(AdsSceneType.plus);
     }
@@ -369,7 +371,7 @@ class AdmobTool {
       if (sceneType == AdsSceneType.plus) {
         resetDisplayTime();
       }
-      // AdmobTool.instance.showFailUpload(sceneType, 'UHdCR');
+      AdmobTool.instance.showFailUpload(sceneType, 'UHdCR');
       if (sceneType != AdsSceneType.middle) {
         EventTool.instance.eventUpload(EventApi.adNeedShow, {
           EventParaName.value.name: eventAdsSource.name,

@@ -125,10 +125,10 @@ packages:
     dependency: "direct main"
     description:
       name: connectivity_plus
-      sha256: "33bae12a398f841c6cda09d1064212957265869104c478e5ad51e2fb26c3973c"
+      sha256: b5e72753cf63becce2c61fd04dfe0f1c430cc5278b53a1342dc5ad839eab29ec
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "7.0.0"
+    version: "6.1.5"
   connectivity_plus_platform_interface:
     dependency: transitive
     description:
@@ -1032,6 +1032,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.4.1"
+  sim_reader:
+    dependency: "direct main"
+    description:
+      name: sim_reader
+      sha256: dd55844d6e8b15a1d433af3a190816883844c936af96baf3ae1dec5bf0396bf5
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1261,6 +1269,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.4.1"
+  vpn_detector:
+    dependency: "direct main"
+    description:
+      name: vpn_detector
+      sha256: ff46cb06bde58bfb5c0e465c0935a0e82bbc27355f57c01a22263aff788c51a3
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.2.0"
   wakelock_plus:
     dependency: "direct main"
     description:

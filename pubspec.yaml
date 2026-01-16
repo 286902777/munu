@@ -53,7 +53,7 @@ dependencies:
   image_picker: ^1.2.1
   flutter_easyloading: ^3.0.5
   shared_preferences: ^2.5.4
-  connectivity_plus: ^7.0.0
+  connectivity_plus: ^6.1.4
   url_launcher: ^6.3.2
   device_info_plus: ^12.3.0
   package_info_plus: ^9.0.0
@@ -70,6 +70,8 @@ dependencies:
   pull_to_refresh: ^2.0.0
   in_app_purchase: ^3.2.2 # 3.2.3 订阅状态不对
   in_app_purchase_storekit: 0.4.4 # 版本高了没有取消的回调
+  vpn_detector: ^1.2.0
+  sim_reader: ^1.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
