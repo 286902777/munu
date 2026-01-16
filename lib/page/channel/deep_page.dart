@@ -23,6 +23,7 @@ import '../../data/video_data.dart';
 import '../../generated/assets.dart';
 import '../../keys/app_key.dart';
 import '../../tools/common_tool.dart';
+import '../../vip/premium_page.dart';
 import '../home/file_list_page.dart';
 import '../home/home_cell.dart';
 import 'channel_page.dart';
@@ -494,18 +495,18 @@ class _DeepPageState extends State<DeepPage>
           );
         },
       ),
-      // actions: [
-      //   SizedBox(width: 10),
-      //   GestureDetector(
-      //     onTap: () {
-      //       vipMethod = VipMethod.click;
-      //       vipSource = VipSource.landPage;
-      //       Get.to(() => UserVipPage());
-      //     },
-      //     child: Image.asset(Assets.svipProNav, width: 54, height: 22),
-      //   ),
-      //   SizedBox(width: 12),
-      // ],
+      actions: [
+        SizedBox(width: 10),
+        GestureDetector(
+          onTap: () {
+            vipMethod = VipMethod.click;
+            vipSource = VipSource.landPage;
+            Get.to(() => PremiumPage());
+          },
+          child: Image.asset(Assets.channelPremiumPro, width: 62, height: 26),
+        ),
+        SizedBox(width: 12),
+      ],
     );
   }
 

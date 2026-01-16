@@ -8,6 +8,8 @@ class Assets {
   static const String channelPremiumAd = 'image/channel/premium_ad.webp';
   static const String channelPremiumHead = 'image/channel/premium_head.webp';
   static const String channelPremiumHot = 'image/channel/premium_hot.webp';
+  static const String channelPremiumLoad = 'image/channel/premium_load.webp';
+  static const String channelPremiumPop = 'image/channel/premium_pop.webp';
   static const String channelPremiumPro = 'image/channel/premium_pro.webp';
   static const String channelPremiumSel = 'image/channel/premium_sel.webp';
   static const String channelPremiumSpeed = 'image/channel/premium_speed.webp';

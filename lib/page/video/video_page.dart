@@ -9,6 +9,8 @@ import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:munu/page/video/video_full_page.dart';
 import 'package:munu/page/video/video_list_page.dart';
+import 'package:munu/vip/premium_page.dart';
+import 'package:munu/vip/premium_pop_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:volume_controller/volume_controller.dart';
@@ -16,6 +18,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../common/admob_native_page.dart';
 import '../../common/db_tool.dart';
+import '../../data/premium_data.dart';
 import '../../data/video_data.dart';
 import '../../generated/assets.dart';
 import '../../keys/app_key.dart';
@@ -25,6 +28,7 @@ import '../../tools/event_tool.dart';
 import '../../tools/http_tool.dart';
 import '../../tools/service_tool.dart';
 import '../../tools/toast_tool.dart';
+import '../../vip/premium_tool.dart';
 
 enum DragEvent { left, right, drag }
 
@@ -273,7 +277,7 @@ class _VideoPageState extends State<VideoPage>
       if (error.contains('Failed to open') == false) {
         return;
       }
-      // _removeSpeed();
+      _removeSpeed();
       EventTool.instance.eventUpload(EventApi.playFail, {
         EventParaName.value.name: error,
       });
@@ -402,7 +406,7 @@ class _VideoPageState extends State<VideoPage>
   @override
   void dispose() async {
     super.dispose();
-    // _removeSpeed();
+    _removeSpeed();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     isFullScreen = false;
@@ -611,10 +615,12 @@ class _VideoPageState extends State<VideoPage>
             color: Colors.black,
             child: Stack(
               children: [
-                // Center(child: Video(controller: controller, controls: null)), //remove activeStroy
-                Center(child: Video(controller: controller)),
+                Center(
+                  child: Video(controller: controller, controls: null),
+                ), //remove activeStroy
+                // Center(child: Video(controller: controller)),
                 videoWidget(),
-                // _appendSpeedWidget(),
+                _appendSpeedWidget(),
               ],
             ),
           ),
@@ -835,13 +841,17 @@ class _VideoPageState extends State<VideoPage>
               ),
 
               SizedBox(width: 8),
-              // GestureDetector(
-              //   onTap: () {
-              //     vipSource = VipSource.VideoPage;
-              //     _pushVipPage();
-              //   },
-              //   child: Image.asset(Assets.svipProNav, width: 54, height: 22),
-              // ),
+              GestureDetector(
+                onTap: () {
+                  vipSource = VipSource.playPage;
+                  _pushVipPage();
+                },
+                child: Image.asset(
+                  Assets.channelPremiumPro,
+                  width: 62,
+                  height: 26,
+                ),
+              ),
               SizedBox(width: orientation == Orientation.portrait ? 12 : 20),
             ],
           ),
@@ -1020,7 +1030,7 @@ class _VideoPageState extends State<VideoPage>
                 isLoadShow.value = true;
               }
               await player.play();
-              // _removeSpeed();
+              _removeSpeed();
             },
           ),
         ),
@@ -1303,102 +1313,106 @@ class _VideoPageState extends State<VideoPage>
     return duration.isNegative ? -duration : duration;
   }
 
-  // Widget _appendSpeedWidget() {
-  //   return Obx(
-  //     () => Visibility(
-  //       visible: isLoadShow.value,
-  //       child: Center(
-  //         child: ValueListenableBuilder(
-  //           valueListenable: UserVipTool.instance.vipData,
-  //           builder: (BuildContext context, VipData vip, Widget? child) {
-  //             return Column(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               crossAxisAlignment: CrossAxisAlignment.center,
-  //               children: [
-  //                 SizedBox(
-  //                   width: 24,
-  //                   height: 24,
-  //                   child: CircularProgressIndicator(
-  //                     color: Colors.white,
-  //                     strokeWidth: 2,
-  //                   ),
-  //                 ),
-  //                 SizedBox(height: 24),
-  //                 if (vip.status == VipStatus.none)
-  //                   Obx(
-  //                     () => Text(
-  //                       'Current line congestion… ${videoSpeed.value}kb/s',
-  //                       style: const TextStyle(
-  //                         letterSpacing: -0.5,
-  //                         fontSize: 14,
-  //                         color: Colors.white,
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 if (vip.status == VipStatus.none) SizedBox(height: 12),
-  //                 vip.status == VipStatus.none
-  //                     ? _userSpeedView()
-  //                     : _vipSpeedView(),
-  //               ],
-  //             );
-  //           },
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _appendSpeedWidget() {
+    return Obx(
+      () => Visibility(
+        visible: isLoadShow.value,
+        child: Center(
+          child: ValueListenableBuilder(
+            valueListenable: PremiumTool.instance.premiumData,
+            builder: (BuildContext context, PremiumData vip, Widget? child) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  if (vip.status == PremiumStatus.none)
+                    Obx(
+                      () => Text(
+                        'Current line congestion… ${videoSpeed.value}kb/s',
+                        style: const TextStyle(
+                          letterSpacing: -0.5,
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  if (vip.status == PremiumStatus.none) SizedBox(height: 12),
+                  vip.status == PremiumStatus.none
+                      ? _userSpeedView()
+                      : _vipSpeedView(),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
 
-  // Widget _userSpeedView() {
-  //   return SizedBox(
-  //     width: 262,
-  //     height: 38,
-  //     child: GestureDetector(
-  //       onTap: () {
-  //         vipSource = VipSource.accelerate;
-  //         _pushVipPage();
-  //       },
-  //       child: Container(
-  //         alignment: Alignment.center,
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(10),
-  //           color: Color(0xFFD4E4FF),
-  //         ),
-  //         child: Stack(
-  //           children: [
-  //             Positioned(
-  //               top: 3,
-  //               left: 23,
-  //               child: Image.asset(Assets.svipSvipSpeed, width: 32, height: 32),
-  //             ),
-  //             Positioned(
-  //               top: 10,
-  //               left: 63,
-  //               child: Text(
-  //                 'Exclusive acceleration line',
-  //                 style: const TextStyle(
-  //                   letterSpacing: -0.5,
-  //                   fontSize: 14,
-  //                   fontWeight: FontWeight.w500,
-  //                   color: Color(0xFF1B1B1B),
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _userSpeedView() {
+    return SizedBox(
+      width: 262,
+      height: 38,
+      child: GestureDetector(
+        onTap: () {
+          vipSource = VipSource.accelerate;
+          _pushVipPage();
+        },
+        child: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Color(0xFFFFFFFF),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 3,
+                left: 23,
+                child: Image.asset(
+                  Assets.channelPremiumLoad,
+                  width: 32,
+                  height: 32,
+                ),
+              ),
+              Positioned(
+                top: 10,
+                left: 63,
+                child: Text(
+                  'Exclusive acceleration line',
+                  style: const TextStyle(
+                    letterSpacing: -0.5,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF202020),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget _vipSpeedView() {
     return Container(
       height: 40,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Color(0xFFD4E4FF),
+        borderRadius: BorderRadius.circular(16),
+        color: Color(0xFFFFFFFF),
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+        padding: EdgeInsets.fromLTRB(36, 10, 36, 10),
         child: Text(
           'Loading extremely fast…',
           style: const TextStyle(
@@ -1452,9 +1466,9 @@ class _VideoPageState extends State<VideoPage>
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     await player.pause();
     isCurrentPage = false;
-    // Get.to(() => UserVipPage())?.then((_) async {
-    //   isCurrentPage = true;
-    // });
+    Get.to(() => PremiumPage())?.then((_) async {
+      isCurrentPage = true;
+    });
   }
 
   void _showAlertVipView() async {
@@ -1495,20 +1509,19 @@ class _VideoPageState extends State<VideoPage>
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
       isFullScreen = false;
     }
-    // Future.delayed(Duration(milliseconds: 500), () {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) => AlertUserVipPage(),
-    //   ).then((_) async {
-    //     isCurrentPage = true;
-    //   });
-    // });
+    Future.delayed(Duration(milliseconds: 500), () {
+      showDialog(context: context, builder: (context) => PremiumPopPage()).then(
+        (_) async {
+          isCurrentPage = true;
+        },
+      );
+    });
   }
 
   void _isShowSpeedView(VideoData model) async {
-    // if (UserVipTool.instance.vipData.value.status == VipStatus.vip) {
-    //   return;
-    // }
+    if (PremiumTool.instance.premiumData.value.status == PremiumStatus.vip) {
+      return;
+    }
     if (model.netMovie == 0) {
       return;
     }

@@ -17,6 +17,7 @@ import 'package:munu/tools/play_tool.dart';
 import 'package:munu/tools/refresh_tool.dart';
 import 'package:munu/tools/service_tool.dart';
 import 'package:munu/tools/toast_tool.dart';
+import 'package:munu/vip/premium_page.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../common/admob_native_page.dart';
@@ -490,17 +491,17 @@ class _ChannelPageState extends State<ChannelPage>
           ),
         ],
       ),
-      // actions: [
-      //   GestureDetector(
-      //     onTap: () {
-      //       vipMethod = VipMethod.click;
-      //       vipSource = VipSource.channelPage;
-      //       Get.to(() => UserVipPage());
-      //     },
-      //     child: Image.asset(Assets.svipProNav, width: 54, height: 22),
-      //   ),
-      //   SizedBox(width: 12),
-      // ],
+      actions: [
+        GestureDetector(
+          onTap: () {
+            vipMethod = VipMethod.click;
+            vipSource = VipSource.channelPage;
+            Get.to(() => PremiumPage());
+          },
+          child: Image.asset(Assets.channelPremiumPro, width: 62, height: 26),
+        ),
+        SizedBox(width: 12),
+      ],
     );
   }
 

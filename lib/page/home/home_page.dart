@@ -15,6 +15,7 @@ import 'package:munu/tools/network_tool.dart';
 import 'package:munu/tools/play_tool.dart';
 import 'package:munu/tools/service_tool.dart';
 import 'package:munu/tools/track_tool.dart';
+import 'package:munu/vip/premium_page.dart';
 
 import '../../common/db_tool.dart';
 import '../../data/video_data.dart';
@@ -206,18 +207,22 @@ class _HomePageState extends State<HomePage>
                     : _emptyWidget(),
               ),
             ),
-            // Positioned(
-            //   top: 9,
-            //   right: 12,
-            //   child: GestureDetector(
-            //     onTap: () {
-            //       vipMethod = VipMethod.click;
-            //       vipSource = VipSource.home;
-            //       Get.to(() => UserVipPage());
-            //     },
-            //     child: Image.asset(Assets.svipProNav, width: 54, height: 22),
-            //   ),
-            // ),
+            Positioned(
+              top: 7,
+              right: 12,
+              child: GestureDetector(
+                onTap: () {
+                  vipMethod = VipMethod.click;
+                  vipSource = VipSource.home;
+                  Get.to(() => PremiumPage());
+                },
+                child: Image.asset(
+                  Assets.channelPremiumPro,
+                  width: 62,
+                  height: 26,
+                ),
+              ),
+            ),
           ],
         ),
       ),
