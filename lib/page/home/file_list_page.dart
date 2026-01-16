@@ -70,7 +70,7 @@ class _FileListPageState extends State<FileListPage> {
         if (data != null) {
           FileData model = fileDataFromJson(data);
           if (model.files.isNotEmpty) {
-            replaceModel(model);
+            replaceDataInfo(model);
             page = page + 1;
           } else {
             _refreshController.loadNoData();
@@ -89,7 +89,7 @@ class _FileListPageState extends State<FileListPage> {
     );
   }
 
-  void replaceModel(FileData model) {
+  void replaceDataInfo(FileData model) {
     for (FileListData item in model.files) {
       VideoData videoM = VideoData(
         name: item.disPlayName.epithets,

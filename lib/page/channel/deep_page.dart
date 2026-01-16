@@ -381,31 +381,32 @@ class _DeepPageState extends State<DeepPage>
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: cusNavbar(),
-        body: Obx(
-          () => Visibility(
-            visible: allChange.value,
-            child: NestedScrollView(
-              controller: _scrollController,
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  SliverAppBar(
-                    expandedHeight: 80.0,
-                    pinned: false,
-                    floating: false,
-                    backgroundColor: Colors.transparent,
-                    leading: SizedBox(),
-                    flexibleSpace: FlexibleSpaceBar(
-                      title: headWidget(),
-                      expandedTitleScale: 1,
-                      titlePadding: EdgeInsetsDirectional.zero,
-                    ),
-                  ),
-                ];
-              },
-              body: ContentWidget(),
-            ),
-          ),
-        ),
+        body: _mainWidget(),
+        // body: Obx(
+        //   () => Visibility(
+        //     visible: allChange.value,
+        //     child: NestedScrollView(
+        //       controller: _scrollController,
+        //       headerSliverBuilder: (context, innerBoxIsScrolled) {
+        //         return [
+        //           SliverAppBar(
+        //             expandedHeight: 80.0,
+        //             pinned: false,
+        //             floating: false,
+        //             backgroundColor: Colors.transparent,
+        //             leading: SizedBox(),
+        //             flexibleSpace: FlexibleSpaceBar(
+        //               title: headWidget(),
+        //               expandedTitleScale: 1,
+        //               titlePadding: EdgeInsetsDirectional.zero,
+        //             ),
+        //           ),
+        //         ];
+        //       },
+        //       body: ContentWidget(),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
@@ -429,73 +430,49 @@ class _DeepPageState extends State<DeepPage>
           ),
         ],
       ),
-      title: ValueListenableBuilder(
-        valueListenable: _onOffSet,
-        builder: (BuildContext context, offSet, Widget? child) {
-          double rate = offSet;
-          if (rate > 1) {
-            rate = 1;
+      title: GestureDetector(
+        onTap: () {
+          if (userId.isNotEmpty) {
+            channelSource = ChannelSource.landpage_avtor;
+            Get.to(() => ChannelPage(userId: userId, platform: apiPlatform));
           }
-          return Opacity(
-            opacity: rate < 0.5 ? 0 : rate,
-            child: GestureDetector(
-              onTap: () {
-                if (userId.isNotEmpty) {
-                  channelSource = ChannelSource.landpage_avtor;
-                  Get.to(
-                    () => ChannelPage(userId: userId, platform: apiPlatform),
-                  );
-                }
-              },
-              child: Container(
-                color: Colors.transparent,
-                child: Obx(
-                  () => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                        child: CachedNetworkImage(
-                          imageUrl: userInfoChange.value
-                              ? user?.picture ?? ''
-                              : '',
-                          fit: BoxFit.cover,
-                          width: 24,
-                          height: 24,
-                          placeholder: (context, url) => Image.asset(
-                            Assets.channelAvatar,
-                            width: 24,
-                            height: 24,
-                          ),
-                          errorWidget: (context, url, error) => Image.asset(
-                            Assets.channelAvatar,
-                            width: 24,
-                            height: 24,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Flexible(
-                        child: Text(
-                          userInfoChange.value ? user?.name ?? '' : '',
-                          style: const TextStyle(
-                            letterSpacing: -0.5,
-                            fontSize: 16,
-                            color: Color(0xFF03011A),
-                          ),
-                          maxLines: 1,
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      Image.asset(Assets.channelUp, width: 16, height: 16),
-                    ],
-                  ),
+        },
+        child: Container(
+          color: Colors.transparent,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                child: CachedNetworkImage(
+                  imageUrl: userInfoChange.value ? user?.picture ?? '' : '',
+                  fit: BoxFit.cover,
+                  width: 24,
+                  height: 24,
+                  placeholder: (context, url) =>
+                      Image.asset(Assets.channelAvatar, width: 24, height: 24),
+                  errorWidget: (context, url, error) =>
+                      Image.asset(Assets.channelAvatar, width: 24, height: 24),
                 ),
               ),
-            ),
-          );
-        },
+              SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  userInfoChange.value ? user?.name ?? '' : '',
+                  style: const TextStyle(
+                    letterSpacing: -0.5,
+                    fontSize: 16,
+                    color: Color(0xFF03011A),
+                  ),
+                  maxLines: 1,
+                ),
+              ),
+              SizedBox(width: 8),
+              Image.asset(Assets.channelUp, width: 16, height: 16),
+            ],
+          ),
+        ),
       ),
       // actions: [
       //   SizedBox(width: 10),
@@ -512,87 +489,87 @@ class _DeepPageState extends State<DeepPage>
     );
   }
 
-  Widget headWidget() {
-    return ValueListenableBuilder(
-      valueListenable: _onOffSet,
-      builder: (BuildContext context, offSet, Widget? child) {
-        double rate = offSet;
-        if (rate > 1) {
-          rate = 1;
-        }
-        return Opacity(
-          opacity: 1 - rate,
-          child: Container(
-            padding: EdgeInsetsDirectional.fromSTEB(
-              16 + 128 * rate,
-              8,
-              16 + 128 * rate,
-              24,
-            ),
-            color: Colors.transparent,
-            alignment: Alignment.centerLeft,
-            child: Obx(
-              () => GestureDetector(
-                onTap: () {
-                  if (userId.isNotEmpty) {
-                    channelSource = ChannelSource.landpage_avtor;
-                    Get.to(
-                      () => ChannelPage(userId: userId, platform: apiPlatform),
-                    );
-                  }
-                },
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(24 - 12 * rate),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: userInfoChange.value
-                            ? user?.picture ?? ''
-                            : '',
-                        fit: BoxFit.cover,
-                        width: 48 - 24 * rate,
-                        height: 48 - 24 * rate,
-                        placeholder: (context, url) => Image.asset(
-                          Assets.iconAvatar,
-                          width: 48 - 24 * rate,
-                          height: 48 - 24 * rate,
-                        ),
+  // Widget headWidget() {
+  //   return ValueListenableBuilder(
+  //     valueListenable: _onOffSet,
+  //     builder: (BuildContext context, offSet, Widget? child) {
+  //       double rate = offSet;
+  //       if (rate > 1) {
+  //         rate = 1;
+  //       }
+  //       return Opacity(
+  //         opacity: 1 - rate,
+  //         child: Container(
+  //           padding: EdgeInsetsDirectional.fromSTEB(
+  //             16 + 128 * rate,
+  //             8,
+  //             16 + 128 * rate,
+  //             24,
+  //           ),
+  //           color: Colors.transparent,
+  //           alignment: Alignment.centerLeft,
+  //           child: Obx(
+  //             () => GestureDetector(
+  //               onTap: () {
+  //                 if (userId.isNotEmpty) {
+  //                   channelSource = ChannelSource.landpage_avtor;
+  //                   Get.to(
+  //                     () => ChannelPage(userId: userId, platform: apiPlatform),
+  //                   );
+  //                 }
+  //               },
+  //               child: Row(
+  //                 children: [
+  //                   ClipRRect(
+  //                     borderRadius: BorderRadius.all(
+  //                       Radius.circular(24 - 12 * rate),
+  //                     ),
+  //                     child: CachedNetworkImage(
+  //                       imageUrl: userInfoChange.value
+  //                           ? user?.picture ?? ''
+  //                           : '',
+  //                       fit: BoxFit.cover,
+  //                       width: 48 - 24 * rate,
+  //                       height: 48 - 24 * rate,
+  //                       placeholder: (context, url) => Image.asset(
+  //                         Assets.iconAvatar,
+  //                         width: 48 - 24 * rate,
+  //                         height: 48 - 24 * rate,
+  //                       ),
+  //
+  //                       errorWidget: (context, url, error) => Image.asset(
+  //                         Assets.iconAvatar,
+  //                         width: 48 - 24 * rate,
+  //                         height: 48 - 24 * rate,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   SizedBox(width: 12),
+  //                   Flexible(
+  //                     child: Text(
+  //                       userInfoChange.value ? user?.name ?? '' : '',
+  //                       style: const TextStyle(
+  //                         letterSpacing: -0.5,
+  //                         fontSize: 18,
+  //                         color: Color(0xFF03011A),
+  //                         overflow: TextOverflow.ellipsis,
+  //                       ),
+  //                       maxLines: 1,
+  //                     ),
+  //                   ),
+  //                   SizedBox(width: 4),
+  //                   Image.asset(Assets.iconMore, width: 16, height: 16),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
-                        errorWidget: (context, url, error) => Image.asset(
-                          Assets.iconAvatar,
-                          width: 48 - 24 * rate,
-                          height: 48 - 24 * rate,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    Flexible(
-                      child: Text(
-                        userInfoChange.value ? user?.name ?? '' : '',
-                        style: const TextStyle(
-                          letterSpacing: -0.5,
-                          fontSize: 18,
-                          color: Color(0xFF03011A),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        maxLines: 1,
-                      ),
-                    ),
-                    SizedBox(width: 4),
-                    Image.asset(Assets.iconMore, width: 16, height: 16),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget ContentWidget() {
+  Widget _mainWidget() {
     return Column(
       children: [
         Container(
