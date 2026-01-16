@@ -1,3 +1,5 @@
+import 'package:munu/data/premium_data.dart';
+
 class CommonTool {
   static CommonTool instance = CommonTool();
 
@@ -189,4 +191,4 @@ Function(int index)? clickTabItem;
 
 Function()? pushDeepPageInfo;
 
-// Function(VipData mod, bool isPay)? vipDoneBlock;
+Function(PremiumData data, bool isPay)? premiumDoneBlock;

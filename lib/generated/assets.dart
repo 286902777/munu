@@ -5,7 +5,16 @@ class Assets {
   static const String channelAvatar = 'image/channel/avatar.webp';
   static const String channelDown = 'image/channel/down.webp';
   static const String channelHot = 'image/channel/hot.webp';
+  static const String channelPremiumAd = 'image/channel/premium_ad.webp';
+  static const String channelPremiumHead = 'image/channel/premium_head.webp';
+  static const String channelPremiumHot = 'image/channel/premium_hot.webp';
+  static const String channelPremiumPro = 'image/channel/premium_pro.webp';
+  static const String channelPremiumSel = 'image/channel/premium_sel.webp';
+  static const String channelPremiumSpeed = 'image/channel/premium_speed.webp';
+  static const String channelPremiumSuc = 'image/channel/premium_suc.webp';
+  static const String channelPremiumUnsel = 'image/channel/premium_unsel.webp';
   static const String channelRecommend = 'image/channel/recommend.webp';
+  static const String channelRightArrow = 'image/channel/right_arrow.webp';
   static const String channelUp = 'image/channel/up.webp';
   static const String iconAlertBg = 'image/icon/alert_bg.webp';
   static const String iconAvatar = 'image/icon/avatar.webp';
