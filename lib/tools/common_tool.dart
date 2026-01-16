@@ -115,8 +115,8 @@ AdmobSource eventAdsSource = AdmobSource.coldOpen;
 
 String appLinkId = '';
 String deepLink = '';
-String app_Name = 'Test';
-String app_Bunlde_Id = 'com.am';
+String app_Name = 'Lens';
+String app_Bunlde_Id = 'com.lens.videoapp';
 bool isFullScreen = false;
 bool isDeepComment = false;
 String playFileId = '';
