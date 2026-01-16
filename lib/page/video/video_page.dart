@@ -63,7 +63,7 @@ class _VideoPageState extends State<VideoPage>
   var isLoadShow = false.obs;
   var isEnd = false.obs;
   bool isAutoLoadShow = false;
-  bool isCurrentPage = true;
+  bool isCurrentVC = true;
   bool isBackPage = false;
 
   var videoSpeed = 0.obs;
@@ -244,7 +244,7 @@ class _VideoPageState extends State<VideoPage>
               await AppKey.getInt(AppKey.middlePlayCount) ?? 0;
           if (middlePlayCount == AdmobTool.instance.middlePlayIdx) {
             eventAdsSource = AdmobSource.play;
-            if (isCurrentPage && AdmobTool.adsState != AdsState.showing) {
+            if (isCurrentVC && AdmobTool.adsState != AdsState.showing) {
               bool suc = await AdmobTool.showAdsScreen(AdsSceneType.middle);
               if (suc) {
                 await AppKey.save(AppKey.middlePlayCount, 0);
@@ -257,7 +257,7 @@ class _VideoPageState extends State<VideoPage>
         if (position.inSeconds.toInt() > 1 &&
             position.inSeconds.toInt() % AdmobTool.instance.playShowTime == 0) {
           eventAdsSource = AdmobSource.playTen;
-          if (isCurrentPage) {
+          if (isCurrentVC) {
             bool suc = await AdmobTool.showAdsScreen(AdsSceneType.play);
             if (suc) {
               player.pause();
@@ -289,7 +289,7 @@ class _VideoPageState extends State<VideoPage>
       twoAd,
       sceneType,
     }) async {
-      if (isCurrentPage == false) {
+      if (isCurrentVC == false) {
         return;
       }
       if (state == AdsState.showing && AdmobTool.scene == AdsSceneType.middle) {
@@ -428,7 +428,7 @@ class _VideoPageState extends State<VideoPage>
     if (isBackPage) {
       return;
     }
-    if (isCurrentPage) {
+    if (isCurrentVC) {
       await AdmobTool.showAdsScreen(AdsSceneType.play);
     }
 
@@ -1426,7 +1426,7 @@ class _VideoPageState extends State<VideoPage>
           isAutoLoadShow = false;
           isLoadShow.value = false;
           speedTimer?.cancel();
-          if (isCurrentPage) {
+          if (isCurrentVC) {
             if (isPlay.value == false) {
               await player.play();
             }
@@ -1441,7 +1441,7 @@ class _VideoPageState extends State<VideoPage>
       isAutoLoadShow = false;
       isLoadShow.value = false;
       speedTimer?.cancel();
-      if (isCurrentPage) {
+      if (isCurrentVC) {
         await player.play();
       }
     }
@@ -1451,9 +1451,9 @@ class _VideoPageState extends State<VideoPage>
     vipMethod = VipMethod.click;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     await player.pause();
-    isCurrentPage = false;
+    isCurrentVC = false;
     // Get.to(() => UserVipPage())?.then((_) async {
-    //   isCurrentPage = true;
+    //   isCurrentVC = true;
     // });
   }
 
@@ -1482,7 +1482,7 @@ class _VideoPageState extends State<VideoPage>
       DateTime.now().millisecondsSinceEpoch.toInt(),
     );
     await AppKey.save(AppKey.vipAlertShowCount, (showCount ?? 0) + 1);
-    isCurrentPage = false;
+    isCurrentVC = false;
     vipSource = VipSource.ad;
     vipMethod = VipMethod.auto;
     vipType = VipType.popup;
@@ -1500,7 +1500,7 @@ class _VideoPageState extends State<VideoPage>
     //     context: context,
     //     builder: (context) => AlertUserVipPage(),
     //   ).then((_) async {
-    //     isCurrentPage = true;
+    //     isCurrentVC = true;
     //   });
     // });
   }
