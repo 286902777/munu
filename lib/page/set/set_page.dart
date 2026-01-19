@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../common/web_page.dart';
 import '../../generated/assets.dart';
+import '../../tools/common_tool.dart';
 
 class SetPage extends StatefulWidget {
   const SetPage({super.key});
@@ -158,9 +159,9 @@ class _SetPageState extends State<SetPage>
         openEmail();
       // MobileAds.instance.openAdInspector((error) {});
       case 1:
-        Get.to(() => (WebPage(name: '', link: 'https://s.com/terms/')));
+        Get.to(() => (WebPage(name: '', link: appTerms)));
       default:
-        Get.to(() => (WebPage(name: '', link: 'https://s.com/privacy/')));
+        Get.to(() => (WebPage(name: '', link: appPrivacy)));
     }
   }
 }

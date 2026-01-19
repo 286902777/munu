@@ -138,6 +138,10 @@ bool isEmulatorLimit = false;
 bool isPadLimit = false;
 bool isVpnLimit = false;
 
+String appTerms = 'https://lensvids.com/terms/';
+
+String appPrivacy = 'https://lensvids.com/privacy/';
+
 Function()? clickNativeAction;
 
 Function(int index)? clickTabItem;
