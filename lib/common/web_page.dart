@@ -32,21 +32,20 @@ class _WebPageState extends State<WebPage> {
         top: false,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: navbar(),
+          appBar: cusNavbar(),
           body: WebViewWidget(controller: _controller),
         ),
       ),
     );
   }
 
-  AppBar navbar() {
+  AppBar cusNavbar() {
     return AppBar(
       backgroundColor: Colors.transparent,
       leading: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               Get.back();

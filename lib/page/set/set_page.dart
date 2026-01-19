@@ -54,7 +54,7 @@ class _SetPageState extends State<SetPage>
   void didPushNext() {}
 
   void openEmail() async {
-    String email = 'xxxx@outlook.com';
+    String email = 'spomunityli@outlook.com';
     launchUrl(Uri(scheme: 'mailto', path: email));
   }
 
@@ -158,8 +158,7 @@ class _SetPageState extends State<SetPage>
         openEmail();
       // MobileAds.instance.openAdInspector((error) {});
       case 1:
-        print("ssss");
-        Get.to(() => (WebPage(name: '', link: 'https://s/terms/')));
+        Get.to(() => (WebPage(name: '', link: 'https://s.com/terms/')));
       default:
         Get.to(() => (WebPage(name: '', link: 'https://s.com/privacy/')));
     }

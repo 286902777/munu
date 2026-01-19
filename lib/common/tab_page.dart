@@ -221,10 +221,10 @@ class _TabPageState extends State<TabPage>
               boxShadow: [
                 // 外部阴影
                 BoxShadow(
-                  color: Color(0x1F000000),
+                  color: Color(0x0F000000),
                   spreadRadius: 2,
-                  blurRadius: 6,
-                  offset: Offset(0, -3),
+                  blurRadius: 2,
+                  offset: Offset(0, -2),
                 ),
               ],
               borderRadius: BorderRadius.all(Radius.circular(24)),

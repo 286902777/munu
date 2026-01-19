@@ -142,6 +142,7 @@ class _RecordCellState extends State<RecordCell> {
                           color: Color(0xFF03011A),
                         ),
                         maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 8),
                       Text(
@@ -151,9 +152,9 @@ class _RecordCellState extends State<RecordCell> {
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           color: Color(0xFF595959),
-                          overflow: TextOverflow.ellipsis,
                         ),
                         maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
