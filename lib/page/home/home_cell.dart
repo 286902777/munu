@@ -95,9 +95,9 @@ class _HomeCellState extends State<HomeCell> {
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: Color(0xFF595959),
-                        overflow: TextOverflow.ellipsis,
                       ),
                       maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Spacer(),
                     if (widget.model.fileType != 2 &&
