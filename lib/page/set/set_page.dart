@@ -28,7 +28,6 @@ class _SetPageState extends State<SetPage>
     'Terms of Service',
     'Privacy Policy',
   ];
-  var appName = ''.obs;
   var version = ''.obs;
 
   @override
@@ -38,7 +37,6 @@ class _SetPageState extends State<SetPage>
   void initState() {
     super.initState();
     pageInfo().then((info) {
-      appName.value = info.appName;
       version.value = info.version;
     });
   }
