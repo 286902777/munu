@@ -45,7 +45,7 @@ class _HomeListCellState extends State<HomeListCell> {
                 Positioned(
                   left: 26,
                   child: Text(
-                    'Collection',
+                    'Video',
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontWeight: FontWeight.w500,
