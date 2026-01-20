@@ -436,8 +436,8 @@ class DefaultOptions {
       );
     }
     switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        return android;
+      // case TargetPlatform.android:
+      //   return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -462,20 +462,20 @@ class DefaultOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'sdfsaas',
-    appId: '1:sdfasfasdf',
-    projectId: 'xxabaasx',
-    storageBucket: 'sdfasdfa.app',
-    messagingSenderId: '1483151234',
-  );
+  // static const FirebaseOptions android = FirebaseOptions(
+  //   apiKey: 'sdfssaas',
+  //   appId: '1:sdfassdgfasdf',
+  //   projectId: 'xxabssaasx',
+  //   storageBucket: 'sdfaffsdfa.app',
+  //   messagingSenderId: '138415123',
+  // );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'ixislU',
-    appId: '1:425762359418:ios:b360724235225b96e863',
+    apiKey: 'ixsx124124sislU',
+    appId: '1:522459418:ios:b360724235225b96e863',
     projectId: 'lens-ios-734dd',
-    iosBundleId: 'com.lens.oxs',
+    iosBundleId: 'com.lens.videoapp',
     storageBucket: 'lens-ios-754dd.firebaxge.app',
-    messagingSenderId: '429418',
+    messagingSenderId: '1429418',
   );
 }
