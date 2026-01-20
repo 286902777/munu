@@ -13,7 +13,6 @@ import 'package:flutter/foundation.dart'
         FlutterErrorDetails,
         TargetPlatform,
         defaultTargetPlatform,
-        kDebugMode,
         kIsWeb;
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:munu/tools/event_tool.dart';
@@ -43,7 +42,6 @@ class FireConfigKey {
   static String nativeTimeKey = 'nativeTimeKey';
   // 原生广告关闭机率
   static String nativeClickKey = 'nativeClickKey';
-
   // 原生广告显示时长
   static String doubleNativeTimeKey = 'doubleNativeTimeKey';
   // 原生广告关闭机率
@@ -71,15 +69,15 @@ class FireConfigKey {
 
   static String clockFileName = 'clock_config';
 
-  static String userVipName = 'user_vip_config';
+  static String userVipName = 'user_premium_config';
 
-  static String userVipInfoName = 'vip_info';
+  static String userVipInfoName = 'premium_info';
 
-  static String userVipProductId = 'vip_productId';
-  static String userVipHot = 'vip_hot';
-  static String userVipIndex = 'vip_index';
-  static String userVipSelect = 'vip_selected';
-  static String userVipType = 'vip_type';
+  static String userVipProductId = 'premium_productId';
+  static String userVipHot = 'premium_hot';
+  static String userVipIndex = 'premium_index';
+  static String userVipSelect = 'premium_selected';
+  static String userVipType = 'premium_type';
 }
 
 class FireBaseTool {
@@ -154,23 +152,19 @@ class FireBaseTool {
 
   static Map adsPlusFile = {
     AdsSceneType.plus.value: [
-      // {
-      //   FireConfigKey.levelKey: 5,
-      //   FireConfigKey.typeKey: AdsType.native.value,
-      //   FireConfigKey.sourceKey: AdsSourceType.admob.value,
-      //   FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/7831645754',
-      // },
-    ],
-    AdsSceneType.three.value: [
       {
         FireConfigKey.levelKey: 5,
         FireConfigKey.typeKey: AdsType.native.value,
         FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey: 'ca-app-pub-11243120652519/783754',
-        FireConfigKey.adsTwoIdKey: 'ca-app-pub-84520652519/123759',
+        FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/7831645754',
       },
     ],
   };
+
+  static Map adsThreeFile = {
+    AdsSceneType.three.value: [],
+  };
+
   static Map clockFile = {};
   static late FirebaseAnalyticsObserver observer;
 
@@ -196,8 +190,8 @@ class FireBaseTool {
     };
 
     final AppsFlyerOptions afiOS = AppsFlyerOptions(
-      afDevKey: 'vJ612xK58yGZamTRTZZj',
-      appId: '614122',
+      afDevKey: 'LGCq2ac2vattczm2ZW3JEa',
+      appId: '6758001383',
       showDebug: true,
       timeToWaitForATTUserAuthorization: 15,
       manualStart: true,
@@ -214,6 +208,7 @@ class FireBaseTool {
             ? FireConfigKey.maxiOSPlusConfigKey
             : FireConfigKey.maxAndroidPlusConfigKey,
       );
+
       String cflie = remote.getString(FireConfigKey.clockFileName);
       if (mfile.isNotEmpty) {
         adsFile = jsonDecode(mfile);
@@ -297,8 +292,19 @@ class FireBaseTool {
         }
       }
 
+      for (AdsSceneType type in AdsSceneType.values) {
+        dynamic adsArrs = FireBaseTool.adsThreeFile[type.value];
+        if (adsArrs is List) {
+          adsArrs.sort((x, y) {
+            return (y[FireConfigKey.levelKey]).compareTo(
+              x[FireConfigKey.levelKey],
+            );
+          });
+        }
+      }
+
       adsFile[AdsSceneType.plus.value] = adsPlusFile[AdsSceneType.plus.value];
-      adsFile[AdsSceneType.three.value] = adsPlusFile[AdsSceneType.three.value];
+      adsFile[AdsSceneType.three.value] = adsThreeFile[AdsSceneType.three.value];
 
       // if (cflie.isNotEmpty) {
       //   FireBaseTool.clockFile = jsonDecode(cflie);
