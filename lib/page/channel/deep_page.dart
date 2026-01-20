@@ -593,6 +593,9 @@ class _DeepPageState extends State<DeepPage>
                   onTap: () {
                     selectIndex.value = lists[index].idx;
                     _controller.jumpToPage(index);
+                    if (index == 2) {
+                      EventTool.instance.eventUpload(EventApi.landPageUploadedExpose, null);
+                    }
                   },
                   child: Container(
                     decoration: BoxDecoration(

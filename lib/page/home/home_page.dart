@@ -337,7 +337,7 @@ class _HomePageState extends State<HomePage>
                                 ? EventParaValue.history.value
                                 : EventParaValue.recommend.value,
                             EventParaName.entrance.name:
-                                EventParaValue.entrance.value,
+                                EventParaValue.home.value,
                           });
                     }
                     Get.to(

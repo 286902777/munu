@@ -23,7 +23,6 @@ void main() async {
   NetworkTool.instance.networkStatus();
   await FireBaseTool.instance.addConfig();
   await EventTool.instance.loadLocalConfig();
-  EventTool.instance.postApiEvent();
   runApp(const MyApp());
 }
 
