@@ -45,7 +45,7 @@ class _HomeListCellState extends State<HomeListCell> {
                 Positioned(
                   left: 26,
                   child: Text(
-                    'Collection',
+                    'Video',
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontWeight: FontWeight.w500,
@@ -132,6 +132,7 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF03011A),
                   ),
+                  overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
                 SizedBox(height: 4),
@@ -142,9 +143,9 @@ class _HomeListCellContentState extends State<HomeListCellContent> {
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF595959),
-                    overflow: TextOverflow.ellipsis,
                   ),
                   maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

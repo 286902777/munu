@@ -135,20 +135,20 @@ class _VideoFullPageState extends State<VideoFullPage> {
   }
 
   Future<void> _loadUserInfo() async {
-    List<String> idsList = <String>[];
+    List<String> idsArr = <String>[];
     if (recommendList.isNotEmpty) {
-      idsList = [
+      idsArr = [
         '${DateTime.now().millisecondsSinceEpoch}',
         recommendList.last.movieId,
       ];
     }
-    await HttpTool.recommendPostRequest(
+    await HttpTool.operationPostRequest(
       ApiKey.recommend,
       platform == 0 ? PlatformType.india : PlatformType.middle,
-      isRequested ? (idsList.isNotEmpty ? true : false) : false,
+      isRequested ? (idsArr.isNotEmpty ? true : false) : false,
       para: {
         'swamper': resultUserId,
-        'quira': {'w8g8juoi36': idsList},
+        'quira': {'w8g8juoi36': idsArr},
       },
       successHandle: (data) {
         _refreshController.loadComplete();

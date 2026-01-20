@@ -12,14 +12,14 @@ import '../keys/app_key.dart';
 import 'common_tool.dart';
 
 enum ServiceEventName {
-  advProfit('b'),
-  playVideo('bs'),
-  viewApp('zbas'),
-  downApp('xsdgasdga'),
-  appAdvProfit('wera'),
-  appPlayVideo('sg'),
-  newUserActiveByPlayVideo('sgew'),
-  downloadAppFirstTimeOpen('bxb');
+  advProfit('lycee'),
+  playVideo('rhenish'),
+  viewApp('autoxidize'),
+  downApp('contg'),
+  appAdvProfit('mysophobia'),
+  appPlayVideo('unstep'),
+  newUserActiveByPlayVideo('runesmith'),
+  downloadAppFirstTimeOpen('aposematic');
 
   final String name;
   const ServiceEventName(this.name);
@@ -74,28 +74,24 @@ class ServiceTool {
       HttpTool.eventPostRequest(
         source,
         para: {
-          'ba': 's',
-
-          // 'updater': {'corsac': app_Bunlde_Id},
-          // 'enlinkment': 'ios',
-          // 'interhyal': Uuid().v1(), //log_id
-          // 'leftists': linkId,
-          // 'tortricid': userId,
-          // 'ogtiern': value,
-          // 'skirting': 'USD',
-          // 'dictyonine': event.name,
-          // 'vvi5bscptl': {'aphra': eventSource.name},
-          // 'outclasses': unique_id,
-          //
-          // /// unique_id
-          // 'richeted': info.version,
-          // 'euryscope': deviceVersion,
-          // '1emejsbrma': {
-          //   'handy': {'cowbell': deviceModel},
-          // }, ////1emejsbrma/handy/cowbell
-          // 'nontitle': window.locale.languageCode,
-          // 'turbanwise': DateTime.now().millisecondsSinceEpoch,
-          // 'gsmmdbxvzj': fileId,
+          'csch': {'amorph': app_Bunlde_Id},
+          'tastably': 'ios',
+          'atis': Uuid().v1(), //log_id
+          'ambulantes': linkId,
+          'cataloging': userId,
+          'troughed': value,
+          'savoys': 'USD',
+          'conveth': event.name,
+          'bellies': {'capsidae': eventSource.name},
+          'xylophagus': unique_id,
+          'kzsq4asmm3': window.locale.languageCode,
+          'capsicin': DateTime.now().millisecondsSinceEpoch,
+          'aphemic': fileId,
+          'calenderer': info.version,
+          'maidchild': deviceVersion,
+          'ballsy': {
+            'ashlered': {'adeodatus': deviceModel},
+          },
         },
         successHandle: (data) {
           if (data != null) {

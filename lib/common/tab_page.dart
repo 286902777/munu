@@ -214,6 +214,7 @@ class _TabPageState extends State<TabPage>
     return PopScope(
       canPop: false,
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: PageView(
           controller: _tabPageController,
           physics: const NeverScrollableScrollPhysics(),
@@ -230,10 +231,10 @@ class _TabPageState extends State<TabPage>
               boxShadow: [
                 // 外部阴影
                 BoxShadow(
-                  color: Color(0x1F000000),
-                  spreadRadius: 2,
-                  blurRadius: 6,
-                  offset: Offset(0, -3),
+                  color: Color(0x09000000),
+                  spreadRadius: 1,
+                  blurRadius: 2,
+                  offset: Offset(0, -1),
                 ),
               ],
               borderRadius: BorderRadius.all(Radius.circular(24)),

@@ -53,21 +53,20 @@ class _RecordPageState extends State<RecordPage> {
         top: false,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: navbar(),
+          appBar: cusNavbar(),
           body: _listWidget(),
         ),
       ),
     );
   }
 
-  AppBar navbar() {
+  AppBar cusNavbar() {
     return AppBar(
       backgroundColor: Colors.transparent,
       leading: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               Get.back();

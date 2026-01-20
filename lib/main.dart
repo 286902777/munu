@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get.dart';
 import 'package:media_kit/media_kit.dart';
-import 'package:munu/common/db_tool.dart';
-import 'package:munu/common/launch_page.dart';
 import 'package:munu/tools/event_tool.dart';
 import 'package:munu/tools/fire_base_tool.dart';
 import 'package:munu/tools/network_tool.dart';
 import 'package:munu/tools/track_tool.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:get/get.dart';
+import 'common/db_tool.dart';
+import 'common/launch_page.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 final RouteObserver<PageRoute> routeObserver = RouteObserver();

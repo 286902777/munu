@@ -87,7 +87,6 @@ enum EventParaValue {
   linkSource('bix'),
   isFirstLink('a'),
   iPlayerUid('b'),
-
   source('x');
 
   final String value;

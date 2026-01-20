@@ -233,6 +233,9 @@ class _ChannelPageState extends State<ChannelPage>
             if (model.files.isNotEmpty) {
               replaceData(model);
               page = page + 1;
+            } else {
+              _refreshController.loadNoData();
+              noMoreData = true;
             }
           }
           _refreshController.loadComplete();
@@ -357,7 +360,7 @@ class _ChannelPageState extends State<ChannelPage>
   }
 
   Future loadRecommendInfo() async {
-    await HttpTool.recommendPostRequest(
+    await HttpTool.operationPostRequest(
       ApiKey.home,
       widget.platform,
       randomPage > 1,

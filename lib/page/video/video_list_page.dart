@@ -139,7 +139,7 @@ class _VideoListPageState extends State<VideoListPage> {
         recommendList.last.movieId,
       ];
     }
-    await HttpTool.recommendPostRequest(
+    await HttpTool.operationPostRequest(
       ApiKey.recommend,
       platform == 0 ? PlatformType.india : PlatformType.middle,
       isRequested ? (idsList.isNotEmpty ? true : false) : false,

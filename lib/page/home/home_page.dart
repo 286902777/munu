@@ -413,7 +413,7 @@ class _HomePageState extends State<HomePage>
             Image.asset(Assets.iconTitle, width: 20, height: 20),
             SizedBox(width: 6),
             Text(
-              'Collection',
+              'Video',
               style: const TextStyle(
                 letterSpacing: -0.5,
                 fontWeight: FontWeight.w500,
@@ -491,7 +491,7 @@ class _HomePageState extends State<HomePage>
             Image.asset(Assets.iconTitle, width: 20, height: 20),
             SizedBox(width: 6),
             Text(
-              'Collection',
+              'Video',
               style: const TextStyle(
                 letterSpacing: -0.5,
                 fontWeight: FontWeight.w500,
