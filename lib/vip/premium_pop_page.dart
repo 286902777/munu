@@ -130,7 +130,12 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
             padding: EdgeInsets.fromLTRB(0, 84, 0, 0),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(32),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(36),
+                  topRight: Radius.circular(36),
+                  bottomLeft: Radius.circular(32),
+                  bottomRight: Radius.circular(32),
+                ),
                 color: Colors.white,
               ),
               child: Padding(
@@ -155,10 +160,11 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '29.9',
+                                    selectData?.showPrice ?? '',
                                     style: const TextStyle(
                                       letterSpacing: -0.5,
                                       fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -167,14 +173,16 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                                     style: const TextStyle(
                                       letterSpacing: -0.5,
                                       fontSize: 16,
+                                      fontWeight: FontWeight.w500,
                                       color: Colors.white,
                                     ),
                                   ),
                                   Text(
-                                    'weakly',
+                                    selectData?.title ?? '',
                                     style: const TextStyle(
                                       letterSpacing: -0.5,
                                       fontSize: 9,
+                                      fontWeight: FontWeight.w500,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -309,64 +317,76 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
         }
       },
       child: SizedBox(
-        height: 78,
+        height: 69,
         child: Stack(
           children: [
             Positioned(
-              top: 14,
+              top: 10,
               left: 0,
               right: 0,
               bottom: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: mod.isSelect ? Color(0xFFF1F6FF) : Color(0xFFF5F8FC),
+                  color: mod.isSelect ? Color(0xFFFDF2EC) : Color(0xFFF7F7F7),
                   border: Border.all(
-                    color: mod.isSelect ? Color(0xFF5597FA) : Color(0xFFE1ECFF),
-                    width: 3.0,
+                    color: mod.isSelect ? Color(0xFF202020) : Color(0xFFDCDCDC),
+                    width: 2.0,
                   ),
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(14),
+                    topRight: Radius.circular(100),
+                    bottomLeft: Radius.circular(14),
+                    bottomRight: Radius.circular(14),
+                  ),
                 ),
-                child: Row(
-                  children: [
-                    SizedBox(width: 24),
-                    Image.asset(
-                      mod.isSelect
-                          ? Assets.channelPremiumSel
-                          : Assets.channelPremiumUnsel,
-                      width: 20,
-                      height: 20,
-                    ),
-                    SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 8),
-                        Text(
-                          mod.title,
-                          style: const TextStyle(
-                            letterSpacing: -0.5,
-                            fontSize: 10,
-                            color: Color(0x801A1A1A),
-                          ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        mod.showPrice,
+                        style: const TextStyle(
+                          letterSpacing: -0.5,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF272727),
                         ),
-                        Text(
-                          mod.showPrice,
-                          style: const TextStyle(
-                            letterSpacing: -0.5,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF341B03),
-                          ),
+                      ),
+                      Text(
+                        ' / ',
+                        style: const TextStyle(
+                          letterSpacing: -0.5,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF272727),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      Text(
+                        mod.title,
+                        style: const TextStyle(
+                          letterSpacing: -0.5,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF272727),
+                        ),
+                      ),
+                      Spacer(),
+                      Image.asset(
+                        mod.isSelect
+                            ? Assets.channelPremiumSel
+                            : Assets.channelPremiumUnsel,
+                        width: 20,
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             if (mod.hot)
               Positioned(
-                top: 8,
+                top: 2,
                 left: 0,
                 child: Image.asset(
                   Assets.channelPremiumHot,
