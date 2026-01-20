@@ -78,8 +78,8 @@ class _SetPageState extends State<SetPage>
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontWeight: FontWeight.w500,
-                      fontSize: 22,
-                      color: Color(0xFF17132C),
+                      fontSize: 20,
+                      color: Color(0xFF141414),
                     ),
                     textAlign: TextAlign.start,
                   ),
@@ -94,10 +94,9 @@ class _SetPageState extends State<SetPage>
                     () => Text(
                       'v${version.value}',
                       style: const TextStyle(
-                        letterSpacing: -0.5,
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
-                        color: Color(0x8017132C),
+                        color: Color(0x80141414),
                       ),
                       textAlign: TextAlign.center,
                     ),

@@ -58,8 +58,8 @@ class HttpTool extends GetConnect {
   static const contentType = 'application/json';
   static const textPlain = 'text/plain';
 
-  List<String> east = ['https://api.s.com', 'https://api.b.com'];
-  List<String> india = ['https://api.xc.com', 'https://api.xs.com'];
+  List<String> east = ['https://api.lensmilkman.com', 'https://api.lensting.com'];
+  List<String> india = ['https://api.lenshotuch.com', 'https://api.lensadopting.com'];
 
   String hostUrl = '';
 
@@ -85,8 +85,8 @@ class HttpTool extends GetConnect {
 
   void setHost(PlatformType? source) {
     hostUrl = source == PlatformType.india
-        ? 'https://api.bx.com'
-        : 'https://api.bxs.com';
+        ? 'https://api.lenshotuch.com'
+        : 'https://api.lensmilkman.com';
     httpClient.baseUrl = hostUrl;
     httpClient.maxAuthRetries = 3;
     httpClient.defaultContentType = HttpTool.contentType;
