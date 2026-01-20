@@ -218,7 +218,8 @@ class _VideoPageState extends State<VideoPage>
       if (newVideoSuccess == false) {
         uploadPlayEvent();
         EventTool.instance.eventUpload(EventApi.playStartAll, {
-          EventParaName.source.name: playSource.name,
+          EventParaName.value.name: playSource.name,
+          EventParaName.method.name: autoClick == false ? EventParaValue.click.value : EventParaValue.auto.value,
         });
         if (autoClick == false) {
           EventTool.instance.eventUpload(EventApi.playSource, {

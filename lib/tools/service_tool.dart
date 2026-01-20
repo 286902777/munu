@@ -122,9 +122,6 @@ class ServiceTool {
     String userId,
     String fileId,
   ) {
-    if (ad is MaxAd) {
-      addEvent(event, source, ad.revenue * 1000000, linkId, userId, fileId);
-    }
     if (ad is AdWithoutView) {
       ad.onPaidEvent =
           (Ad ad, double value, PrecisionType precision, String code) {
@@ -137,6 +134,9 @@ class ServiceTool {
       ServiceTool.instance.ad_linkId = linkId;
       ServiceTool.instance.ad_userId = userId;
       ServiceTool.instance.ad_fileId = fileId;
+    }
+    if (ad is MaxAd) {
+      addEvent(event, source, ad.revenue * 1000000, linkId, userId, fileId);
     }
   }
 }
