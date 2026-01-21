@@ -720,42 +720,17 @@ class _ChannelPageState extends State<ChannelPage>
         height: 50,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 150,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    child: Image.asset(Assets.iconTitle, width: 20, height: 20),
-                  ),
-                  Positioned(
-                    left: 42,
-                    child: Text(
-                      'Recommend',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF121212),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Spacer(),
+            Image.asset(Assets.iconTitle, width: 20, height: 20),
+            SizedBox(width: 6),
             Text(
-              'More',
+              'Recommend',
               style: const TextStyle(
-                letterSpacing: -0.5,
-                fontSize: 12,
+                fontSize: 20,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF919191),
+                color: Color(0xFF121212),
               ),
             ),
-            SizedBox(width: 4),
-            Image.asset(Assets.iconMore, width: 12, height: 12),
           ],
         ),
       ),

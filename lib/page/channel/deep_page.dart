@@ -580,8 +580,8 @@ class _DeepPageState extends State<DeepPage>
             color: Colors.white,
           ),
           alignment: Alignment.centerLeft,
-          height: 55,
-          padding: EdgeInsets.only(left: 16, right: 16, top: 21, bottom: 0),
+          height: 67,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 21, bottom: 12),
           child: Obx(
             () => Wrap(
               direction: Axis.horizontal,
@@ -593,7 +593,10 @@ class _DeepPageState extends State<DeepPage>
                     selectIndex.value = lists[index].idx;
                     _controller.jumpToPage(index);
                     if (index == 2) {
-                      EventTool.instance.eventUpload(EventApi.landPageUploadedExpose, null);
+                      EventTool.instance.eventUpload(
+                        EventApi.landPageUploadedExpose,
+                        null,
+                      );
                     }
                   },
                   child: Container(
@@ -688,42 +691,17 @@ class _DeepPageState extends State<DeepPage>
         height: 50,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 150,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    child: Image.asset(Assets.iconTitle, width: 20, height: 20),
-                  ),
-                  Positioned(
-                    left: 42,
-                    child: Text(
-                      'Recommend',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF121212),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Spacer(),
-            Text(
-              'More',
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF919191),
-              ),
-            ),
+            Image.asset(Assets.iconTitle, width: 20, height: 20),
             SizedBox(width: 6),
-            Image.asset(Assets.iconMore, width: 12, height: 12),
+            Text(
+              'Recommend',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF121212),
+              ),
+            ),
           ],
         ),
       ),

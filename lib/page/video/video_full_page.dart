@@ -241,6 +241,7 @@ class _VideoFullPageState extends State<VideoFullPage> {
               margin: EdgeInsets.only(top: 24, right: 24, bottom: 24),
               alignment: Alignment.centerRight,
               width: 375,
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(32)),
                 gradient: LinearGradient(
@@ -309,24 +310,18 @@ class _VideoFullPageState extends State<VideoFullPage> {
     return Container(
       height: 44,
       alignment: Alignment.centerLeft,
-      child: Stack(
+      child: Row(
         children: [
-          Positioned(
-            left: 0,
-            bottom: 10,
-            child: Image.asset(Assets.iconTitle, width: 20, height: 20),
-          ),
-          Positioned(
-            left: 26,
-            top: 8,
-            child: Text(
-              'Recommend',
-              style: const TextStyle(
-                letterSpacing: -0.5,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF141414),
-              ),
+          SizedBox(width: 20),
+          Image.asset(Assets.iconTitle, width: 20, height: 20),
+          SizedBox(width: 6),
+          Text(
+            'Recommend',
+            style: const TextStyle(
+              letterSpacing: -0.5,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF141414),
             ),
           ),
         ],
