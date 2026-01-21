@@ -61,6 +61,8 @@ class _HomeListCellState extends State<HomeListCell> {
           SizedBox(height: 6),
           Expanded(
             child: ListView.builder(
+              // shrinkWrap: true,
+              // physics: NeverScrollableScrollPhysics(), // 禁止滚动
               itemCount: widget.lists.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
