@@ -220,7 +220,6 @@ class AdmobTool {
         AdmobTool.instance.adRequestFail(sceneType);
         //当从广告配置所有层级拉了一遍广告后还没拉到广告，则最终拉取广告失败，并且重置指针
         adsRequestIdxMap[sceneType.value] = 0;
-        // startLoadingOtherAd(sceneType);
       }
     } else {
       EventTool.instance.eventUpload(EventApi.adReqPlacement, {

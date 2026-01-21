@@ -28,6 +28,8 @@ class FireConfigKey {
 
   static String maxiOSPlusConfigKey = 'ios_lens_plus';
 
+  static String maxiOSThreeConfigKey = 'ios_lens_three';
+
   static String maxAndroidPlusConfigKey = 'android_lens_plus';
 
   static String maxKey =
@@ -161,9 +163,7 @@ class FireBaseTool {
     ],
   };
 
-  static Map adsThreeFile = {
-    AdsSceneType.three.value: [],
-  };
+  static Map adsThreeFile = {AdsSceneType.three.value: []};
 
   static Map clockFile = {};
   static late FirebaseAnalyticsObserver observer;
@@ -209,6 +209,7 @@ class FireBaseTool {
             : FireConfigKey.maxAndroidPlusConfigKey,
       );
 
+      String tFile = remote.getString(FireConfigKey.maxiOSThreeConfigKey);
       String cflie = remote.getString(FireConfigKey.clockFileName);
       if (mfile.isNotEmpty) {
         adsFile = jsonDecode(mfile);
@@ -218,6 +219,9 @@ class FireBaseTool {
         adsPlusFile = jsonDecode(pfile);
       }
 
+      if (pfile.isNotEmpty) {
+        adsThreeFile = jsonDecode(tFile);
+      }
       if (adsFile[FireConfigKey.playWaitKey] != null) {
         AdmobTool.instance.playShowTime = adsFile[FireConfigKey.playWaitKey]
             .toInt();
@@ -304,7 +308,8 @@ class FireBaseTool {
       }
 
       adsFile[AdsSceneType.plus.value] = adsPlusFile[AdsSceneType.plus.value];
-      adsFile[AdsSceneType.three.value] = adsThreeFile[AdsSceneType.three.value];
+      adsFile[AdsSceneType.three.value] =
+          adsThreeFile[AdsSceneType.three.value];
 
       // if (cflie.isNotEmpty) {
       //   FireBaseTool.clockFile = jsonDecode(cflie);
@@ -471,10 +476,10 @@ class DefaultOptions {
   // );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'ixsx124124sislU',
-    appId: '1:522459418:ios:b360724235225b96e863',
-    projectId: 'lens-ios-734dd',
-    iosBundleId: 'com.lens.videoapp',
+    apiKey: 'app-1-176177691086-ios-8f1a4375acc2eb989cd39f',
+    appId: '1:176177691086:ios:8f1a4375acc2eb989cd39f',
+    projectId: 'testlens-d485f',
+    iosBundleId: 'com.test.lens',
     storageBucket: 'lens-ios-754dd.firebaxge.app',
     messagingSenderId: '1429418',
   );
