@@ -189,6 +189,12 @@ String appTerms = 'https://lensvids.com/terms/';
 
 String appPrivacy = 'https://lensvids.com/privacy/';
 
+String preWeek = 'lens_weekly';
+
+String preYear = 'lens_yearly';
+
+String preLife = 'lens_lifetimely';
+
 Function()? clickNativeAction;
 
 Function(int index)? clickTabItem;

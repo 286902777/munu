@@ -44,7 +44,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
     }
 
     PremiumProductData sx = PremiumProductData(
-      productId: 'ssd',
+      productId: preYear,
       title: 'year',
       productInfo: 'productInfo',
       price: 19.99,
@@ -54,7 +54,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
       hot: true,
     );
     PremiumProductData ssx = PremiumProductData(
-      productId: 'ssd',
+      productId: preWeek,
       title: 'weak',
       productInfo: 'productInfo',
       price: 2.99,

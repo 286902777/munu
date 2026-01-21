@@ -59,7 +59,7 @@ class _PremiumPageState extends State<PremiumPage>
     }
     List<PremiumProductData> lists = [];
     PremiumProductData s = PremiumProductData(
-      productId: 'sd',
+      productId: preLife,
       title: 'lift',
       productInfo: 'productInfo',
       price: 29.99,
@@ -69,7 +69,7 @@ class _PremiumPageState extends State<PremiumPage>
       hot: true,
     );
     PremiumProductData sx = PremiumProductData(
-      productId: 'ssd',
+      productId: preYear,
       title: 'year',
       productInfo: 'productInfo',
       price: 19.99,
@@ -79,7 +79,7 @@ class _PremiumPageState extends State<PremiumPage>
       hot: false,
     );
     PremiumProductData ssx = PremiumProductData(
-      productId: 'sssd',
+      productId: preWeek,
       title: 'weak',
       productInfo: 'productInfo',
       price: 2.99,
@@ -501,16 +501,15 @@ class _PremiumPageState extends State<PremiumPage>
       }
     }
     if (Platform.isIOS) {
-      switch (vip.productId) {
-        case 'lens_weekly':
-          titleInfo = '$price/week auto-renew. Cancel anytime.';
-          titleName = 'Deadline: $time';
-        case 'lens_yearly':
-          titleInfo = '$price/year auto-renew. Cancel anytime.';
-          titleName = 'Deadline: $time';
-        default:
-          titleInfo = 'Lifetime validity upon purchase. No renewal needed.';
-          titleName = 'Lifetime membership activated.';
+      if (vip.productId == preLife) {
+        titleInfo = 'Lifetime validity upon purchase. No renewal needed.';
+        titleName = 'Lifetime membership activated.';
+      } else if (vip.productId == preYear) {
+        titleInfo = '$price/year auto-renew. Cancel anytime.';
+        titleName = 'Deadline: $time';
+      } else {
+        titleInfo = '$price/week auto-renew. Cancel anytime.';
+        titleName = 'Deadline: $time';
       }
     }
 
@@ -638,13 +637,12 @@ class _PremiumPageState extends State<PremiumPage>
       }
     }
     if (Platform.isIOS) {
-      switch (selectData?.productId) {
-        case 'lens_weekly':
-          payInfo = '$price/week auto-renew. Cancel anytime.';
-        case 'lens_yearly':
-          payInfo = '$price/year auto-renew. Cancel anytime.';
-        default:
-          payInfo = 'Lifetime validity upon purchase. No renewal needed.';
+      if (selectData?.productId == preLife) {
+        payInfo = 'Lifetime validity upon purchase. No renewal needed.';
+      } else if (selectData?.productId == preYear) {
+        payInfo = '$price/year auto-renew. Cancel anytime.';
+      } else {
+        payInfo = '$price/week auto-renew. Cancel anytime.';
       }
     }
     return ValueListenableBuilder(
