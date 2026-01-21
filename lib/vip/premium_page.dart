@@ -57,42 +57,43 @@ class _PremiumPageState extends State<PremiumPage>
       await PremiumTool.instance.queryProductInfo();
       EasyLoading.dismiss();
     }
-    // List<PremiumProductData> lists = [];
-    // PremiumProductData s = PremiumProductData(
-    //   productId: 'sd',
-    //   title: 'lift',
-    //   productInfo: 'productInfo',
-    //   price: 29.99,
-    //   showPrice: '${'\$'}29.99',
-    //   currency: '*',
-    //   isSelect: true,
-    //   hot: true,
-    // );
-    // PremiumProductData sx = PremiumProductData(
-    //   productId: 'ssd',
-    //   title: 'year',
-    //   productInfo: 'productInfo',
-    //   price: 19.99,
-    //   showPrice: '${'\$'}19.99',
-    //   currency: '*',
-    //   isSelect: false,
-    //   hot: false,
-    // );
-    // PremiumProductData ssx = PremiumProductData(
-    //   productId: 'ssd',
-    //   title: 'weak',
-    //   productInfo: 'productInfo',
-    //   price: 2.99,
-    //   showPrice: '${'\$'}2.99',
-    //   currency: '*',
-    //   isSelect: false,
-    //   hot: false,
-    // );
-    // lists.add(s);
-    // lists.add(sx);
-    // lists.add(ssx);
-    //
-    // PremiumTool.instance.productResultList.value = lists;
+    List<PremiumProductData> lists = [];
+    PremiumProductData s = PremiumProductData(
+      productId: 'sd',
+      title: 'lift',
+      productInfo: 'productInfo',
+      price: 29.99,
+      showPrice: '${'\$'}29.99',
+      currency: '*',
+      isSelect: true,
+      hot: true,
+    );
+    PremiumProductData sx = PremiumProductData(
+      productId: 'ssd',
+      title: 'year',
+      productInfo: 'productInfo',
+      price: 19.99,
+      showPrice: '${'\$'}19.99',
+      currency: '*',
+      isSelect: false,
+      hot: false,
+    );
+    PremiumProductData ssx = PremiumProductData(
+      productId: 'sssd',
+      title: 'weak',
+      productInfo: 'productInfo',
+      price: 2.99,
+      showPrice: '${'\$'}2.99',
+      currency: '*',
+      isSelect: false,
+      hot: false,
+    );
+    lists.add(s);
+    lists.add(sx);
+    lists.add(ssx);
+
+    PremiumTool.instance.productResultList.value = lists;
+    // ^ test
     dynamic fileList = FireBaseTool.userVipFile[FireConfigKey.userVipInfoName];
     if (fileList is List) {
       for (PremiumProductData m
@@ -127,20 +128,13 @@ class _PremiumPageState extends State<PremiumPage>
             return Column(
               children: [
                 headWidget(),
-                SizedBox(height: 38),
+                SizedBox(height: 22),
                 Expanded(child: _mainView(vip)),
+                vip.status == PremiumStatus.none
+                    ? _normalBottomView(vip)
+                    : _userBottomView(vip),
               ],
             );
-          },
-        ),
-        bottomSheet: ValueListenableBuilder(
-          valueListenable: PremiumTool.instance.premiumData,
-          builder: (BuildContext context, PremiumData vip, Widget? child) {
-            if (vip.status == PremiumStatus.none) {
-              return _normalBottomView(vip);
-            } else {
-              return _userBottomView(vip);
-            }
           },
         ),
       ),
@@ -154,7 +148,6 @@ class _PremiumPageState extends State<PremiumPage>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               Get.back();
@@ -256,7 +249,7 @@ class _PremiumPageState extends State<PremiumPage>
                 right: 28,
                 child: Center(
                   child: Text(
-                    'Congrats! You’ve become a member and are entitled to all the premium perks.',
+                    'Congrats! You’re now a member – unlock all premium perks!',
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontSize: 16,
@@ -304,7 +297,7 @@ class _PremiumPageState extends State<PremiumPage>
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'The subscription will keep renewing automatically until you decide to cancel, according to the terms and conditions. You have the right to cancel anytime. Just remember to cancel at least 24 hours prior to the renewal to prevent extra charges. Keep in mind that no refunds will be issued if the subscription term has not ended.',
+                    'Your subscription auto-renews unless cancelled, per the Terms. You may cancel anytime. Cancel at least 24 hours prior to renewal to avoid extra fees. No refunds will be issued, even for unused portions of the subscription.',
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontSize: 12,
@@ -343,59 +336,71 @@ class _PremiumPageState extends State<PremiumPage>
               bottom: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: mod.isSelect ? Color(0xFFF1F6FF) : Color(0xFFF5F8FC),
+                  color: mod.isSelect ? Color(0xFFFDF2EC) : Color(0xFFF7F7F7),
                   border: Border.all(
-                    color: mod.isSelect ? Color(0xFF5597FA) : Color(0xFFE1ECFF),
-                    width: 3.0,
+                    color: mod.isSelect ? Color(0xFF202020) : Color(0x1F202020),
+                    width: 2.0,
                   ),
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(40),
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
                 ),
-                child: Row(
-                  children: [
-                    SizedBox(width: 24),
-                    Image.asset(
-                      mod.isSelect
-                          ? Assets.channelPremiumSel
-                          : Assets.channelPremiumUnsel,
-                      width: 20,
-                      height: 20,
-                    ),
-                    SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 8),
-                        Text(
-                          mod.title,
-                          style: const TextStyle(
-                            letterSpacing: -0.5,
-                            fontSize: 10,
-                            color: Color(0x801A1A1A),
-                          ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        mod.showPrice,
+                        style: const TextStyle(
+                          letterSpacing: -0.5,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF272727),
                         ),
-                        Text(
-                          mod.showPrice,
-                          style: const TextStyle(
-                            letterSpacing: -0.5,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF341B03),
-                          ),
+                      ),
+                      Text(
+                        ' / ',
+                        style: const TextStyle(
+                          letterSpacing: -0.5,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF272727),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      Text(
+                        mod.title,
+                        style: const TextStyle(
+                          letterSpacing: -0.5,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF272727),
+                        ),
+                      ),
+                      Spacer(),
+                      Image.asset(
+                        mod.isSelect
+                            ? Assets.channelPremiumSel
+                            : Assets.channelPremiumUnsel,
+                        width: 20,
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             if (mod.hot)
               Positioned(
                 top: 0,
-                right: 12,
+                right: 56,
                 child: Image.asset(
                   Assets.channelPremiumHot,
-                  width: 70,
-                  height: 36,
+                  width: 68,
+                  height: 28,
                 ),
               ),
           ],
@@ -432,9 +437,8 @@ class _PremiumPageState extends State<PremiumPage>
   }
 
   Widget _subContentView() {
-    return Container(
-      height: 72,
-      padding: EdgeInsets.symmetric(horizontal: 24),
+    return SizedBox(
+      height: 75,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -443,8 +447,9 @@ class _PremiumPageState extends State<PremiumPage>
               Image.asset(Assets.channelPremiumAd, fit: BoxFit.cover),
               Positioned(
                 left: 16,
+                top: 20,
                 child: Text(
-                  'Ad - free\n Experience',
+                  'Ad - free\nExperience',
                   style: const TextStyle(
                     letterSpacing: -0.5,
                     fontSize: 12,
@@ -455,12 +460,13 @@ class _PremiumPageState extends State<PremiumPage>
               ),
             ],
           ),
-          SizedBox(width: 15),
+          Spacer(),
           Stack(
             children: [
               Image.asset(Assets.channelPremiumSpeed, fit: BoxFit.cover),
               Positioned(
                 left: 16,
+                top: 30,
                 child: Text(
                   'Speed Up ',
                   style: const TextStyle(
@@ -497,17 +503,15 @@ class _PremiumPageState extends State<PremiumPage>
     }
     if (Platform.isIOS) {
       switch (vip.productId) {
-        case 'rme_weekly':
-          titleInfo =
-              '$price weekly subscription with automatic renewal. Cancel at any time';
+        case 'lens_weekly':
+          titleInfo = '$price/week auto-renew. Cancel anytime.';
           titleName = 'Deadline: $time';
-        case 'rme_yearly':
-          titleInfo =
-              '$price. per year with automatic renewal. You can cancel at any time';
+        case 'lens_yearly':
+          titleInfo = '$price/year auto-renew. Cancel anytime.';
           titleName = 'Deadline: $time';
         default:
-          titleInfo = 'Lifetime validity upon purchase, no need for renewal.';
-          titleName = 'You have already obtained lifetime membership.';
+          titleInfo = 'Lifetime validity upon purchase. No renewal needed.';
+          titleName = 'Lifetime membership activated.';
       }
     }
 
@@ -568,30 +572,6 @@ class _PremiumPageState extends State<PremiumPage>
               ],
             ),
           ),
-          // Container(
-          //   height: 26,
-          //   alignment: Alignment.center,
-          //   decoration: BoxDecoration(
-          //     gradient: LinearGradient(
-          //       colors: [
-          //         Color(0x0060E7AE),
-          //         Color(0xFF60E7AE),
-          //         Color(0x0060E7AE),
-          //       ], // 中心到边缘颜色
-          //       begin: Alignment(-0.5, 0),
-          //       end: Alignment(0.5, 0),
-          //     ),
-          //   ),
-          //   child: Text(
-          //     titleName,
-          //     style: const TextStyle(
-          //       letterSpacing: -0.5,
-          //       fontSize: 16,
-          //       fontWeight: FontWeight.w500,
-          //       color: Color(0xFF1A1A1A),
-          //     ),
-          //   ),
-          // ),
           SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -599,9 +579,7 @@ class _PremiumPageState extends State<PremiumPage>
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.to(
-                    () => (WebPage(name: '', link: 'https://s.com/terms/')),
-                  );
+                  Get.to(() => (WebPage(name: '', link: appTerms)));
                 },
                 child: Text(
                   '·Terms of service',
@@ -619,9 +597,7 @@ class _PremiumPageState extends State<PremiumPage>
               SizedBox(width: 32),
               GestureDetector(
                 onTap: () {
-                  Get.to(
-                    () => (WebPage(name: '', link: 'https://s.com/privacy/')),
-                  );
+                  Get.to(() => (WebPage(name: '', link: appPrivacy)));
                 },
                 child: Text(
                   '·Privacy policy',
@@ -656,14 +632,12 @@ class _PremiumPageState extends State<PremiumPage>
     }
     if (Platform.isIOS) {
       switch (selectData?.productId) {
-        case 'rme_weekly':
-          payInfo =
-              '$price weekly subscription with automatic renewal. Cancel at any time';
-        case 'rme_yearly':
-          payInfo =
-              '$price. per year with automatic renewal. You can cancel at any time';
+        case 'lens_weekly':
+          payInfo = '$price/week auto-renew. Cancel anytime.';
+        case 'lens_yearly':
+          payInfo = '$price/year auto-renew. Cancel anytime.';
         default:
-          payInfo = 'Lifetime validity upon purchase, no need for renewal.';
+          payInfo = 'Lifetime validity upon purchase. No renewal needed.';
       }
     }
     return ValueListenableBuilder(
@@ -675,6 +649,7 @@ class _PremiumPageState extends State<PremiumPage>
             Widget? child,
           ) {
             return Container(
+              height: 162,
               padding: EdgeInsets.fromLTRB(24, 15, 24, 33),
               alignment: Alignment.center,
               // height: 170,
@@ -707,31 +682,104 @@ class _PremiumPageState extends State<PremiumPage>
                       _openPay();
                     },
                     child: SizedBox(
-                      height: 44,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          color: Color(0xFF136FF9),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Next',
-                              style: const TextStyle(
-                                letterSpacing: -0.5,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFFFFFFFF),
+                      height: 48,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            color: Color(0xFF060606),
+                          ),
+                          child: Stack(
+                            alignment: Alignment.centerLeft,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(width: 40),
+                                  Text(
+                                    selectData?.showPrice ?? '',
+                                    style: const TextStyle(
+                                      letterSpacing: -0.5,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    '/',
+                                    style: const TextStyle(
+                                      letterSpacing: -0.5,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    selectData?.title ?? '',
+                                    style: const TextStyle(
+                                      letterSpacing: -0.5,
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            SizedBox(width: 12),
-                            Image.asset(
-                              Assets.channelRightArrow,
-                              width: 22,
-                              height: 22,
-                            ),
-                          ],
+                              Positioned(
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    EasyLoading.show(
+                                      status: 'loading...',
+                                      maskType: EasyLoadingMaskType.clear,
+                                      dismissOnTap: false,
+                                    );
+                                    await PremiumTool.instance.toGetPay(
+                                      selectData,
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 48,
+                                    width: 102,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(0xFFFFA46B),
+                                          Color(0xFFFD6B39),
+                                        ], // 颜色数组
+                                        begin: Alignment.centerLeft, // 渐变起点
+                                        end: Alignment.centerRight, // 渐变终点
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Next',
+                                          style: const TextStyle(
+                                            letterSpacing: -0.5,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color(0xFFFFFFFF),
+                                          ),
+                                        ),
+                                        SizedBox(width: 4),
+                                        Image.asset(
+                                          Assets.channelRightArrow,
+                                          width: 22,
+                                          height: 22,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -744,12 +792,7 @@ class _PremiumPageState extends State<PremiumPage>
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.to(
-                            () => (WebPage(
-                              name: '',
-                              link: 'https://lensid.com/terms/',
-                            )),
-                          );
+                          Get.to(() => (WebPage(name: '', link: appTerms)));
                         },
                         child: Text(
                           '·Terms of service',
@@ -767,12 +810,7 @@ class _PremiumPageState extends State<PremiumPage>
                       SizedBox(width: 32),
                       GestureDetector(
                         onTap: () {
-                          Get.to(
-                            () => (WebPage(
-                              name: '',
-                              link: 'https://lensid.com/privacy/',
-                            )),
-                          );
+                          Get.to(() => (WebPage(name: '', link: appPrivacy)));
                         },
                         child: Text(
                           '·Privacy policy',

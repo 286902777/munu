@@ -43,29 +43,29 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
       await PremiumTool.instance.queryProductInfo();
     }
 
-    // PremiumProductData sx = PremiumProductData(
-    //   productId: 'ssd',
-    //   title: 'year',
-    //   productInfo: 'productInfo',
-    //   price: 19.99,
-    //   showPrice: '${'\$'}19.99',
-    //   currency: '*',
-    //   isSelect: true,
-    //   hot: true,
-    // );
-    // PremiumProductData ssx = PremiumProductData(
-    //   productId: 'ssd',
-    //   title: 'weak',
-    //   productInfo: 'productInfo',
-    //   price: 2.99,
-    //   showPrice: '${'\$'}2.99',
-    //   currency: '*',
-    //   isSelect: false,
-    //   hot: false,
-    // );
-    // lists.add(sx);
-    // lists.add(ssx);
-
+    PremiumProductData sx = PremiumProductData(
+      productId: 'ssd',
+      title: 'year',
+      productInfo: 'productInfo',
+      price: 19.99,
+      showPrice: '${'\$'}19.99',
+      currency: '*',
+      isSelect: true,
+      hot: true,
+    );
+    PremiumProductData ssx = PremiumProductData(
+      productId: 'ssd',
+      title: 'weak',
+      productInfo: 'productInfo',
+      price: 2.99,
+      showPrice: '${'\$'}2.99',
+      currency: '*',
+      isSelect: false,
+      hot: false,
+    );
+    lists.add(sx);
+    lists.add(ssx);
+    // ^ test
     for (PremiumProductData m in PremiumTool.instance.productResultList.value) {
       if (m.productId != PremiumIdKey.year.value) {
         lists.add(m);
@@ -122,7 +122,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
           height: 320,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/channel/premium_pop.webp'),
+              image: AssetImage('image/channel/premium_pop.webp'),
               fit: BoxFit.cover,
             ),
           ),
@@ -139,7 +139,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                 color: Colors.white,
               ),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: Column(
                   children: [
                     if (lists.isNotEmpty) _listCell(lists.first),
@@ -148,16 +148,19 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 4),
                       child: Container(
+                        height: 40,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(21),
                           color: Color(0xFF060606),
                         ),
                         child: Stack(
+                          alignment: Alignment.centerLeft,
                           children: [
                             Positioned(
                               left: 20,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
                                     selectData?.showPrice ?? '',
@@ -250,12 +253,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(
-                              () => (WebPage(
-                                name: '',
-                                link: 'https://fssid.com/terms/',
-                              )),
-                            );
+                            Get.to(() => (WebPage(name: '', link: appTerms)));
                           },
                           child: Text(
                             'Terms of service',
@@ -272,12 +270,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                         SizedBox(width: 24),
                         GestureDetector(
                           onTap: () {
-                            Get.to(
-                              () => (WebPage(
-                                name: '',
-                                link: 'https://fxcyvid.com/privacy/',
-                              )),
-                            );
+                            Get.to(() => (WebPage(name: '', link: appPrivacy)));
                           },
                           child: Text(
                             'Privacy policy',
@@ -334,7 +327,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                   ),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(14),
-                    topRight: Radius.circular(100),
+                    topRight: Radius.circular(36),
                     bottomLeft: Radius.circular(14),
                     bottomRight: Radius.circular(14),
                   ),
