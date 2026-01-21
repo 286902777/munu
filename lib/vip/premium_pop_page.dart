@@ -127,7 +127,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(0, 84, 0, 0),
+            padding: EdgeInsets.fromLTRB(7, 84, 7, 6),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -246,7 +246,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

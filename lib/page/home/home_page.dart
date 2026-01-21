@@ -23,6 +23,7 @@ import '../../generated/assets.dart';
 import '../../keys/app_key.dart';
 import '../../main.dart';
 import '../../tools/common_tool.dart';
+import '../../vip/premium_pop_page.dart';
 import '../channel/channel_page.dart';
 import 'home_list_cell.dart';
 
@@ -214,7 +215,11 @@ class _HomePageState extends State<HomePage>
                 onTap: () {
                   vipMethod = VipMethod.click;
                   vipSource = VipSource.home;
-                  Get.to(() => PremiumPage());
+                  // Get.to(() => PremiumPage());
+                  showDialog(
+                    context: context,
+                    builder: (context) => PremiumPopPage(),
+                  ).then((_) async {});
                 },
                 child: Image.asset(
                   Assets.channelPremiumPro,
