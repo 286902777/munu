@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../common/web_page.dart';
 import '../../generated/assets.dart';
+import '../../tools/common_tool.dart';
 
 class SetPage extends StatefulWidget {
   const SetPage({super.key});
@@ -27,7 +28,6 @@ class _SetPageState extends State<SetPage>
     'Terms of Service',
     'Privacy Policy',
   ];
-  var appName = ''.obs;
   var version = ''.obs;
 
   @override
@@ -37,7 +37,6 @@ class _SetPageState extends State<SetPage>
   void initState() {
     super.initState();
     pageInfo().then((info) {
-      appName.value = info.appName;
       version.value = info.version;
     });
   }
@@ -54,7 +53,7 @@ class _SetPageState extends State<SetPage>
   void didPushNext() {}
 
   void openEmail() async {
-    String email = 'xxxx@outlook.com';
+    String email = 'spomunityli@outlook.com';
     launchUrl(Uri(scheme: 'mailto', path: email));
   }
 
@@ -79,8 +78,8 @@ class _SetPageState extends State<SetPage>
                     style: const TextStyle(
                       letterSpacing: -0.5,
                       fontWeight: FontWeight.w500,
-                      fontSize: 22,
-                      color: Color(0xFF17132C),
+                      fontSize: 20,
+                      color: Color(0xFF141414),
                     ),
                     textAlign: TextAlign.start,
                   ),
@@ -95,10 +94,9 @@ class _SetPageState extends State<SetPage>
                     () => Text(
                       'v${version.value}',
                       style: const TextStyle(
-                        letterSpacing: -0.5,
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
-                        color: Color(0x8017132C),
+                        color: Color(0x80141414),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -158,9 +156,9 @@ class _SetPageState extends State<SetPage>
         openEmail();
       // MobileAds.instance.openAdInspector((error) {});
       case 1:
-        Get.to(() => (WebPage(name: '', link: 'https://s/terms/')));
+        Get.to(() => (WebPage(name: '', link: appTerms)));
       default:
-        Get.to(() => (WebPage(name: '', link: 'https://s.com/privacy/')));
+        Get.to(() => (WebPage(name: '', link: appPrivacy)));
     }
   }
 }

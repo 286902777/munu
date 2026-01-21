@@ -21,6 +21,7 @@ import 'package:munu/vip/premium_page.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../common/admob_native_page.dart';
+import '../../common/munu_page.dart';
 import '../../data/index_data.dart';
 import '../../data/user_pool_data.dart';
 import '../../data/video_data.dart';
@@ -30,7 +31,7 @@ import '../../tools/common_tool.dart';
 import '../home/file_list_page.dart';
 
 enum StationState {
-  video(0, 'Collection'),
+  video(0, 'All Videos'),
   hot(1, 'Hot'),
   recently(2, 'Recently');
 
@@ -234,6 +235,9 @@ class _ChannelPageState extends State<ChannelPage>
             if (model.files.isNotEmpty) {
               replaceData(model);
               page = page + 1;
+            } else {
+              _refreshController.loadNoData();
+              noMoreData = true;
             }
           }
           _refreshController.loadComplete();
@@ -358,7 +362,7 @@ class _ChannelPageState extends State<ChannelPage>
   }
 
   Future loadRecommendInfo() async {
-    await HttpTool.recommendPostRequest(
+    await HttpTool.operationPostRequest(
       ApiKey.home,
       widget.platform,
       randomPage > 1,
@@ -418,10 +422,15 @@ class _ChannelPageState extends State<ChannelPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: cusNavbar(),
-      body: headWidget(),
+    return MunuPage(
+      child: SafeArea(
+        top: false,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: cusNavbar(),
+          body: headWidget(),
+        ),
+      ),
     );
     // return Stack(
     //   children: [
@@ -481,7 +490,6 @@ class _ChannelPageState extends State<ChannelPage>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               Get.back();
@@ -577,6 +585,7 @@ class _ChannelPageState extends State<ChannelPage>
                   style: const TextStyle(
                     letterSpacing: -0.5,
                     fontSize: 18,
+                    fontWeight: FontWeight.w500,
                     color: Color(0xFF141414),
                   ),
                   textAlign: TextAlign.center,
@@ -610,8 +619,8 @@ class _ChannelPageState extends State<ChannelPage>
       children: [
         Container(
           alignment: Alignment.centerLeft,
-          height: 70,
-          padding: EdgeInsets.all(18),
+          height: 55,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 21, bottom: 0),
           child: Obx(
             () => Wrap(
               direction: Axis.horizontal,
@@ -624,13 +633,19 @@ class _ChannelPageState extends State<ChannelPage>
                     _controller.jumpToPage(index);
                   },
                   child: Container(
+                    height: 34,
+                    padding: EdgeInsets.only(
+                      top: 8,
+                      bottom: 8,
+                      left: 10,
+                      right: 10,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                       color: selectIndex.value == index
                           ? Color(0xFFFD6B39)
                           : Colors.transparent,
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       lists[index].value,
                       style: TextStyle(
@@ -706,42 +721,17 @@ class _ChannelPageState extends State<ChannelPage>
         height: 50,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 150,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    child: Image.asset(Assets.iconTitle, width: 20, height: 20),
-                  ),
-                  Positioned(
-                    left: 42,
-                    child: Text(
-                      'Recommend',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF121212),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Spacer(),
+            Image.asset(Assets.iconTitle, width: 20, height: 20),
+            SizedBox(width: 6),
             Text(
-              'More',
+              'Recommend',
               style: const TextStyle(
-                letterSpacing: -0.5,
-                fontSize: 12,
+                fontSize: 20,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF919191),
+                color: Color(0xFF121212),
               ),
             ),
-            SizedBox(width: 4),
-            Image.asset(Assets.iconMore, width: 12, height: 12),
           ],
         ),
       ),

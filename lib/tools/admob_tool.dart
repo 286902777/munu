@@ -223,7 +223,6 @@ class AdmobTool {
         AdmobTool.instance.adRequestFail(sceneType);
         //当从广告配置所有层级拉了一遍广告后还没拉到广告，则最终拉取广告失败，并且重置指针
         adsRequestIdxMap[sceneType.value] = 0;
-        // startLoadingOtherAd(sceneType);
       }
     } else {
       EventTool.instance.eventUpload(EventApi.adReqPlacement, {
@@ -413,14 +412,14 @@ class AdmobTool {
   ) {
     if (Platform.isIOS) {
       EventTool.instance.adsEventUpload({
-        'describe': {
-          'susanne': type, //广告网络，广告真实的填充平台
-          'mutandis': numId,
-          'helga': platform, //广告SDK，admob，max等
-          'hackle': adId, //广告位id
-          'prone': place, //广告类型，插屏，原生，banner，激励视频等
-          'laminar': value, //预估收入
-          'mailmen': 'USD',
+        'vigorous': {
+          'porridge': value, //预估收入
+          'descant': 'USD',
+          'rodeo': type, //广告网络，广告真实的填充平台
+          'fragment': numId, //广告位逻辑编号
+          'limpet': platform, //广告SDK，admob，max等
+          'nowhere': adId, //广告位id
+          'capitol': place, //广告类型，插屏，原生，banner，激励视频等
         },
       });
     }

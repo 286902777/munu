@@ -139,7 +139,7 @@ class _VideoListPageState extends State<VideoListPage> {
         recommendList.last.movieId,
       ];
     }
-    await HttpTool.recommendPostRequest(
+    await HttpTool.operationPostRequest(
       ApiKey.recommend,
       platform == 0 ? PlatformType.india : PlatformType.middle,
       isRequested ? (idsList.isNotEmpty ? true : false) : false,
@@ -318,26 +318,19 @@ class _VideoListPageState extends State<VideoListPage> {
   Widget _recommendTitleV() {
     return Container(
       height: 44,
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       alignment: Alignment.centerLeft,
-      child: Stack(
+      child: Row(
         children: [
-          Positioned(
-            left: 0,
-            bottom: 10,
-            child: Image.asset(Assets.iconTitle, width: 20, height: 20),
-          ),
-          Positioned(
-            right: 26,
-            top: 8,
-            child: Text(
-              'Recommend',
-              style: const TextStyle(
-                letterSpacing: -0.5,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF17132C),
-              ),
+          Image.asset(Assets.iconTitle, width: 20, height: 20),
+          SizedBox(width: 6),
+          Text(
+            'Recommend',
+            style: const TextStyle(
+              letterSpacing: -0.5,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17132C),
             ),
           ),
         ],

@@ -174,6 +174,9 @@ class _DeepPageState extends State<DeepPage>
             if (model.files.isNotEmpty) {
               replaceData(model);
               page = page + 1;
+            } else {
+              _refreshController.loadNoData();
+              noMoreData = true;
             }
           }
           bool isFirst = await AppKey.getBool(AppKey.isFirstLink) ?? false;
@@ -314,7 +317,7 @@ class _DeepPageState extends State<DeepPage>
   }
 
   Future loadRecommendInfo() async {
-    await HttpTool.recommendPostRequest(
+    await HttpTool.operationPostRequest(
       ApiKey.home,
       apiPlatform,
       randomPage > 1,
@@ -379,31 +382,32 @@ class _DeepPageState extends State<DeepPage>
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: cusNavbar(),
-        body: Obx(
-          () => Visibility(
-            visible: allChange.value,
-            child: NestedScrollView(
-              controller: _scrollController,
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  SliverAppBar(
-                    expandedHeight: 80.0,
-                    pinned: false,
-                    floating: false,
-                    backgroundColor: Colors.transparent,
-                    leading: SizedBox(),
-                    flexibleSpace: FlexibleSpaceBar(
-                      title: headWidget(),
-                      expandedTitleScale: 1,
-                      titlePadding: EdgeInsetsDirectional.zero,
-                    ),
-                  ),
-                ];
-              },
-              body: ContentWidget(),
-            ),
-          ),
-        ),
+        body: _mainWidget(),
+        // body: Obx(
+        //   () => Visibility(
+        //     visible: allChange.value,
+        //     child: NestedScrollView(
+        //       controller: _scrollController,
+        //       headerSliverBuilder: (context, innerBoxIsScrolled) {
+        //         return [
+        //           SliverAppBar(
+        //             expandedHeight: 80.0,
+        //             pinned: false,
+        //             floating: false,
+        //             backgroundColor: Colors.transparent,
+        //             leading: SizedBox(),
+        //             flexibleSpace: FlexibleSpaceBar(
+        //               title: headWidget(),
+        //               expandedTitleScale: 1,
+        //               titlePadding: EdgeInsetsDirectional.zero,
+        //             ),
+        //           ),
+        //         ];
+        //       },
+        //       body: ContentWidget(),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
@@ -415,7 +419,6 @@ class _DeepPageState extends State<DeepPage>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               isDeepComment = true;
@@ -427,73 +430,49 @@ class _DeepPageState extends State<DeepPage>
           ),
         ],
       ),
-      title: ValueListenableBuilder(
-        valueListenable: _onOffSet,
-        builder: (BuildContext context, offSet, Widget? child) {
-          double rate = offSet;
-          if (rate > 1) {
-            rate = 1;
+      title: GestureDetector(
+        onTap: () {
+          if (userId.isNotEmpty) {
+            channelSource = ChannelSource.landpage_avtor;
+            Get.to(() => ChannelPage(userId: userId, platform: apiPlatform));
           }
-          return Opacity(
-            opacity: rate < 0.5 ? 0 : rate,
-            child: GestureDetector(
-              onTap: () {
-                if (userId.isNotEmpty) {
-                  channelSource = ChannelSource.landpage_avtor;
-                  Get.to(
-                    () => ChannelPage(userId: userId, platform: apiPlatform),
-                  );
-                }
-              },
-              child: Container(
-                color: Colors.transparent,
-                child: Obx(
-                  () => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                        child: CachedNetworkImage(
-                          imageUrl: userInfoChange.value
-                              ? user?.picture ?? ''
-                              : '',
-                          fit: BoxFit.cover,
-                          width: 24,
-                          height: 24,
-                          placeholder: (context, url) => Image.asset(
-                            Assets.channelAvatar,
-                            width: 24,
-                            height: 24,
-                          ),
-                          errorWidget: (context, url, error) => Image.asset(
-                            Assets.channelAvatar,
-                            width: 24,
-                            height: 24,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Flexible(
-                        child: Text(
-                          userInfoChange.value ? user?.name ?? '' : '',
-                          style: const TextStyle(
-                            letterSpacing: -0.5,
-                            fontSize: 16,
-                            color: Color(0xFF03011A),
-                          ),
-                          maxLines: 1,
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      Image.asset(Assets.channelUp, width: 16, height: 16),
-                    ],
-                  ),
+        },
+        child: Container(
+          color: Colors.transparent,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                child: CachedNetworkImage(
+                  imageUrl: userInfoChange.value ? user?.picture ?? '' : '',
+                  fit: BoxFit.cover,
+                  width: 24,
+                  height: 24,
+                  placeholder: (context, url) =>
+                      Image.asset(Assets.channelAvatar, width: 24, height: 24),
+                  errorWidget: (context, url, error) =>
+                      Image.asset(Assets.channelAvatar, width: 24, height: 24),
                 ),
               ),
-            ),
-          );
-        },
+              SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  userInfoChange.value ? user?.name ?? '' : '',
+                  style: const TextStyle(
+                    letterSpacing: -0.5,
+                    fontSize: 16,
+                    color: Color(0xFF03011A),
+                  ),
+                  maxLines: 1,
+                ),
+              ),
+              SizedBox(width: 8),
+              Image.asset(Assets.channelDown, width: 16, height: 16),
+            ],
+          ),
+        ),
       ),
       actions: [
         SizedBox(width: 10),
@@ -510,87 +489,87 @@ class _DeepPageState extends State<DeepPage>
     );
   }
 
-  Widget headWidget() {
-    return ValueListenableBuilder(
-      valueListenable: _onOffSet,
-      builder: (BuildContext context, offSet, Widget? child) {
-        double rate = offSet;
-        if (rate > 1) {
-          rate = 1;
-        }
-        return Opacity(
-          opacity: 1 - rate,
-          child: Container(
-            padding: EdgeInsetsDirectional.fromSTEB(
-              16 + 128 * rate,
-              8,
-              16 + 128 * rate,
-              24,
-            ),
-            color: Colors.transparent,
-            alignment: Alignment.centerLeft,
-            child: Obx(
-              () => GestureDetector(
-                onTap: () {
-                  if (userId.isNotEmpty) {
-                    channelSource = ChannelSource.landpage_avtor;
-                    Get.to(
-                      () => ChannelPage(userId: userId, platform: apiPlatform),
-                    );
-                  }
-                },
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(24 - 12 * rate),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: userInfoChange.value
-                            ? user?.picture ?? ''
-                            : '',
-                        fit: BoxFit.cover,
-                        width: 48 - 24 * rate,
-                        height: 48 - 24 * rate,
-                        placeholder: (context, url) => Image.asset(
-                          Assets.iconAvatar,
-                          width: 48 - 24 * rate,
-                          height: 48 - 24 * rate,
-                        ),
+  // Widget headWidget() {
+  //   return ValueListenableBuilder(
+  //     valueListenable: _onOffSet,
+  //     builder: (BuildContext context, offSet, Widget? child) {
+  //       double rate = offSet;
+  //       if (rate > 1) {
+  //         rate = 1;
+  //       }
+  //       return Opacity(
+  //         opacity: 1 - rate,
+  //         child: Container(
+  //           padding: EdgeInsetsDirectional.fromSTEB(
+  //             16 + 128 * rate,
+  //             8,
+  //             16 + 128 * rate,
+  //             24,
+  //           ),
+  //           color: Colors.transparent,
+  //           alignment: Alignment.centerLeft,
+  //           child: Obx(
+  //             () => GestureDetector(
+  //               onTap: () {
+  //                 if (userId.isNotEmpty) {
+  //                   channelSource = ChannelSource.landpage_avtor;
+  //                   Get.to(
+  //                     () => ChannelPage(userId: userId, platform: apiPlatform),
+  //                   );
+  //                 }
+  //               },
+  //               child: Row(
+  //                 children: [
+  //                   ClipRRect(
+  //                     borderRadius: BorderRadius.all(
+  //                       Radius.circular(24 - 12 * rate),
+  //                     ),
+  //                     child: CachedNetworkImage(
+  //                       imageUrl: userInfoChange.value
+  //                           ? user?.picture ?? ''
+  //                           : '',
+  //                       fit: BoxFit.cover,
+  //                       width: 48 - 24 * rate,
+  //                       height: 48 - 24 * rate,
+  //                       placeholder: (context, url) => Image.asset(
+  //                         Assets.iconAvatar,
+  //                         width: 48 - 24 * rate,
+  //                         height: 48 - 24 * rate,
+  //                       ),
+  //
+  //                       errorWidget: (context, url, error) => Image.asset(
+  //                         Assets.iconAvatar,
+  //                         width: 48 - 24 * rate,
+  //                         height: 48 - 24 * rate,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   SizedBox(width: 12),
+  //                   Flexible(
+  //                     child: Text(
+  //                       userInfoChange.value ? user?.name ?? '' : '',
+  //                       style: const TextStyle(
+  //                         letterSpacing: -0.5,
+  //                         fontSize: 18,
+  //                         color: Color(0xFF03011A),
+  //                         overflow: TextOverflow.ellipsis,
+  //                       ),
+  //                       maxLines: 1,
+  //                     ),
+  //                   ),
+  //                   SizedBox(width: 4),
+  //                   Image.asset(Assets.iconMore, width: 16, height: 16),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
-                        errorWidget: (context, url, error) => Image.asset(
-                          Assets.iconAvatar,
-                          width: 48 - 24 * rate,
-                          height: 48 - 24 * rate,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    Flexible(
-                      child: Text(
-                        userInfoChange.value ? user?.name ?? '' : '',
-                        style: const TextStyle(
-                          letterSpacing: -0.5,
-                          fontSize: 18,
-                          color: Color(0xFF03011A),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        maxLines: 1,
-                      ),
-                    ),
-                    SizedBox(width: 4),
-                    Image.asset(Assets.iconMore, width: 16, height: 16),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget ContentWidget() {
+  Widget _mainWidget() {
     return Column(
       children: [
         Container(
@@ -602,8 +581,8 @@ class _DeepPageState extends State<DeepPage>
             color: Colors.white,
           ),
           alignment: Alignment.centerLeft,
-          height: 70,
-          padding: EdgeInsets.all(18),
+          height: 67,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 21, bottom: 12),
           child: Obx(
             () => Wrap(
               direction: Axis.horizontal,
@@ -614,15 +593,27 @@ class _DeepPageState extends State<DeepPage>
                   onTap: () {
                     selectIndex.value = lists[index].idx;
                     _controller.jumpToPage(index);
+                    if (index == 2) {
+                      EventTool.instance.eventUpload(
+                        EventApi.landPageUploadedExpose,
+                        null,
+                      );
+                    }
                   },
                   child: Container(
+                    height: 34,
+                    padding: EdgeInsets.only(
+                      top: 8,
+                      bottom: 8,
+                      left: 10,
+                      right: 10,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                       color: selectIndex.value == index
                           ? Color(0xFFFD6B39)
                           : Colors.transparent,
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       lists[index].value,
                       style: TextStyle(
@@ -643,17 +634,14 @@ class _DeepPageState extends State<DeepPage>
         Expanded(
           child: Container(
             color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.only(top: 12),
-              child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  allContentWidget(),
-                  hotContentWidget(),
-                  newContentWidget(),
-                ],
-              ),
+            child: PageView(
+              controller: _controller,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                allContentWidget(),
+                hotContentWidget(),
+                newContentWidget(),
+              ],
             ),
           ),
         ),
@@ -704,42 +692,17 @@ class _DeepPageState extends State<DeepPage>
         height: 50,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 150,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    child: Image.asset(Assets.iconTitle, width: 20, height: 20),
-                  ),
-                  Positioned(
-                    left: 42,
-                    child: Text(
-                      'Recommend',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF121212),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Spacer(),
-            Text(
-              'More',
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF919191),
-              ),
-            ),
+            Image.asset(Assets.iconTitle, width: 20, height: 20),
             SizedBox(width: 6),
-            Image.asset(Assets.iconMore, width: 12, height: 12),
+            Text(
+              'Recommend',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF121212),
+              ),
+            ),
           ],
         ),
       ),

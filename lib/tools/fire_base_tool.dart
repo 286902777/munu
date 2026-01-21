@@ -13,7 +13,6 @@ import 'package:flutter/foundation.dart'
         FlutterErrorDetails,
         TargetPlatform,
         defaultTargetPlatform,
-        kDebugMode,
         kIsWeb;
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:munu/tools/event_tool.dart';
@@ -29,6 +28,8 @@ class FireConfigKey {
 
   static String maxiOSPlusConfigKey = 'ios_lens_plus';
 
+  static String maxiOSThreeConfigKey = 'ios_lens_three';
+
   static String maxAndroidPlusConfigKey = 'android_lens_plus';
 
   static String maxKey =
@@ -43,7 +44,6 @@ class FireConfigKey {
   static String nativeTimeKey = 'nativeTimeKey';
   // 原生广告关闭机率
   static String nativeClickKey = 'nativeClickKey';
-
   // 原生广告显示时长
   static String doubleNativeTimeKey = 'doubleNativeTimeKey';
   // 原生广告关闭机率
@@ -71,15 +71,15 @@ class FireConfigKey {
 
   static String clockFileName = 'clock_config';
 
-  static String userVipName = 'user_vip_config';
+  static String userVipName = 'user_premium_config';
 
-  static String userVipInfoName = 'vip_info';
+  static String userVipInfoName = 'premium_info';
 
-  static String userVipProductId = 'vip_productId';
-  static String userVipHot = 'vip_hot';
-  static String userVipIndex = 'vip_index';
-  static String userVipSelect = 'vip_selected';
-  static String userVipType = 'vip_type';
+  static String userVipProductId = 'premium_productId';
+  static String userVipHot = 'premium_hot';
+  static String userVipIndex = 'premium_index';
+  static String userVipSelect = 'premium_selected';
+  static String userVipType = 'premium_type';
 }
 
 class FireBaseTool {
@@ -154,23 +154,17 @@ class FireBaseTool {
 
   static Map adsPlusFile = {
     AdsSceneType.plus.value: [
-      // {
-      //   FireConfigKey.levelKey: 5,
-      //   FireConfigKey.typeKey: AdsType.native.value,
-      //   FireConfigKey.sourceKey: AdsSourceType.admob.value,
-      //   FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/7831645754',
-      // },
-    ],
-    AdsSceneType.three.value: [
       {
         FireConfigKey.levelKey: 5,
         FireConfigKey.typeKey: AdsType.native.value,
         FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey: 'ca-app-pub-11243120652519/783754',
-        FireConfigKey.adsTwoIdKey: 'ca-app-pub-84520652519/123759',
+        FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/7831645754',
       },
     ],
   };
+
+  static Map adsThreeFile = {AdsSceneType.three.value: []};
+
   static Map clockFile = {};
   static late FirebaseAnalyticsObserver observer;
 
@@ -195,14 +189,6 @@ class FireBaseTool {
       );
     };
 
-    final AppsFlyerOptions afiOS = AppsFlyerOptions(
-      afDevKey: 'vJ612xK58yGZamTRTZZj',
-      appId: '614122',
-      showDebug: true,
-      timeToWaitForATTUserAuthorization: 15,
-      manualStart: true,
-    );
-
     updateRemoteSet() async {
       String mfile = remote.getString(
         Platform.isIOS
@@ -214,6 +200,8 @@ class FireBaseTool {
             ? FireConfigKey.maxiOSPlusConfigKey
             : FireConfigKey.maxAndroidPlusConfigKey,
       );
+
+      String tFile = remote.getString(FireConfigKey.maxiOSThreeConfigKey);
       String cflie = remote.getString(FireConfigKey.clockFileName);
       if (mfile.isNotEmpty) {
         adsFile = jsonDecode(mfile);
@@ -223,6 +211,9 @@ class FireBaseTool {
         adsPlusFile = jsonDecode(pfile);
       }
 
+      if (pfile.isNotEmpty) {
+        adsThreeFile = jsonDecode(tFile);
+      }
       if (adsFile[FireConfigKey.playWaitKey] != null) {
         AdmobTool.instance.playShowTime = adsFile[FireConfigKey.playWaitKey]
             .toInt();
@@ -297,8 +288,20 @@ class FireBaseTool {
         }
       }
 
+      for (AdsSceneType type in AdsSceneType.values) {
+        dynamic adsArrs = FireBaseTool.adsThreeFile[type.value];
+        if (adsArrs is List) {
+          adsArrs.sort((x, y) {
+            return (y[FireConfigKey.levelKey]).compareTo(
+              x[FireConfigKey.levelKey],
+            );
+          });
+        }
+      }
+
       adsFile[AdsSceneType.plus.value] = adsPlusFile[AdsSceneType.plus.value];
-      adsFile[AdsSceneType.three.value] = adsPlusFile[AdsSceneType.three.value];
+      adsFile[AdsSceneType.three.value] =
+          adsThreeFile[AdsSceneType.three.value];
 
       if (cflie.isNotEmpty) {
         FireBaseTool.clockFile = jsonDecode(cflie);
@@ -351,74 +354,7 @@ class FireBaseTool {
     MobileAds.instance.initialize();
 
     AppLovinMAX.initialize(FireConfigKey.maxKey);
-
-    late AppsflyerSdk _afSdk = AppsflyerSdk(afiOS);
-
-    // Deep linking callback
-    _afSdk.onDeepLinking((DeepLinkResult dp) async {
-      switch (dp.status) {
-        case Status.FOUND:
-          print(dp.deepLink?.deepLinkValue);
-          String? link = dp.deepLink?.deepLinkValue;
-          isDeepLink = dp.deepLink?.isDeferred ?? false;
-          if (link != null) {
-            await readDeepInfo(link);
-          }
-          break;
-        case Status.NOT_FOUND:
-          print("deep link not found");
-          break;
-        case Status.ERROR:
-          print("deep link error: ${dp.error}");
-          break;
-        case Status.PARSE_ERROR:
-          print("deep link status parsing error");
-          break;
-      }
-    });
-
-    // Init of AppsFlyer SDK
-    await _afSdk.initSdk(
-      registerConversionDataCallback: true,
-      registerOnAppOpenAttributionCallback: true,
-      registerOnDeepLinkingCallback: true,
-    );
-
-    _afSdk.startSDK(
-      onSuccess: () {
-        print("onSuccess");
-      },
-      onError: (code, msg) {
-        print("d error");
-      },
-    );
   }
-}
-
-Future<void> readDeepInfo(String info) async {
-  Uri uri = Uri.parse(info);
-  Map<String, String> para = uri.queryParameters;
-  String? linkId = para['levanto'];
-  if (linkId != null && linkId.isNotEmpty) {
-    deepLink = linkId;
-    appLinkId = linkId;
-    await AppKey.save(AppKey.appLinkId, linkId);
-  }
-  String? plat = para['tumefying'];
-  if (plat == PlatformType.india.name) {
-    apiPlatform = PlatformType.india;
-  } else {
-    apiPlatform = PlatformType.middle;
-  }
-  await AppKey.save(AppKey.appPlatform, plat);
-  bool isFirst = await AppKey.getBool('getDeepLink') ?? false;
-  EventTool.instance.eventUpload(EventApi.deeplinkOpen, {
-    EventParaName.linkSource.name: isDeepLink
-        ? EventParaValue.delayLink.value
-        : EventParaValue.link.value,
-    EventParaName.isFirstLink.name: isFirst,
-  });
-  pushDeepPageInfo?.call();
 }
 
 class DefaultOptions {
@@ -430,8 +366,8 @@ class DefaultOptions {
       );
     }
     switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        return android;
+      // case TargetPlatform.android:
+      //   return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -456,20 +392,20 @@ class DefaultOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'sdfsaas',
-    appId: '1:sdfasfasdf',
-    projectId: 'xxabaasx',
-    storageBucket: 'sdfasdfa.app',
-    messagingSenderId: '1483151234',
-  );
+  // static const FirebaseOptions android = FirebaseOptions(
+  //   apiKey: 'sdfssaas',
+  //   appId: '1:sdfassdgfasdf',
+  //   projectId: 'xxabssaasx',
+  //   storageBucket: 'sdfaffsdfa.app',
+  //   messagingSenderId: '138415123',
+  // );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'ixislU',
-    appId: '1:425762359418:ios:b360724235225b96e863',
-    projectId: 'lens-ios-734dd',
-    iosBundleId: 'com.lens.oxs',
+    apiKey: 'app-1-176177691086-ios-8f1a4375acc2eb989cd39f',
+    appId: '1:176177691086:ios:8f1a4375acc2eb989cd39f',
+    projectId: 'testlens-d485f',
+    iosBundleId: 'com.test.lens',
     storageBucket: 'lens-ios-754dd.firebaxge.app',
-    messagingSenderId: '429418',
+    messagingSenderId: '1429418',
   );
 }

@@ -46,8 +46,8 @@ class CommonTool {
 }
 
 enum PlatformType {
-  india('a'), // cashsnap
-  middle('b'); //quickearn
+  india('rafe'), // cashsnap
+  middle('demophil'); //quickearn
 
   final String name;
   const PlatformType(this.name);
@@ -162,8 +162,8 @@ AdmobSource eventAdsSource = AdmobSource.coldOpen;
 
 String appLinkId = '';
 String deepLink = '';
-String app_Name = 'Test';
-String app_Bunlde_Id = 'com.am';
+String app_Name = 'Lens';
+String app_Bunlde_Id = 'com.lens.videoapp';
 bool isFullScreen = false;
 bool isDeepComment = false;
 String playFileId = '';
@@ -184,6 +184,10 @@ bool isSimLimit = false;
 bool isEmulatorLimit = false;
 bool isPadLimit = false;
 bool isVpnLimit = false;
+
+String appTerms = 'https://lensvids.com/terms/';
+
+String appPrivacy = 'https://lensvids.com/privacy/';
 
 Function()? clickNativeAction;
 
