@@ -53,7 +53,7 @@ target 'Runner' do
   pod 'GoogleMobileAdsMediationMaio'
   pod 'GoogleMobileAdsMediationIronSource'
   pod 'GoogleMobileAdsMediationMintegral'
-  pod 'GoogleMobileAdsMediationFacebook'
+  pod 'GoogleMobileAdsMediationFacebook', '6.17.0.0'
   pod 'GoogleMobileAdsMediationVungle'
   pod 'GoogleMobileAdsMediationFyber'
   pod 'GoogleMobileAdsMediationUnity'

@@ -1553,10 +1553,10 @@ class _VideoPageState extends State<VideoPage>
   }
 
   void showSpeed() async {
-    isAutoLoadShow = true;
-    isLoadShow.value = true;
-    await player.pause();
-    _disPlaySpeedView();
+    // isAutoLoadShow = true;
+    // isLoadShow.value = true;
+    // await player.pause();
+    // _disPlaySpeedView();
   }
 
   Future<bool> isSameDay() async {

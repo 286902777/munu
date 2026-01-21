@@ -269,26 +269,17 @@ class _HomePageState extends State<HomePage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Stack(
+                Row(
                   children: [
-                    Positioned(
-                      left: 16,
-                      child: Image.asset(
-                        Assets.iconTitle,
-                        width: 20,
-                        height: 20,
-                      ),
-                    ),
-                    Positioned(
-                      left: 42,
-                      child: Text(
-                        'Channel',
-                        style: const TextStyle(
-                          letterSpacing: -0.5,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20,
-                          color: Color(0xFF17132C),
-                        ),
+                    Image.asset(Assets.iconTitle, width: 20, height: 20),
+                    SizedBox(width: 6),
+                    Text(
+                      'Channel',
+                      style: const TextStyle(
+                        letterSpacing: -0.5,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Color(0xFF17132C),
                       ),
                     ),
                   ],
@@ -484,7 +475,6 @@ class _HomePageState extends State<HomePage>
     return Column(
       children: [
         SizedBox(height: 8),
-
         Row(
           children: [
             SizedBox(width: 16),

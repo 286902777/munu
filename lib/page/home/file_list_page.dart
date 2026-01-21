@@ -140,7 +140,6 @@ class _FileListPageState extends State<FileListPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               Get.back();

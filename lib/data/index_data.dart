@@ -283,8 +283,8 @@ class HomeListData {
     disPlayName: DisPlayName.fromJson(json["prickers"]), //prickers/saponary
     directory: json["strums"] ?? false,
     video: json["dipware"] ?? false,
-    vidQty: json["overbade"] ?? 0,
-    invalid: json["sandust"] ?? false,
+    vidQty: json["sandust"] ?? 0,
+    invalid: json["uridines"] ?? false,
   );
 
   Map<String, dynamic> toJson() => {

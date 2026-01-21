@@ -161,9 +161,7 @@ class FireBaseTool {
     ],
   };
 
-  static Map adsThreeFile = {
-    AdsSceneType.three.value: [],
-  };
+  static Map adsThreeFile = {AdsSceneType.three.value: []};
 
   static Map clockFile = {};
   static late FirebaseAnalyticsObserver observer;
@@ -188,14 +186,6 @@ class FireBaseTool {
         fatal: true,
       );
     };
-
-    final AppsFlyerOptions afiOS = AppsFlyerOptions(
-      afDevKey: 'LGCq2ac2vattczm2ZW3JEa',
-      appId: '6758001383',
-      showDebug: true,
-      timeToWaitForATTUserAuthorization: 15,
-      manualStart: true,
-    );
 
     updateRemoteSet() async {
       String mfile = remote.getString(
@@ -304,7 +294,8 @@ class FireBaseTool {
       }
 
       adsFile[AdsSceneType.plus.value] = adsPlusFile[AdsSceneType.plus.value];
-      adsFile[AdsSceneType.three.value] = adsThreeFile[AdsSceneType.three.value];
+      adsFile[AdsSceneType.three.value] =
+          adsThreeFile[AdsSceneType.three.value];
 
       // if (cflie.isNotEmpty) {
       //   FireBaseTool.clockFile = jsonDecode(cflie);
@@ -357,74 +348,7 @@ class FireBaseTool {
     MobileAds.instance.initialize();
 
     AppLovinMAX.initialize(FireConfigKey.maxKey);
-
-    late AppsflyerSdk _afSdk = AppsflyerSdk(afiOS);
-
-    // Deep linking callback
-    _afSdk.onDeepLinking((DeepLinkResult dp) async {
-      switch (dp.status) {
-        case Status.FOUND:
-          print(dp.deepLink?.deepLinkValue);
-          String? link = dp.deepLink?.deepLinkValue;
-          isDeepLink = dp.deepLink?.isDeferred ?? false;
-          if (link != null) {
-            await readDeepInfo(link);
-          }
-          break;
-        case Status.NOT_FOUND:
-          print("deep link not found");
-          break;
-        case Status.ERROR:
-          print("deep link error: ${dp.error}");
-          break;
-        case Status.PARSE_ERROR:
-          print("deep link status parsing error");
-          break;
-      }
-    });
-
-    // Init of AppsFlyer SDK
-    await _afSdk.initSdk(
-      registerConversionDataCallback: true,
-      registerOnAppOpenAttributionCallback: true,
-      registerOnDeepLinkingCallback: true,
-    );
-
-    _afSdk.startSDK(
-      onSuccess: () {
-        print("onSuccess");
-      },
-      onError: (code, msg) {
-        print("d error");
-      },
-    );
   }
-}
-
-Future<void> readDeepInfo(String info) async {
-  Uri uri = Uri.parse(info);
-  Map<String, String> para = uri.queryParameters;
-  String? linkId = para['levanto'];
-  if (linkId != null && linkId.isNotEmpty) {
-    deepLink = linkId;
-    appLinkId = linkId;
-    await AppKey.save(AppKey.appLinkId, linkId);
-  }
-  String? plat = para['tumefying'];
-  if (plat == PlatformType.india.name) {
-    apiPlatform = PlatformType.india;
-  } else {
-    apiPlatform = PlatformType.middle;
-  }
-  await AppKey.save(AppKey.appPlatform, plat);
-  bool isFirst = await AppKey.getBool('getDeepLink') ?? false;
-  EventTool.instance.eventUpload(EventApi.deeplinkOpen, {
-    EventParaName.linkSource.name: isDeepLink
-        ? EventParaValue.delayLink.value
-        : EventParaValue.link.value,
-    EventParaName.isFirstLink.name: isFirst,
-  });
-  pushDeepPageInfo?.call();
 }
 
 class DefaultOptions {
@@ -471,10 +395,10 @@ class DefaultOptions {
   // );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'ixsx124124sislU',
-    appId: '1:522459418:ios:b360724235225b96e863',
-    projectId: 'lens-ios-734dd',
-    iosBundleId: 'com.lens.videoapp',
+    apiKey: 'app-1-176177691086-ios-8f1a4375acc2eb989cd39f',
+    appId: '1:176177691086:ios:8f1a4375acc2eb989cd39f',
+    projectId: 'testlens-d485f',
+    iosBundleId: 'com.test.lens',
     storageBucket: 'lens-ios-754dd.firebaxge.app',
     messagingSenderId: '1429418',
   );
