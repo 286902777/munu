@@ -108,7 +108,6 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               Get.back();
@@ -130,12 +129,12 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
           child: Stack(
             children: [
               Positioned(
-                left: 16,
+                left: 4,
                 bottom: 21,
                 child: Image.asset(Assets.iconTitle, width: 20, height: 20),
               ),
               Positioned(
-                left: 42,
+                left: 30,
                 child: Text(
                   'Channel',
                   style: const TextStyle(
@@ -168,12 +167,12 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
               child: Stack(
                 children: [
                   Positioned(
-                    left: 16,
+                    left: 4,
                     bottom: 11,
                     child: Image.asset(Assets.iconTitle, width: 20, height: 20),
                   ),
                   Positioned(
-                    left: 42,
+                    left: 30,
                     top: 10,
                     child: Text(
                       'Recommend',

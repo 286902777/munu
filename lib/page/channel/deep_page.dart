@@ -580,8 +580,8 @@ class _DeepPageState extends State<DeepPage>
             color: Colors.white,
           ),
           alignment: Alignment.centerLeft,
-          height: 67,
-          padding: EdgeInsets.only(left: 16, right: 16, top: 21, bottom: 12),
+          height: 55,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 21, bottom: 0),
           child: Obx(
             () => Wrap(
               direction: Axis.horizontal,
@@ -595,17 +595,17 @@ class _DeepPageState extends State<DeepPage>
                   },
                   child: Container(
                     height: 34,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                      color: selectIndex.value == index
-                          ? Color(0xFFFD6B39)
-                          : Colors.transparent,
-                    ),
                     padding: EdgeInsets.only(
                       top: 8,
                       bottom: 8,
                       left: 10,
                       right: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      color: selectIndex.value == index
+                          ? Color(0xFFFD6B39)
+                          : Colors.transparent,
                     ),
                     child: Text(
                       lists[index].value,
