@@ -20,9 +20,9 @@ PODS:
   - AppLovinMediationByteDanceAdapter (7.8.5.6.0):
     - Ads-Global (= 7.8.5.6)
     - AppLovinSDK (>= 13.0.0)
-  - AppLovinMediationFacebookAdapter (6.21.0.0):
+  - AppLovinMediationFacebookAdapter (6.17.0.0):
     - AppLovinSDK (>= 13.0.0)
-    - FBAudienceNetwork (= 6.21.0)
+    - FBAudienceNetwork (= 6.17.0)
   - AppLovinMediationFyberAdapter (8.4.3.0):
     - AppLovinSDK (>= 13.0.0)
     - Fyber_Marketplace_SDK (= 8.4.3)
@@ -100,7 +100,7 @@ PODS:
   - DKPhotoGallery/Resource (0.0.19):
     - SDWebImage
     - SwiftyGif
-  - FBAudienceNetwork (6.21.0)
+  - FBAudienceNetwork (6.17.0)
   - file_picker (0.0.1):
     - DKImagePickerController/PhotoGallery
     - Flutter
@@ -232,8 +232,8 @@ PODS:
   - GoogleMobileAdsMediationAppLovin (13.4.0.0):
     - AppLovinSDK (= 13.4.0)
     - Google-Mobile-Ads-SDK (~> 12.0)
-  - GoogleMobileAdsMediationFacebook (6.21.0.0):
-    - FBAudienceNetwork (= 6.21.0)
+  - GoogleMobileAdsMediationFacebook (6.17.0.0):
+    - FBAudienceNetwork (= 6.17.0)
     - Google-Mobile-Ads-SDK (~> 12.0)
   - GoogleMobileAdsMediationFyber (8.4.3.0):
     - Fyber_Marketplace_SDK (= 8.4.3)
@@ -443,7 +443,7 @@ DEPENDENCIES:
   - flutter_secure_storage_darwin (from `.symlinks/plugins/flutter_secure_storage_darwin/darwin`)
   - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
   - GoogleMobileAdsMediationAppLovin
-  - GoogleMobileAdsMediationFacebook
+  - GoogleMobileAdsMediationFacebook (= 6.17.0.0)
   - GoogleMobileAdsMediationFyber
   - GoogleMobileAdsMediationInMobi
   - GoogleMobileAdsMediationIronSource
@@ -593,7 +593,7 @@ SPEC CHECKSUMS:
   AppLovinMediationBidMachineAdapter: 782a7169e708fac8370238d6f7cd927ca8140936
   AppLovinMediationBigoAdsAdapter: 7b82d115b8977966641a2c757989e7ee6664b081
   AppLovinMediationByteDanceAdapter: b0658e00016cde8745b5be0b5ded69f7a7c374da
-  AppLovinMediationFacebookAdapter: 228611db1f86884d61c0f06bef0af0983d7e2eba
+  AppLovinMediationFacebookAdapter: 1c6d271111f4676049520487ea5d93f6d286e2f2
   AppLovinMediationFyberAdapter: 7a7258e041b6381dc1461422dff4eb2b400aa4e5
   AppLovinMediationGoogleAdapter: ac14b02df1d6ccffe0774b32198df6d1e43d1264
   AppLovinMediationGoogleAdManagerAdapter: f958f755741c0f9184b04b7f9e388fbbe07d018b
@@ -612,7 +612,7 @@ SPEC CHECKSUMS:
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
-  FBAudienceNetwork: f4ab9e073ab98c884dbdb5ffe7c861272b380bc2
+  FBAudienceNetwork: 0f84c13e480f480a1290ca998f82533a3f476c14
   file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
   Firebase: a451a7b61536298fd5cbfe3a746fd40443a50679
   firebase_analytics: 4f9cca09e65f6c2944a862c6dc86f6bed9fb769c
@@ -639,7 +639,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 3bf40aff49a601af5da1c3345702fcb4991d35ee
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMobileAdsMediationAppLovin: 604d93a0913908be064558a90170004f35b57a96
-  GoogleMobileAdsMediationFacebook: 664fd50364d36531196bf24fe62d2db84cad72d0
+  GoogleMobileAdsMediationFacebook: a08bc1c2e83a88a9a1f1e6c9b7cba75589627862
   GoogleMobileAdsMediationFyber: 5419d085cbf62763db2095a3936e3d67781ca087
   GoogleMobileAdsMediationInMobi: 554333410d516c69c53e5308c8de5e930438ce07
   GoogleMobileAdsMediationIronSource: 4a48ad37b6f08104f1d9ee27d79b7016d47fca4f
@@ -679,6 +679,6 @@ SPEC CHECKSUMS:
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
   webview_flutter_wkwebview: 8ebf4fded22593026f7dbff1fbff31ea98573c8d
 
-PODFILE CHECKSUM: bfc7738e974f01d5e24bf1e095626c994a0b3ac7
+PODFILE CHECKSUM: c63755b008aadfd4ca06623300ec3f791f86f70b
 
 COCOAPODS: 1.16.2

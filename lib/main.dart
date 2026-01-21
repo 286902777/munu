@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:munu/tools/apps_flyer_tool.dart';
 import 'package:munu/tools/event_tool.dart';
 import 'package:munu/tools/fire_base_tool.dart';
 import 'package:munu/tools/network_tool.dart';
@@ -21,7 +22,8 @@ void main() async {
   Get.put(DataTool());
   TrackTool.instance.config();
   NetworkTool.instance.networkStatus();
-  await FireBaseTool.instance.addConfig();
+  // await FireBaseTool.instance.addConfig();
+  await AppsFlyerTool.instance.addConfig();
   await EventTool.instance.loadLocalConfig();
   runApp(const MyApp());
 }

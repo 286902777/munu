@@ -418,7 +418,6 @@ class _DeepPageState extends State<DeepPage>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               isDeepComment = true;
@@ -469,7 +468,7 @@ class _DeepPageState extends State<DeepPage>
                 ),
               ),
               SizedBox(width: 8),
-              Image.asset(Assets.channelUp, width: 16, height: 16),
+              Image.asset(Assets.channelDown, width: 16, height: 16),
             ],
           ),
         ),
@@ -581,8 +580,8 @@ class _DeepPageState extends State<DeepPage>
             color: Colors.white,
           ),
           alignment: Alignment.centerLeft,
-          height: 70,
-          padding: EdgeInsets.all(18),
+          height: 55,
+          padding: EdgeInsets.only(left: 16, right: 16, top: 21, bottom: 0),
           child: Obx(
             () => Wrap(
               direction: Axis.horizontal,
@@ -598,13 +597,19 @@ class _DeepPageState extends State<DeepPage>
                     }
                   },
                   child: Container(
+                    height: 34,
+                    padding: EdgeInsets.only(
+                      top: 8,
+                      bottom: 8,
+                      left: 10,
+                      right: 10,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                       color: selectIndex.value == index
                           ? Color(0xFFFD6B39)
                           : Colors.transparent,
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       lists[index].value,
                       style: TextStyle(
@@ -625,17 +630,14 @@ class _DeepPageState extends State<DeepPage>
         Expanded(
           child: Container(
             color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.only(top: 12),
-              child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  allContentWidget(),
-                  hotContentWidget(),
-                  newContentWidget(),
-                ],
-              ),
+            child: PageView(
+              controller: _controller,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                allContentWidget(),
+                hotContentWidget(),
+                newContentWidget(),
+              ],
             ),
           ),
         ),

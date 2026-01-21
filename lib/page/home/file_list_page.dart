@@ -127,7 +127,7 @@ class _FileListPageState extends State<FileListPage> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: navbar(),
-          body: Padding(padding: EdgeInsets.only(top: 16), child: listWidget()),
+          body: listWidget(),
         ),
       ),
     );
@@ -140,7 +140,6 @@ class _FileListPageState extends State<FileListPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 16),
           CupertinoButton(
             onPressed: () {
               Get.back();
@@ -154,6 +153,7 @@ class _FileListPageState extends State<FileListPage> {
       titleTextStyle: const TextStyle(
         letterSpacing: -0.5,
         fontSize: 16,
+        fontWeight: FontWeight.w500,
         color: Color(0xFF03011A),
       ),
     );
