@@ -129,7 +129,7 @@ class _PremiumPageState extends State<PremiumPage>
               children: [
                 headWidget(),
                 SizedBox(height: 22),
-                Expanded(child: _mainView(vip)),
+                Expanded(child: mainWidget(vip)),
                 vip.status == PremiumStatus.none
                     ? _normalBottomView(vip)
                     : _userBottomView(vip),
@@ -194,7 +194,7 @@ class _PremiumPageState extends State<PremiumPage>
     );
   }
 
-  Widget _mainView(PremiumData vip) {
+  Widget mainWidget(PremiumData vip) {
     return ClipRRect(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(24),
@@ -209,7 +209,9 @@ class _PremiumPageState extends State<PremiumPage>
               left: 0,
               right: 0,
               bottom: 0,
-              child: vip.status == PremiumStatus.none ? _buyView() : _vipView(),
+              child: vip.status == PremiumStatus.none
+                  ? buyWidget()
+                  : premiumWidget(),
             ),
           ],
         ),
@@ -217,7 +219,7 @@ class _PremiumPageState extends State<PremiumPage>
     );
   }
 
-  Widget _vipView() {
+  Widget premiumWidget() {
     return Column(
       children: [
         Padding(
@@ -233,21 +235,18 @@ class _PremiumPageState extends State<PremiumPage>
           child: Stack(
             children: [
               Positioned(
-                top: -60,
                 left: 0,
-                right: 0,
+                bottom: 0,
                 child: Image.asset(
                   Assets.channelPremiumSuc,
                   fit: BoxFit.cover,
-                  // width: Get.width,
-                  // height: Get.width * 0.7,
+                  width: 120,
+                  height: 150,
                 ),
               ),
-              Positioned(
-                top: Get.width * 0.4,
-                left: 28,
-                right: 28,
-                child: Center(
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 68),
                   child: Text(
                     'Congrats! You’re now a member – unlock all premium perks!',
                     style: const TextStyle(
@@ -267,7 +266,7 @@ class _PremiumPageState extends State<PremiumPage>
     );
   }
 
-  Widget _buyView() {
+  Widget buyWidget() {
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(24, 0, 24, 6),
       child: ValueListenableBuilder(
@@ -543,16 +542,24 @@ class _PremiumPageState extends State<PremiumPage>
           ),
           SizedBox(height: 15),
           SizedBox(
-            height: 50,
+            height: 28,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 Positioned(
-                  top: 0,
-                  child: Image.asset(
-                    Assets.channelPremiumSuc,
-                    width: 260,
-                    height: 50,
+                  bottom: 0,
+                  left: 76,
+                  right: 76,
+                  child: Container(
+                    height: 16,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      gradient: LinearGradient(
+                        colors: [Color(0x00FFA46B), Color(0x33FD6B39)], // 颜色数组
+                        begin: Alignment.topCenter, // 渐变起点
+                        end: Alignment.bottomCenter, // 渐变终点
+                      ),
+                    ),
                   ),
                 ),
                 Positioned(
