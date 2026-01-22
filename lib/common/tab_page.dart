@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:munu/page/set/set_page.dart';
 import 'package:munu/page/upload/upload_page.dart';
-import 'package:munu/tools/event_tool.dart';
 import 'package:munu/tools/play_tool.dart';
 import 'package:munu/tools/service_tool.dart';
 
@@ -39,7 +38,7 @@ class _TabPageState extends State<TabPage>
     };
 
     pushDeepPageInfo = () {
-      openDeepPage();
+      pushDeepVC();
     };
 
     WidgetsBinding.instance.addObserver(this);
@@ -89,14 +88,14 @@ class _TabPageState extends State<TabPage>
       }
       if (state == AdsState.dismissed && AdmobTool.scene == AdsSceneType.open) {
         if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
-          openDeepPage();
+          pushDeepVC();
         } else {
           loadPlusAds(adsType ?? AdsType.interstitial);
         }
       }
     });
     Future.delayed(Duration(milliseconds: 500), () {
-      openDeepPage();
+      pushDeepVC();
     });
   }
 
@@ -104,12 +103,12 @@ class _TabPageState extends State<TabPage>
     if (type == AdsType.rewarded) {
       bool s = await AdmobTool.showAdsScreen(AdsSceneType.three);
       if (s == false) {
-        openDeepPage();
+        pushDeepVC();
       }
     } else {
       bool s = await AdmobTool.showAdsScreen(AdsSceneType.plus);
       if (s == false) {
-        openDeepPage();
+        pushDeepVC();
       }
     }
   }
@@ -193,7 +192,7 @@ class _TabPageState extends State<TabPage>
     });
   }
 
-  void openDeepPage() async {
+  void pushDeepVC() async {
     if (deepLink.isNotEmpty) {
       bool open = await checkClock(deepLink);
       if (open == false) {

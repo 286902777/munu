@@ -529,5 +529,9 @@ class _HomePageState extends State<HomePage>
       EventParaName.history.name: DataTool.instance.historyItems.length,
     });
     EventTool.instance.eventUpload(EventApi.homeExpose, null);
+    bool install = await AppKey.getBool(AppKey.appInstall) ?? false;
+    if (install == false) {
+      EventTool.instance.install(false);
+    }
   }
 }
