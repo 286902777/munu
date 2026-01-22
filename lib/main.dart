@@ -22,7 +22,7 @@ void main() async {
   Get.put(DataTool());
   TrackTool.instance.config();
   NetworkTool.instance.networkStatus();
-  // await FireBaseTool.instance.addConfig();
+  await FireBaseTool.instance.addConfig();
   await AppsFlyerTool.instance.addConfig();
   await EventTool.instance.loadLocalConfig();
   runApp(const MyApp());

@@ -94,70 +94,120 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
             ? Colors.black
             : Color(0xA6000000), // 关键：设置透明背景
         body: Center(
-          child: Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 36),
-              child: Column(
-                children: [
-                  AspectRatio(
-                    aspectRatio: 6 / 5,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      clipBehavior: Clip.hardEdge,
-                      child: GestureDetector(
-                        key: _adKey,
-                        onTapDown: (details) =>
-                            _checkClick(details.globalPosition, true),
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            AdWidget(ad: widget.ad),
-                            Positioned(
-                              left: 4,
-                              top: 4,
-                              child: Obx(
-                                () => Visibility(
-                                  visible: !showTime.value && upShow.value,
-                                  child: IgnorePointer(
-                                    ignoring: !canClick.value,
-                                    child: GestureDetector(
-                                      key: _closeKey,
-                                      onTap: () {
-                                        Get.back(result: true);
-                                      },
-                                      child: Image.asset(
-                                        Assets.iconCloseAlert,
-                                        width: 24,
-                                        height: 24,
-                                        fit: BoxFit.cover,
-                                      ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 36),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AspectRatio(
+                  aspectRatio: 6 / 5,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    clipBehavior: Clip.hardEdge,
+                    child: GestureDetector(
+                      key: _adKey,
+                      onTapDown: (details) =>
+                          _checkClick(details.globalPosition, true),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          AdWidget(ad: widget.ad),
+                          Positioned(
+                            left: 4,
+                            top: 4,
+                            child: Obx(
+                              () => Visibility(
+                                visible: !showTime.value && upShow.value,
+                                child: IgnorePointer(
+                                  ignoring: !canClick.value,
+                                  child: GestureDetector(
+                                    key: _closeKey,
+                                    onTap: () {
+                                      closePage();
+                                    },
+                                    child: Image.asset(
+                                      Assets.iconAdClose,
+                                      width: 24,
+                                      height: 24,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
+                          ),
+                          Positioned(
+                            top: 4,
+                            right: 4,
+                            child: Obx(
+                              () => Visibility(
+                                visible: showTime.value,
+                                child: Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Color(0x80000000),
+                                  ),
+                                  child: Text(
+                                    '${timeValue.value}',
+                                    style: const TextStyle(
+                                      letterSpacing: -0.5,
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: widget.doubleAd != null,
+                  child: SizedBox(height: 32),
+                ),
+                Visibility(
+                  visible: widget.doubleAd != null,
+                  child: AspectRatio(
+                    aspectRatio: 6 / 5,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      clipBehavior: Clip.hardEdge,
+                      child: GestureDetector(
+                        key: _doubleKey,
+                        onTapDown: (details) =>
+                            _checkClick(details.globalPosition, false),
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            ?widget.doubleAd != null
+                                ? AdWidget(ad: widget.doubleAd!)
+                                : null,
                             Positioned(
+                              left: 4,
                               top: 4,
-                              right: 4,
                               child: Obx(
                                 () => Visibility(
-                                  visible: showTime.value,
-                                  child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Color(0x80000000),
-                                    ),
-                                    child: Text(
-                                      '${timeValue.value}',
-                                      style: const TextStyle(
-                                        letterSpacing: -0.5,
-                                        fontSize: 14,
-                                        color: Colors.white,
+                                  visible: !showTime.value && !upShow.value,
+                                  child: IgnorePointer(
+                                    ignoring: !canClick.value,
+                                    child: GestureDetector(
+                                      key: _closeDoubleKey,
+                                      onTap: () {
+                                        closePage();
+                                      },
+                                      child: Image.asset(
+                                        Assets.iconAdClose,
+                                        width: 24,
+                                        height: 24,
+                                        fit: BoxFit.cover,
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
@@ -168,62 +218,17 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
                       ),
                     ),
                   ),
-                  Visibility(
-                    visible: widget.doubleAd != null,
-                    child: SizedBox(height: 32),
-                  ),
-                  Visibility(
-                    visible: widget.doubleAd != null,
-                    child: AspectRatio(
-                      aspectRatio: 6 / 5,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        clipBehavior: Clip.hardEdge,
-                        child: GestureDetector(
-                          key: _doubleKey,
-                          onTapDown: (details) =>
-                              _checkClick(details.globalPosition, false),
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              AdWidget(ad: widget.doubleAd!),
-                              Positioned(
-                                left: 4,
-                                top: 4,
-                                child: Obx(
-                                  () => Visibility(
-                                    visible: !showTime.value && !upShow.value,
-                                    child: IgnorePointer(
-                                      ignoring: !canClick.value,
-                                      child: GestureDetector(
-                                        key: _closeDoubleKey,
-                                        onTap: () {
-                                          Get.back(result: true);
-                                        },
-                                        child: Image.asset(
-                                          Assets.iconCloseAlert,
-                                          width: 24,
-                                          height: 24,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void closePage() {
+    Get.back(result: true);
   }
 
   void runTime() {

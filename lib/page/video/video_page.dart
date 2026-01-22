@@ -219,7 +219,9 @@ class _VideoPageState extends State<VideoPage>
         uploadPlayEvent();
         EventTool.instance.eventUpload(EventApi.playStartAll, {
           EventParaName.value.name: playSource.name,
-          EventParaName.method.name: autoClick == false ? EventParaValue.click.value : EventParaValue.auto.value,
+          EventParaName.method.name: autoClick == false
+              ? EventParaValue.click.value
+              : EventParaValue.auto.value,
         });
         if (autoClick == false) {
           EventTool.instance.eventUpload(EventApi.playSource, {
@@ -386,7 +388,7 @@ class _VideoPageState extends State<VideoPage>
     });
   }
 
-  void showPlusAds(AdsType type) async {
+  Future<void> showPlusAds(AdsType type) async {
     bool s = await AdmobTool.showAdsScreen(
       type == AdsType.rewarded ? AdsSceneType.three : AdsSceneType.plus,
     );

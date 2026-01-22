@@ -110,7 +110,7 @@ class AdmobTool {
   ///加载广告
   ///非必要不必调用此方法(除冷启动和需要重新加载广告外（比如admob横竖屏切换后）)，因为缓存里面会有广告，只需要调用showAds即可
   ///注意：只有在请求失败的时候才会传入这个levelIndex，其他时候均不传入
-  static Future<Map<String, dynamic>> initAdmobOrMax(
+  static Future<dynamic> initAdmobOrMax(
     AdsSceneType sceneType, {
     int? levelIndex,
   }) async {
@@ -155,7 +155,7 @@ class AdmobTool {
       String adsId = adConfig[FireConfigKey.adsIdKey];
       String adsDoubleId = adConfig[FireConfigKey.adsIdKey];
       if (adsId.isEmpty) {
-        return {'ad': null, 'doubleAd': null};
+        return null;
       } else {
         if (adSourceType == AdsSourceType.admob) {
           if (adType == AdsType.open) {
@@ -191,7 +191,8 @@ class AdmobTool {
         admobOrMaxAd = await _requestAdmobRewardedAd(sceneType);
       } else if (adType == AdsType.native) {
         admobOrMaxAd = await _requestNativeAd(sceneType, false);
-        if (AdsUnitId.admobNativeAdsUnitTwoId.isNotEmpty) {
+        if (AdsUnitId.admobNativeAdsUnitTwoId.isNotEmpty &&
+            AdmobTool.instance.doubleNativeAd == null) {
           admobDoubleAd = await _requestNativeAd(sceneType, true);
         }
       }
@@ -210,12 +211,11 @@ class AdmobTool {
       int nextLevelIndex = adsRequestIdxMap[sceneType.value]! + 1;
       if (nextLevelIndex < adsList.length) {
         adsRequestIdxMap[sceneType.value] = nextLevelIndex;
-        Map<String, dynamic> adsMap = await initAdmobOrMax(
+        admobOrMaxAd = await initAdmobOrMax(
           sceneType,
           levelIndex: nextLevelIndex,
         );
-        admobOrMaxAd = adsMap['ad'];
-        admobDoubleAd = adsMap['doubleAd'];
+        adsMap[sceneType.value] = admobOrMaxAd;
       } else {
         AdmobTool.instance.adRequestFail(sceneType);
         //当从广告配置所有层级拉了一遍广告后还没拉到广告，则最终拉取广告失败，并且重置指针
@@ -235,7 +235,7 @@ class AdmobTool {
       adsTimeStampMap[sceneType.value] = timeStamp;
     }
     _checkAdsValidateTimer();
-    return {'ad': admobOrMaxAd, 'doubleAd': admobDoubleAd};
+    return admobOrMaxAd;
   }
 
   void adRequestFail(AdsSceneType sceneType) {
@@ -302,7 +302,7 @@ class AdmobTool {
     if (sceneType == AdsSceneType.middle) {
       AdmobTool.scene = sceneType;
     } else {
-      if (sceneType != AdsSceneType.plus || sceneType != AdsSceneType.three) {
+      if (sceneType != AdsSceneType.plus && sceneType != AdsSceneType.three) {
         AdmobTool.scene = sceneType;
         bool isOk = await _checkDisplayTime();
         if (isOk == false) {
@@ -328,7 +328,9 @@ class AdmobTool {
           AdsState.showing,
           adsType: AdsType.native,
           ad: ad,
-          doubleAd: AdmobTool.instance.doubleNativeAd,
+          doubleAd: sceneType == AdsSceneType.three
+              ? AdmobTool.instance.doubleNativeAd
+              : null,
           sceneType: currentScene,
         );
       } else if (ad is MaxAd) {
@@ -368,7 +370,10 @@ class AdmobTool {
       if (sceneType == AdsSceneType.plus) {
         resetDisplayTime();
       }
-      // AdmobTool.instance.showFailUpload(sceneType, 'UHdCR');
+      AdmobTool.instance.showFailUpload(
+        sceneType,
+        EventParaValue.noPadding.value,
+      );
       if (sceneType != AdsSceneType.middle) {
         EventTool.instance.eventUpload(EventApi.adNeedShow, {
           EventParaName.value.name: eventAdsSource.name,
