@@ -215,11 +215,7 @@ class _HomePageState extends State<HomePage>
                 onTap: () {
                   vipMethod = VipMethod.click;
                   vipSource = VipSource.home;
-                  // Get.to(() => PremiumPage());
-                  showDialog(
-                    context: context,
-                    builder: (context) => PremiumPopPage(),
-                  ).then((_) async {});
+                  Get.to(() => PremiumPage());
                 },
                 child: Image.asset(
                   Assets.channelPremiumPro,

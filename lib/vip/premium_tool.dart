@@ -229,6 +229,16 @@ class PremiumTool with ChangeNotifier {
 
   ///走自己后端验证票据
   Future<PremiumData> _verifyPurchase(PurchaseDetails purchaseDetails) async {
+    String userId = await AppKey.getString(AppKey.appUserId) ?? '';
+    if (purchaseDetails.status == PurchaseStatus.purchased) {
+      EventTool.instance.eventUpload(EventApi.premiumVerify, {
+        EventParaName.value.name: vipProduct.value,
+        EventParaName.type.name: vipType.value, //type
+        EventParaName.method.name: vipMethod.value, //method
+        EventParaName.source.name: vipSource.value, //source
+        EventParaName.iPlayerUid.name: userId,
+      });
+    }
     PremiumProductData? productInfo;
     SKRequestMaker().startRefreshReceiptRequest();
     String receipt = await SKReceiptManager.retrieveReceiptData();
@@ -308,8 +318,7 @@ class PremiumTool with ChangeNotifier {
         await AppKey.save(AppKey.isVipUser, model.ok);
         await AppKey.save(AppKey.vipProductId, model.productId);
         if (model.ok == true && isPay == true) {
-          String userId = await AppKey.getString(AppKey.appUserId) ?? '';
-          EventTool.instance.eventUpload(EventApi.premiumSuc, {
+          EventTool.instance.eventUpload(EventApi.premiumVerify, {
             EventParaName.value.name: vipProduct.value,
             EventParaName.type.name: vipType.value, //type
             EventParaName.method.name: vipMethod.value, //method
@@ -361,18 +370,12 @@ class PremiumTool with ChangeNotifier {
           .productId;
     }
     if (Platform.isIOS) {
-      // 周：weekly_kreel：2.99
-      // 年：annual_kreel：19.99
-      // 终身：lifetime_kreel：29.99
-      switch (sProductId) {
-        case 'lens_weekly':
-          vipProduct = VipProduct.weekly;
-        case 'lens_yearly':
-          vipProduct = VipProduct.yearly;
-        case 'lens_lifetime':
-          vipProduct = VipProduct.lifetime;
-        default:
-          break;
+      if (sProductId == preLife) {
+        vipProduct = VipProduct.lifetime;
+      } else if (sProductId == preYear) {
+        vipProduct = VipProduct.yearly;
+      } else {
+        vipProduct = VipProduct.weekly;
       }
     }
 
@@ -403,14 +406,14 @@ class PremiumTool with ChangeNotifier {
       if (e is PlatformException) {
         if (e.code.contains('cancelled')) {
           String msg = e.details;
-          if (msg.contains('lens_weekly')) {
-            vipProduct = VipProduct.weekly;
+          if (msg.contains(preLife)) {
+            vipProduct = VipProduct.lifetime;
           }
-          if (msg.contains('lens_yearly')) {
+          if (msg.contains(preYear)) {
             vipProduct = VipProduct.yearly;
           }
-          if (msg.contains('lens_lifetime')) {
-            vipProduct = VipProduct.lifetime;
+          if (msg.contains(preWeek)) {
+            vipProduct = VipProduct.weekly;
           }
           EventTool.instance.eventUpload(EventApi.premiumFail, {
             EventParaName.value.name: vipProduct.value,
@@ -447,7 +450,7 @@ class PremiumTool with ChangeNotifier {
       );
     }
 
-    String url = 'https://rme.frameplayvid.com/horsecar/skwmvb8osg/rantism';
+    String url = 'https://rme.arasvid.com/horsecar/skwmvb8osg/rantism';
     final storage = FlutterSecureStorage();
     String? uniqueId = await storage.read(key: 'unique_id');
     String uuId = '';
@@ -494,17 +497,6 @@ class PremiumTool with ChangeNotifier {
         }
         await AppKey.save(AppKey.isVipUser, model.ok);
         await AppKey.save(AppKey.vipProductId, model.productId);
-        // if (model.ok == true) {
-        //   print('premium_suc');
-        // String userId = await AppKey.getString(AppKey.appUserId) ?? '';
-        // EventTool.instance.eventUpload(EventApi.premiumSuc, {
-        //   EventParaName.value.name: vipProduct.value,
-        //   EventParaName.type.name: vipType.value, //type
-        //   EventParaName.method.name: vipMethod.value, //method
-        //   EventParaName.source.name: vipSource.value, //source
-        //   EventParaName.iPlayerUid.name: userId,
-        // });
-        // }
         EasyLoading.dismiss();
         await AppKey.save(AppKey.isVipUser, model.ok);
         premiumDoneBlock?.call(model, isStore == false);
