@@ -606,7 +606,7 @@ class _DeepPageState extends State<DeepPage>
   Widget hotContentWidget() {
     return Obx(
       () => ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         itemCount: otherChange.value ? hotArray.length : 0,
         itemBuilder: (context, index) {
           return GestureDetector(
@@ -625,7 +625,7 @@ class _DeepPageState extends State<DeepPage>
   Widget newContentWidget() {
     return Obx(
       () => ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         itemCount: otherChange.value ? newArray.length : 0,
         itemBuilder: (context, index) {
           return GestureDetector(

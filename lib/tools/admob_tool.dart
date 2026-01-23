@@ -67,7 +67,6 @@ class AdmobTool {
   dynamic doubleNativeAd;
 
   static AdsSceneType currentScene = AdsSceneType.open;
-  static bool showed = false;
   static int? lastDisplayTime;
 
   ///计算广告是否过期的timer，目前一个广告有效期是50分钟
@@ -978,7 +977,6 @@ class AdmobTool {
         EventParaName.value.name: eventAdsSource.name,
         EventParaName.type.name: sceneType == AdsSceneType.plus ? 2 : 1,
       });
-      showed = true;
     }
     _listenersMap.forEach((key, value) {
       value(
@@ -992,9 +990,6 @@ class AdmobTool {
   }
 
   static resetDisplayTime() {
-    if (showed == false) {
-      return;
-    }
     lastDisplayTime = DateTime.now().millisecondsSinceEpoch;
   }
 }

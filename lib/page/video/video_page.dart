@@ -815,11 +815,10 @@ class _VideoPageState extends State<VideoPage>
                   if (isFullScreen) {
                     screenOrientationAction();
                   } else {
-                    Get.back(); // 和下面冲突
-                  }
-                  bool suc = await AdmobTool.showAdsScreen(AdsSceneType.play);
-                  if (suc == false) {
-                    Get.back();
+                    bool suc = await AdmobTool.showAdsScreen(AdsSceneType.play);
+                    if (suc == false) {
+                      Get.back(result: true);
+                    }
                   }
                 },
               ),
