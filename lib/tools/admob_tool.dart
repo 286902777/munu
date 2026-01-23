@@ -113,13 +113,14 @@ class AdmobTool {
   ///加载广告
   ///非必要不必调用此方法(除冷启动和需要重新加载广告外（比如admob横竖屏切换后）)，因为缓存里面会有广告，只需要调用showAds即可
   ///注意：只有在请求失败的时候才会传入这个levelIndex，其他时候均不传入
-  static Future<Map<String, dynamic>> initAdmobOrMax(
+  static Future<dynamic> initAdmobOrMax(
     AdsSceneType sceneType, {
     int? levelIndex,
   }) async {
     bool isPremium = await AppKey.getBool(AppKey.isVipUser) ?? false;
-    if (PremiumTool.instance.premiumData.value.status != PremiumStatus.none || isPremium) {
-      return {};
+    if (PremiumTool.instance.premiumData.value.status != PremiumStatus.none ||
+        isPremium) {
+      return false;
     }
     if (levelIndex == null) {
       //重置请求index
@@ -156,9 +157,8 @@ class AdmobTool {
 
       //设置广告单元id为远程获取的
       String adsId = adConfig[FireConfigKey.adsIdKey];
-      String adsDoubleId = adConfig[FireConfigKey.adsIdKey];
       if (adsId.isEmpty) {
-        return {'ad': null, 'doubleAd': null};
+        return null;
       } else {
         if (adSourceType == AdsSourceType.admob) {
           if (adType == AdsType.open) {
@@ -169,7 +169,10 @@ class AdmobTool {
             AdsUnitId.admobRewardedAdsUnitId = adsId;
           } else if (adType == AdsType.native) {
             AdsUnitId.admobNativeAdsUnitId = adsId;
-            AdsUnitId.admobNativeAdsUnitTwoId = adsDoubleId;
+            if (adConfig[FireConfigKey.adsTwoIdKey] != null) {
+              String adsDoubleId = adConfig[FireConfigKey.adsTwoIdKey];
+              AdsUnitId.admobNativeAdsUnitTwoId = adsDoubleId;
+            }
           }
         } else if (adSourceType == AdsSourceType.max) {
           if (adType == AdsType.open) {
@@ -194,7 +197,8 @@ class AdmobTool {
         admobOrMaxAd = await _requestAdmobRewardedAd(sceneType);
       } else if (adType == AdsType.native) {
         admobOrMaxAd = await _requestNativeAd(sceneType, false);
-        if (AdsUnitId.admobNativeAdsUnitTwoId.isNotEmpty) {
+        if (AdsUnitId.admobNativeAdsUnitTwoId.isNotEmpty &&
+            AdmobTool.instance.doubleNativeAd == null) {
           admobDoubleAd = await _requestNativeAd(sceneType, true);
         }
       }
@@ -213,12 +217,11 @@ class AdmobTool {
       int nextLevelIndex = adsRequestIdxMap[sceneType.value]! + 1;
       if (nextLevelIndex < adsList.length) {
         adsRequestIdxMap[sceneType.value] = nextLevelIndex;
-        Map<String, dynamic> adsMap = await initAdmobOrMax(
+        admobOrMaxAd = await initAdmobOrMax(
           sceneType,
           levelIndex: nextLevelIndex,
         );
-        admobOrMaxAd = adsMap['ad'];
-        admobDoubleAd = adsMap['doubleAd'];
+        adsMap[sceneType.value] = admobOrMaxAd;
       } else {
         AdmobTool.instance.adRequestFail(sceneType);
         //当从广告配置所有层级拉了一遍广告后还没拉到广告，则最终拉取广告失败，并且重置指针
@@ -238,7 +241,7 @@ class AdmobTool {
       adsTimeStampMap[sceneType.value] = timeStamp;
     }
     _checkAdsValidateTimer();
-    return {'ad': admobOrMaxAd, 'doubleAd': admobDoubleAd};
+    return admobOrMaxAd;
   }
 
   void adRequestFail(AdsSceneType sceneType) {
@@ -285,16 +288,29 @@ class AdmobTool {
   ///显示广告
   ///返回是否显示成功
   static Future<bool> showAdsScreen(AdsSceneType sceneType) async {
-    //如果是vip则不展示广告
+    // //如果是vip则不展示广告
     bool isPremium = await AppKey.getBool(AppKey.isVipUser) ?? false;
-    if (PremiumTool.instance.premiumData.value.status != PremiumStatus.none || isPremium) {
+    if (PremiumTool.instance.premiumData.value.status != PremiumStatus.none ||
+        isPremium) {
       return false;
     }
+    print(AdmobTool.instance.doubleNativeAd);
+    print(adsMap);
     if (sceneType != AdsSceneType.plus) {
-      AdmobTool.startLoadingPlus(AdsSceneType.plus);
+      if (adsMap[AdsSceneType.plus.value] == null) {
+        AdmobTool.startLoadingPlus(AdsSceneType.plus);
+      }
     }
     if (sceneType != AdsSceneType.three) {
-      AdmobTool.startLoadingThree(AdsSceneType.three);
+      if (adsMap[AdsSceneType.three.value] == null) {
+        AdmobTool.startLoadingThree(AdsSceneType.three);
+      }
+      if (AdmobTool.instance.doubleNativeAd == null) {
+        AdmobTool.instance.doubleNativeAd = await _requestNativeAd(
+          AdsSceneType.three,
+          true,
+        );
+      }
     }
     //正在展示则直接返回
     if (adsState == AdsState.showing) {
@@ -304,7 +320,7 @@ class AdmobTool {
     if (sceneType == AdsSceneType.middle) {
       AdmobTool.scene = sceneType;
     } else {
-      if (sceneType != AdsSceneType.plus || sceneType != AdsSceneType.three) {
+      if (sceneType != AdsSceneType.plus && sceneType != AdsSceneType.three) {
         AdmobTool.scene = sceneType;
         bool isOk = await _checkDisplayTime();
         if (isOk == false) {
@@ -330,7 +346,9 @@ class AdmobTool {
           AdsState.showing,
           adsType: AdsType.native,
           ad: ad,
-          doubleAd: AdmobTool.instance.doubleNativeAd,
+          doubleAd: sceneType == AdsSceneType.three
+              ? AdmobTool.instance.doubleNativeAd
+              : null,
           sceneType: currentScene,
         );
       } else if (ad is MaxAd) {
@@ -367,10 +385,13 @@ class AdmobTool {
       // loadAd(moduleType);
       return true;
     } else {
-      if (sceneType == AdsSceneType.plus) {
+      if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
         resetDisplayTime();
       }
-      AdmobTool.instance.showFailUpload(sceneType, 'UHdCR');
+      AdmobTool.instance.showFailUpload(
+        sceneType,
+        EventParaValue.noPadding.value,
+      );
       if (sceneType != AdsSceneType.middle) {
         EventTool.instance.eventUpload(EventApi.adNeedShow, {
           EventParaName.value.name: eventAdsSource.name,
@@ -955,9 +976,6 @@ class AdmobTool {
     if (state == AdsState.dismissed) {
       if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
         resetDisplayTime();
-      }
-      if (doubleAd != null) {
-        AdmobTool.instance.doubleNativeAd = null;
       }
       adsMap[sceneType?.value ?? AdsSceneType.open.value] = null;
     } else {

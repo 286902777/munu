@@ -22,18 +22,16 @@ import 'admob_tool.dart';
 import 'common_tool.dart';
 
 class FireConfigKey {
-  static String maxiOSConfigKey = 'ios_lens_ads';
+  static String maxiOSConfigKey = 'lens_ios_ads';
 
   static String maxAndroidConfigKey = 'android_lens_ads';
 
-  static String maxiOSPlusConfigKey = 'ios_lens_plus';
+  static String maxiOSPlusConfigKey = 'lens_ios_plus';
 
-  static String maxiOSThreeConfigKey = 'ios_lens_three';
+  static String maxiOSThreeConfigKey = 'lens_ios_three';
 
   static String maxAndroidPlusConfigKey = 'android_lens_plus';
 
-  static String maxKey =
-      'GfQnlat0NBNnAweifSxxL5Z5z8ILJg2xAqWoDCTnH1Mpk0HSeVtfFlzIeMTwr7HcIFtdOX6HmJGTsfaUIV_KON';
   // app打开等待时长
   static String appStartTime = 'appStartTime';
   // 播放多长时间开启广告
@@ -130,23 +128,59 @@ class FireBaseTool {
         FireConfigKey.levelKey: 5,
         FireConfigKey.typeKey: AdsType.rewarded.value,
         FireConfigKey.sourceKey: AdsSourceType.max.value,
-        FireConfigKey.adsIdKey: '04c3fc232300d56b4',
+        FireConfigKey.adsIdKey: '0101407bdc3d3eca',
+      },
+      {
+        FireConfigKey.levelKey: 4,
+        FireConfigKey.typeKey: AdsType.interstitial.value,
+        FireConfigKey.sourceKey: AdsSourceType.admob.value,
+        FireConfigKey.adsIdKey: 'ca-app-pub-7475681591463110/7482129416',
+      },
+      {
+        FireConfigKey.levelKey: 3,
+        FireConfigKey.typeKey: AdsType.interstitial.value,
+        FireConfigKey.sourceKey: AdsSourceType.max.value,
+        FireConfigKey.adsIdKey: '7dffd4ba7fb64de6',
       },
     ],
     AdsSceneType.play.value: [
       {
-        FireConfigKey.levelKey: 7,
+        FireConfigKey.levelKey: 5,
         FireConfigKey.typeKey: AdsType.rewarded.value,
         FireConfigKey.sourceKey: AdsSourceType.max.value,
-        FireConfigKey.adsIdKey: '04c12300d56b4',
+        FireConfigKey.adsIdKey: '0101407bdc3d3eca',
+      },
+      {
+        FireConfigKey.levelKey: 4,
+        FireConfigKey.typeKey: AdsType.interstitial.value,
+        FireConfigKey.sourceKey: AdsSourceType.admob.value,
+        FireConfigKey.adsIdKey: 'ca-app-pub-7475681591463110/7482129416',
+      },
+      {
+        FireConfigKey.levelKey: 3,
+        FireConfigKey.typeKey: AdsType.interstitial.value,
+        FireConfigKey.sourceKey: AdsSourceType.max.value,
+        FireConfigKey.adsIdKey: '7dffd4ba7fb64de6',
       },
     ],
     AdsSceneType.channel.value: [
       {
-        FireConfigKey.levelKey: 6,
+        FireConfigKey.levelKey: 5,
         FireConfigKey.typeKey: AdsType.rewarded.value,
         FireConfigKey.sourceKey: AdsSourceType.max.value,
-        FireConfigKey.adsIdKey: '04123418b00d56b4',
+        FireConfigKey.adsIdKey: '0101407bdc3d3eca',
+      },
+      {
+        FireConfigKey.levelKey: 4,
+        FireConfigKey.typeKey: AdsType.interstitial.value,
+        FireConfigKey.sourceKey: AdsSourceType.admob.value,
+        FireConfigKey.adsIdKey: 'ca-app-pub-7475681591463110/7482129416',
+      },
+      {
+        FireConfigKey.levelKey: 3,
+        FireConfigKey.typeKey: AdsType.interstitial.value,
+        FireConfigKey.sourceKey: AdsSourceType.max.value,
+        FireConfigKey.adsIdKey: '7dffd4ba7fb64de6',
       },
     ],
     AdsSceneType.middle.value: [],
@@ -154,16 +188,29 @@ class FireBaseTool {
 
   static Map adsPlusFile = {
     AdsSceneType.plus.value: [
-      {
-        FireConfigKey.levelKey: 5,
-        FireConfigKey.typeKey: AdsType.native.value,
-        FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey: 'ca-app-pub-1124317440652519/7831645754',
-      },
+      // {
+      //   FireConfigKey.levelKey: 5,
+      //   FireConfigKey.typeKey: AdsType.native.value,
+      //   FireConfigKey.sourceKey: AdsSourceType.admob.value,
+      //   FireConfigKey.adsIdKey:
+      //       'ca-app-pub-3940256099942544/2247696110', // test
+      // },
     ],
   };
 
-  static Map adsThreeFile = {AdsSceneType.three.value: []};
+  static Map adsThreeFile = {
+    AdsSceneType.three.value: [
+      // {
+      //   FireConfigKey.levelKey: 5,
+      //   FireConfigKey.typeKey: AdsType.native.value,
+      //   FireConfigKey.sourceKey: AdsSourceType.admob.value,
+      //   FireConfigKey.adsIdKey:
+      //       'ca-app-pub-3940256099942544/2521693316', // test
+      //   FireConfigKey.adsTwoIdKey:
+      //       'ca-app-pub-3940256099942544/3986624511', // test
+      // },
+    ],
+  };
 
   static Map clockFile = {};
   static late FirebaseAnalyticsObserver observer;
@@ -332,8 +379,8 @@ class FireBaseTool {
     remote
         .setConfigSettings(
           RemoteConfigSettings(
-            fetchTimeout: const Duration(minutes: 1),
-            minimumFetchInterval: const Duration(hours: 24),
+            fetchTimeout: const Duration(seconds: 15),
+            minimumFetchInterval: const Duration(minutes: 1),
           ),
         )
         .then((value) async {
@@ -353,7 +400,10 @@ class FireBaseTool {
 
     MobileAds.instance.initialize();
 
-    AppLovinMAX.initialize(FireConfigKey.maxKey);
+    String maxId = 'GfQnlat0NBNnAweifSxxL5Z5z8ILJg2xAqWoDCTnH1Mp';
+    AppLovinMAX.initialize(
+      '${maxId}k0HSeVtfFlzIeMTwr7HcIFtdOX6HmJGTsfaUIV_KON',
+    );
   }
 }
 
@@ -401,11 +451,11 @@ class DefaultOptions {
   // );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'app-1-176177691086-ios-8f1a4375acc2eb989cd39f',
-    appId: '1:176177691086:ios:8f1a4375acc2eb989cd39f',
-    projectId: 'testlens-d485f',
-    iosBundleId: 'com.test.lens',
-    storageBucket: 'lens-ios-754dd.firebaxge.app',
-    messagingSenderId: '1429418',
+    apiKey: 'AIzaSyDMLKmBXFSRXrT7swFLhMRpeSJaGiMn1h0',
+    appId: '1:268941655656:ios:2752e8203170a3399d05dd',
+    projectId: 'lens-ios',
+    iosBundleId: 'com.lens.videoapp',
+    storageBucket: 'lens-ios.firebasestorage.app',
+    messagingSenderId: '268941655656',
   );
 }

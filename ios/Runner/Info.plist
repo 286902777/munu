@@ -38,7 +38,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256032142544~0123456789</string>
+	<string>ca-app-pub-7475681591463110~9581679147</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -49,7 +49,7 @@
 		<true/>
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To enable the feature of importing photos and videos from the media library, please grant access permission to your photos and videos. Permission adjustments are available in &quot;Settings&quot;.</string>
+	<string>To enable the feature of importing photos and videos from the media library, please grant access permission to your photos and videos. Permission adjustments are available in "Settings".</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>For the purpose of delivering personalized ad services and premium product experiences, authorization for the Advertising Identifier permission is required. You may turn it off via Settings at a later time.</string>
 	<key>SKAdNetworkItems</key>

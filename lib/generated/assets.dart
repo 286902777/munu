@@ -18,6 +18,7 @@ class Assets {
   static const String channelRecommend = 'image/channel/recommend.webp';
   static const String channelRightArrow = 'image/channel/right_arrow.webp';
   static const String channelUp = 'image/channel/up.webp';
+  static const String iconAdClose = 'image/icon/ad_close.webp';
   static const String iconAlertBg = 'image/icon/alert_bg.webp';
   static const String iconAvatar = 'image/icon/avatar.webp';
   static const String iconBack = 'image/icon/back.webp';

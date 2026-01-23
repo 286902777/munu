@@ -98,10 +98,10 @@ class _HomePageState extends State<HomePage>
       result.forEach((mod) {
         mod.labels.forEach((label) {
           Map<String, dynamic> dic = {
-            'angered': label.id,
-            'coachable': label.labelName,
-            'paradisian': label.firstLabelCode,
-            'shunts': label.secondLabelCode,
+            'catalyse': label.id,
+            '_78tqbkenx': label.labelName,
+            'leguleian': label.firstLabelCode,
+            'stigmata': label.secondLabelCode,
           };
           labelArr.add(dic);
         });
@@ -110,9 +110,9 @@ class _HomePageState extends State<HomePage>
         ApiKey.userPools,
         platform == 0 ? PlatformType.india : PlatformType.middle,
         para: {
-          'faquir': {'thermopile': labelArr},
-          'insinking': Platform.isIOS ? 'ios' : 'android',
-          'cipherable': userId,
+          'overmantel': {'gunneries': labelArr},
+          'neumatic': Platform.isIOS ? 'ios' : 'android',
+          'abongo': userId,
         },
         successHandle: (data) {
           if (data != null && data is List) {
@@ -120,11 +120,11 @@ class _HomePageState extends State<HomePage>
             data.forEach((m) {
               if (m is Map<String, dynamic>) {
                 UserPoolData pool = UserPoolData(
-                  id: m['cipherable'],
+                  id: m['abongo'],
                   account: '',
-                  name: m['jordanite'],
+                  name: m['agricolous'],
                   email: '',
-                  picture: m['auxology'],
+                  picture: m['1hhfsyljg0'],
                   labels: [],
                   telegramUrl: '',
                   bannerPictureUrl: '',
@@ -535,5 +535,9 @@ class _HomePageState extends State<HomePage>
       EventParaName.history.name: DataTool.instance.historyItems.length,
     });
     EventTool.instance.eventUpload(EventApi.homeExpose, null);
+    bool install = await AppKey.getBool(AppKey.appInstall) ?? false;
+    if (install == false) {
+      EventTool.instance.install(false);
+    }
   }
 }

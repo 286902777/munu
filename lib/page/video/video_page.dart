@@ -392,7 +392,7 @@ class _VideoPageState extends State<VideoPage>
     });
   }
 
-  void showPlusAds(AdsType type) async {
+  Future<void> showPlusAds(AdsType type) async {
     bool s = await AdmobTool.showAdsScreen(
       type == AdsType.rewarded ? AdsSceneType.three : AdsSceneType.plus,
     );

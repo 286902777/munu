@@ -39,7 +39,7 @@ class _TabPageState extends State<TabPage>
     };
 
     pushDeepPageInfo = () {
-      openDeepPage();
+      pushDeepVC();
     };
 
     WidgetsBinding.instance.addObserver(this);
@@ -89,14 +89,14 @@ class _TabPageState extends State<TabPage>
       }
       if (state == AdsState.dismissed && AdmobTool.scene == AdsSceneType.open) {
         if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
-          openDeepPage();
+          pushDeepVC();
         } else {
           loadPlusAds(adsType ?? AdsType.interstitial);
         }
       }
     });
     Future.delayed(Duration(milliseconds: 500), () {
-      openDeepPage();
+      pushDeepVC();
     });
   }
 
@@ -104,12 +104,12 @@ class _TabPageState extends State<TabPage>
     if (type == AdsType.rewarded) {
       bool s = await AdmobTool.showAdsScreen(AdsSceneType.three);
       if (s == false) {
-        openDeepPage();
+        pushDeepVC();
       }
     } else {
       bool s = await AdmobTool.showAdsScreen(AdsSceneType.plus);
       if (s == false) {
-        openDeepPage();
+        pushDeepVC();
       }
     }
   }
@@ -192,7 +192,7 @@ class _TabPageState extends State<TabPage>
     });
   }
 
-  void openDeepPage() async {
+  void pushDeepVC() async {
     if (deepLink.isNotEmpty) {
       bool open = await checkClock(deepLink);
       if (open == true) {

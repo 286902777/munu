@@ -193,8 +193,8 @@ class _LaunchPageState extends State<LaunchPage> {
       return;
     }
     isSetRoot = true;
-    AdmobTool.removeListener(hashCode.toString());
     Get.offAll(() => TabPage());
+    AdmobTool.removeListener(hashCode.toString());
   }
 
   void loadAdsInfo() async {
@@ -212,9 +212,9 @@ class _LaunchPageState extends State<LaunchPage> {
     bool noStart = await AppKey.getBool(AppKey.onceInstallApp) ?? false;
     if (noStart == true) {
       await AdmobTool.initAdmobOrMax(AdsSceneType.open);
-      AdmobTool.initAdmobOrMax(AdsSceneType.play);
-      AdmobTool.initAdmobOrMax(AdsSceneType.middle);
-      AdmobTool.initAdmobOrMax(AdsSceneType.channel);
+      await AdmobTool.initAdmobOrMax(AdsSceneType.play);
+      await AdmobTool.initAdmobOrMax(AdsSceneType.middle);
+      await AdmobTool.initAdmobOrMax(AdsSceneType.channel);
       if (isSetRoot == false) {
         bool success = await AdmobTool.showAdsScreen(AdsSceneType.open);
         if (success == false) {
