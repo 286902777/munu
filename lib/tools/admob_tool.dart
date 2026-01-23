@@ -153,7 +153,6 @@ class AdmobTool {
 
       //设置广告单元id为远程获取的
       String adsId = adConfig[FireConfigKey.adsIdKey];
-      String adsDoubleId = adConfig[FireConfigKey.adsIdKey];
       if (adsId.isEmpty) {
         return null;
       } else {
@@ -166,7 +165,10 @@ class AdmobTool {
             AdsUnitId.admobRewardedAdsUnitId = adsId;
           } else if (adType == AdsType.native) {
             AdsUnitId.admobNativeAdsUnitId = adsId;
-            AdsUnitId.admobNativeAdsUnitTwoId = adsDoubleId;
+            if (adConfig[FireConfigKey.adsTwoIdKey] != null) {
+              String adsDoubleId = adConfig[FireConfigKey.adsTwoIdKey];
+              AdsUnitId.admobNativeAdsUnitTwoId = adsDoubleId;
+            }
           }
         } else if (adSourceType == AdsSourceType.max) {
           if (adType == AdsType.open) {
@@ -287,12 +289,23 @@ class AdmobTool {
     // if (UserVipTool.instance.vipData.value.status != VipStatus.none || isSVip) {
     //   return false;
     // }
-
+    print(AdmobTool.instance.doubleNativeAd);
+    print(adsMap);
     if (sceneType != AdsSceneType.plus) {
-      AdmobTool.startLoadingPlus(AdsSceneType.plus);
+      if (adsMap[AdsSceneType.plus.value] == null) {
+        AdmobTool.startLoadingPlus(AdsSceneType.plus);
+      }
     }
     if (sceneType != AdsSceneType.three) {
-      AdmobTool.startLoadingThree(AdsSceneType.three);
+      if (adsMap[AdsSceneType.three.value] == null) {
+        AdmobTool.startLoadingThree(AdsSceneType.three);
+      }
+      if (AdmobTool.instance.doubleNativeAd == null) {
+        AdmobTool.instance.doubleNativeAd = await _requestNativeAd(
+          AdsSceneType.three,
+          true,
+        );
+      }
     }
     //正在展示则直接返回
     if (adsState == AdsState.showing) {
@@ -367,7 +380,7 @@ class AdmobTool {
       // loadAd(moduleType);
       return true;
     } else {
-      if (sceneType == AdsSceneType.plus) {
+      if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
         resetDisplayTime();
       }
       AdmobTool.instance.showFailUpload(
@@ -958,9 +971,6 @@ class AdmobTool {
     if (state == AdsState.dismissed) {
       if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
         resetDisplayTime();
-      }
-      if (doubleAd != null) {
-        AdmobTool.instance.doubleNativeAd = null;
       }
       adsMap[sceneType?.value ?? AdsSceneType.open.value] = null;
     } else {

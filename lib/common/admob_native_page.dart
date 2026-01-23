@@ -246,6 +246,9 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    if (widget.doubleAd != null) {
+      AdmobTool.instance.doubleNativeAd = null;
+    }
     widget.ad.dispose();
     widget.doubleAd?.dispose();
     if (_timer?.isActive ?? false) {

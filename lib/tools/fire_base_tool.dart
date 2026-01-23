@@ -188,27 +188,27 @@ class FireBaseTool {
 
   static Map adsPlusFile = {
     AdsSceneType.plus.value: [
-      {
-        FireConfigKey.levelKey: 5,
-        FireConfigKey.typeKey: AdsType.native.value,
-        FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey:
-            'ca-app-pub-3940256099942544/2247696110', // test
-      },
+      // {
+      //   FireConfigKey.levelKey: 5,
+      //   FireConfigKey.typeKey: AdsType.native.value,
+      //   FireConfigKey.sourceKey: AdsSourceType.admob.value,
+      //   FireConfigKey.adsIdKey:
+      //       'ca-app-pub-3940256099942544/2247696110', // test
+      // },
     ],
   };
 
   static Map adsThreeFile = {
     AdsSceneType.three.value: [
-      {
-        FireConfigKey.levelKey: 5,
-        FireConfigKey.typeKey: AdsType.native.value,
-        FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey:
-            'ca-app-pub-3940256099942544/2521693316', // test
-        FireConfigKey.adsTwoIdKey:
-            'ca-app-pub-3940256099942544/3986624511', // test
-      },
+      // {
+      //   FireConfigKey.levelKey: 5,
+      //   FireConfigKey.typeKey: AdsType.native.value,
+      //   FireConfigKey.sourceKey: AdsSourceType.admob.value,
+      //   FireConfigKey.adsIdKey:
+      //       'ca-app-pub-3940256099942544/2521693316', // test
+      //   FireConfigKey.adsTwoIdKey:
+      //       'ca-app-pub-3940256099942544/3986624511', // test
+      // },
     ],
   };
 
@@ -379,8 +379,8 @@ class FireBaseTool {
     remote
         .setConfigSettings(
           RemoteConfigSettings(
-            fetchTimeout: const Duration(minutes: 1),
-            minimumFetchInterval: const Duration(hours: 24),
+            fetchTimeout: const Duration(seconds: 15),
+            minimumFetchInterval: const Duration(minutes: 1),
           ),
         )
         .then((value) async {
