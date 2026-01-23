@@ -69,6 +69,7 @@ class _TabPageState extends State<TabPage>
           );
         }
         if (adsType == AdsType.native) {
+          AdmobTool.adsState = AdsState.dismissed;
           Get.to(
             () => AdmobNativePage(
               ad: ad,

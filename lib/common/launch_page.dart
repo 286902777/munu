@@ -67,6 +67,7 @@ class _LaunchPageState extends State<LaunchPage> {
 
         if (adsType == AdsType.native) {
           _timer?.cancel();
+          AdmobTool.adsState = AdsState.dismissed;
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(

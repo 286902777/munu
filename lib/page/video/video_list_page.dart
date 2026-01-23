@@ -46,6 +46,7 @@ class _VideoListPageState extends State<VideoListPage> {
     super.initState();
     int index = 0;
     bool isRecom = false;
+    print(widget.lists);
     for (int i = 0; i < widget.lists.length; i++) {
       if (widget.lists[i].isSelect && widget.lists[i].recommend != 2) {
         index = i;

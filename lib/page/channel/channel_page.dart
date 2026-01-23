@@ -118,6 +118,7 @@ class _ChannelPageState extends State<ChannelPage>
           );
         }
         if (adsType == AdsType.native) {
+          AdmobTool.adsState = AdsState.dismissed;
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(

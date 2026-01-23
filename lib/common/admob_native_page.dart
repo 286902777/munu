@@ -41,6 +41,7 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    AdmobTool.adsState = AdsState.showing;
     if (widget.doubleAd != null) {
       timeValue = AdmobTool.instance.doubleNativeTime.obs;
       canClick.value =
@@ -229,6 +230,7 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
 
   void closePage() {
     Get.back(result: true);
+    AdmobTool.adsState = AdsState.dismissed;
   }
 
   void runTime() {
@@ -251,6 +253,7 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
     }
     widget.ad.dispose();
     widget.doubleAd?.dispose();
+    AdmobTool.adsState = AdsState.dismissed;
     if (_timer?.isActive ?? false) {
       _timer?.cancel();
     }

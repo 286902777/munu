@@ -44,16 +44,16 @@ class ServiceTool {
     String userId,
     String fileId,
   ) async {
-    String unique_id = '';
+    String uniqueIdStr = '';
 
     if (Platform.isIOS) {
       final storage = FlutterSecureStorage();
       String? uniqueId = await storage.read(key: AppKey.appOnlyId);
       if (uniqueId != null) {
-        unique_id = uniqueId;
+        uniqueIdStr = uniqueId;
       } else {
-        unique_id = Uuid().v4();
-        storage.write(key: AppKey.appOnlyId, value: unique_id);
+        uniqueIdStr = Uuid().v4();
+        storage.write(key: AppKey.appOnlyId, value: uniqueIdStr);
       }
     }
     PackageInfo info = await PackageInfo.fromPlatform();
@@ -83,7 +83,7 @@ class ServiceTool {
           'savoys': 'USD',
           'conveth': event.name,
           'bellies': {'capsidae': eventSource.name},
-          'xylophagus': unique_id,
+          'xylophagus': uniqueIdStr,
           'kzsq4asmm3': window.locale.languageCode,
           'capsicin': DateTime.now().millisecondsSinceEpoch,
           'aphemic': fileId,
@@ -122,18 +122,18 @@ class ServiceTool {
     String userId,
     String fileId,
   ) {
-    if (ad is AdWithoutView) {
-      ad.onPaidEvent =
-          (Ad ad, double value, PrecisionType precision, String code) {
-            addEvent(event, source, value, linkId, userId, fileId);
-          };
-    }
     if (ad is NativeAd) {
       ServiceTool.instance.ad_event = event;
       ServiceTool.instance.ad_source = source;
       ServiceTool.instance.ad_linkId = linkId;
       ServiceTool.instance.ad_userId = userId;
       ServiceTool.instance.ad_fileId = fileId;
+    }
+    if (ad is AdWithoutView) {
+      ad.onPaidEvent =
+          (Ad ad, double value, PrecisionType precision, String code) {
+            addEvent(event, source, value, linkId, userId, fileId);
+          };
     }
     if (ad is MaxAd) {
       addEvent(event, source, ad.revenue * 1000000, linkId, userId, fileId);
