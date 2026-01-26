@@ -968,9 +968,7 @@ class AdmobTool {
     }
     adsState = state;
     if (state == AdsState.dismissed) {
-      if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
-        resetDisplayTime();
-      }
+      resetDisplayTime();
       adsMap[sceneType?.value ?? AdsSceneType.open.value] = null;
     } else {
       EventTool.instance.eventUpload(EventApi.adShowPlacement, {

@@ -373,7 +373,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 10),
         ],
       ),
     );

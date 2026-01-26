@@ -41,7 +41,9 @@ class _FileListPageState extends State<FileListPage> {
   final RefreshController _refreshController = RefreshController();
 
   final List<VideoData> _dbDatabase = DataTool.instance.items;
+  final _scrollController = ScrollController();
 
+  final _aplah = ValueNotifier<double>(0);
   List<VideoData> lists = [];
   int page = 1;
 
@@ -49,6 +51,10 @@ class _FileListPageState extends State<FileListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _scrollController.addListener(() {
+      double aplah = _scrollController.offset / 52;
+      _aplah.value = aplah;
+    });
     requestNetworkData();
   }
 
@@ -56,6 +62,7 @@ class _FileListPageState extends State<FileListPage> {
   void dispose() {
     // TODO: implement dispose
     _refreshController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -149,12 +156,30 @@ class _FileListPageState extends State<FileListPage> {
           ),
         ],
       ),
-      title: Text(widget.name, textAlign: TextAlign.center),
-      titleTextStyle: const TextStyle(
-        letterSpacing: -0.5,
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFF03011A),
+      title: ValueListenableBuilder(
+        valueListenable: _aplah,
+        builder: (BuildContext context, alpah, Widget? child) {
+          double op = alpah;
+          if (op > 1) {
+            op = 1;
+          }
+          if (op < 0) {
+            op = 0;
+          }
+          return Opacity(
+            opacity: op,
+            child: Text(
+              widget.name,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                letterSpacing: -0.5,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF03011A),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -167,17 +192,22 @@ class _FileListPageState extends State<FileListPage> {
         itemNum: 1,
         onLoading: requestNetworkData,
         child: ListView.builder(
-          itemCount: lists.length,
+          controller: _scrollController,
+          itemCount: lists.isNotEmpty ? lists.length + 1 : 0,
           itemBuilder: (context, index) {
-            VideoData data = lists[index];
-            data.recommend = widget.recommend;
-            return GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                clickOpenPage(data, lists);
-              },
-              child: HomeCell(model: data),
-            );
+            if (index == 0) {
+              return titleWidget();
+            } else {
+              VideoData data = lists[index - 1];
+              data.recommend = widget.recommend;
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  clickOpenPage(data, lists);
+                },
+                child: HomeCell(model: data),
+              );
+            }
           },
         ),
       ),
@@ -203,5 +233,27 @@ class _FileListPageState extends State<FileListPage> {
           preventDuplicates: false,
         );
     }
+  }
+
+  Widget titleWidget() {
+    return Container(
+      height: 52,
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          Image.asset(Assets.iconTitle, width: 20, height: 20),
+          SizedBox(width: 6),
+          Text(
+            widget.name,
+            style: const TextStyle(
+              letterSpacing: -0.5,
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+              color: Color(0xFF141414),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
