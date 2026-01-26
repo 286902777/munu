@@ -90,7 +90,7 @@ class _LaunchPageState extends State<LaunchPage> {
         if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
           reRootPage();
         } else {
-          showPlusAds();
+          showPlusAds(adsType ?? AdsType.open);
         }
       }
     });
@@ -215,10 +215,11 @@ class _LaunchPageState extends State<LaunchPage> {
       await AdmobTool.initAdmobOrMax(AdsSceneType.play);
       await AdmobTool.initAdmobOrMax(AdsSceneType.middle);
       await AdmobTool.initAdmobOrMax(AdsSceneType.channel);
+      await AdmobTool.initAdmobOrMax(AdsSceneType.three);
       if (isSetRoot == false) {
         bool success = await AdmobTool.showAdsScreen(AdsSceneType.open);
         if (success == false) {
-          showPlusAds();
+          reRootPage();
         }
       }
     } else {
@@ -226,10 +227,17 @@ class _LaunchPageState extends State<LaunchPage> {
     }
   }
 
-  void showPlusAds() async {
-    bool suc = await AdmobTool.showAdsScreen(AdsSceneType.plus);
-    if (suc == false) {
-      reRootPage();
+  void showPlusAds(AdsType type) async {
+    if (type == AdsType.rewarded) {
+      bool s = await AdmobTool.showAdsScreen(AdsSceneType.three);
+      if (s == false) {
+        reRootPage();
+      }
+    } else {
+      bool s = await AdmobTool.showAdsScreen(AdsSceneType.plus);
+      if (s == false) {
+        reRootPage();
+      }
     }
   }
 
