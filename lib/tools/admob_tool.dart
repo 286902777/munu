@@ -299,12 +299,10 @@ class AdmobTool {
       if (adsMap[AdsSceneType.three.value] == null) {
         AdmobTool.startLoadingThree(AdsSceneType.three);
       }
-      if (AdmobTool.instance.doubleNativeAd == null) {
-        AdmobTool.instance.doubleNativeAd = await _requestNativeAd(
-          AdsSceneType.three,
-          true,
-        );
-      }
+      AdmobTool.instance.doubleNativeAd ??= await _requestNativeAd(
+        AdsSceneType.three,
+        true,
+      );
     }
     //正在展示则直接返回
     if (adsState == AdsState.showing) {
@@ -968,7 +966,9 @@ class AdmobTool {
     }
     adsState = state;
     if (state == AdsState.dismissed) {
-      resetDisplayTime();
+      if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
+        resetDisplayTime();
+      }
       adsMap[sceneType?.value ?? AdsSceneType.open.value] = null;
     } else {
       EventTool.instance.eventUpload(EventApi.adShowPlacement, {

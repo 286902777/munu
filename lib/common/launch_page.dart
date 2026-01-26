@@ -87,7 +87,7 @@ class _LaunchPageState extends State<LaunchPage> {
         }
       }
       if (state == AdsState.dismissed) {
-        if (sceneType == AdsSceneType.plus || adsType == AdsType.rewarded) {
+        if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
           reRootPage();
         } else {
           showPlusAds();
