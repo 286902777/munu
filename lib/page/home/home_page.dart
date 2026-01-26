@@ -93,8 +93,8 @@ class _HomePageState extends State<HomePage>
           .where((user) => user.platform == platform)
           .toList();
       List<Map<String, dynamic>> labelArr = [];
-      result.forEach((mod) {
-        mod.labels.forEach((label) {
+      for (var mod in result) {
+        for (var label in mod.labels) {
           Map<String, dynamic> dic = {
             'catalyse': label.id,
             '_78tqbkenx': label.labelName,
@@ -102,8 +102,8 @@ class _HomePageState extends State<HomePage>
             'stigmata': label.secondLabelCode,
           };
           labelArr.add(dic);
-        });
-      });
+        }
+      }
       await HttpTool.postRequest(
         ApiKey.userPools,
         platform == 0 ? PlatformType.india : PlatformType.middle,
@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage>
         successHandle: (data) {
           if (data != null && data is List) {
             List<UserPoolData> tempUser = <UserPoolData>[];
-            data.forEach((m) {
+            for (var m in data) {
               if (m is Map<String, dynamic>) {
                 UserPoolData pool = UserPoolData(
                   id: m['abongo'],
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage>
                 );
                 tempUser.add(pool);
               }
-            });
+            }
             insertChannelData(tempUser);
           }
         },

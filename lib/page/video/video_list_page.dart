@@ -46,7 +46,6 @@ class _VideoListPageState extends State<VideoListPage> {
     super.initState();
     int index = 0;
     bool isRecom = false;
-    print(widget.lists);
     for (int i = 0; i < widget.lists.length; i++) {
       if (widget.lists[i].isSelect && widget.lists[i].recommend != 2) {
         index = i;
@@ -61,9 +60,9 @@ class _VideoListPageState extends State<VideoListPage> {
         _controller.jumpTo(index * 78 + (isRecom ? 44 : 0));
       }
     });
-    widget.lists.forEach((m) {
+    for (var m in widget.lists) {
       dataList.add(m);
-    });
+    }
     for (VideoData m in dataList) {
       if (m.recommend == 1) {
         recommendList.add(m);
@@ -84,11 +83,11 @@ class _VideoListPageState extends State<VideoListPage> {
     List<Map<String, dynamic>> dbList = await DbTool.instance.getAllUser();
     if (dbList.isNotEmpty) {
       List<UserPoolData> tempUsers = <UserPoolData>[];
-      dbList.forEach((mod) {
+      for (var mod in dbList) {
         UserPoolData user = UserPoolData.fromJson(jsonDecode(mod['info']));
         user.platform = mod['platform'];
         tempUsers.add(user);
-      });
+      }
       List<UserPoolData> result = tempUsers
           .where((user) => user.platform == mod.platform)
           .toList();
@@ -96,8 +95,8 @@ class _VideoListPageState extends State<VideoListPage> {
         return;
       }
       List<Map<String, dynamic>> labelArr = [];
-      result.forEach((mod) {
-        mod.labels.forEach((label) {
+      for (var mod in result) {
+        for (var label in mod.labels) {
           Map<String, dynamic> dic = {
             'catalyse': label.id,
             '_78tqbkenx': label.labelName,
@@ -105,8 +104,8 @@ class _VideoListPageState extends State<VideoListPage> {
             'stigmata': label.secondLabelCode,
           };
           labelArr.add(dic);
-        });
-      });
+        }
+      }
       await HttpTool.postRequest(
         ApiKey.userPools,
         mod.platform == 0 ? PlatformType.india : PlatformType.middle,

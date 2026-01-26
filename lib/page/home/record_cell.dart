@@ -63,9 +63,9 @@ class _RecordCellState extends State<RecordCell> {
     return InkWell(
       onTap: () {
         List<VideoData> list = DataTool.instance.historyItems;
-        list.forEach((m) {
+        for (var m in list) {
           m.recommend = 0;
-        });
+        }
         widget.model.recommend = 0;
         PlayTool.pushPage(widget.model, list, widget.model.netMovie != 0);
       },

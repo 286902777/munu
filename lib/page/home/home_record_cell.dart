@@ -85,9 +85,9 @@ class _HomeRecordCellState extends State<HomeRecordCell> {
                   (index) => InkWell(
                     onTap: () {
                       List<VideoData> list = DataTool.instance.historyItems;
-                      list.forEach((m) {
+                      for (var m in list) {
                         m.recommend = 0;
-                      });
+                      }
                       eventSource = ServiceEventSource.history;
                       playSource = PlaySource.history;
                       PlayTool.pushPage(
