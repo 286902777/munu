@@ -158,7 +158,7 @@ class _VideoPageState extends State<VideoPage>
         }
       }
     }
-    _initMovie();
+    _initMovie(true);
     player.stream.completed.listen((bool completed) async {
       if (completed == true) {
         model?.playTime = 0;
@@ -425,9 +425,11 @@ class _VideoPageState extends State<VideoPage>
     VolumeController.instance.showSystemUI = true;
   }
 
-  Future<void> _initMovie() async {
+  Future<void> _initMovie(bool upload) async {
     playSuccess = false;
-    newVideoSuccess = false;
+    if (upload == true) {
+      newVideoSuccess = false;
+    }
     playFileId = model?.movieId ?? '';
     isReport.value = model?.netMovie != 0;
     if (isBackPage) {
@@ -609,7 +611,7 @@ class _VideoPageState extends State<VideoPage>
     return OrientationBuilder(
       builder: (context, orientation) {
         return PopScope(
-          canPop: false,
+          canPop: true,
           child: Container(
             width: isFullScreen ? Get.height : Get.width,
             height: isFullScreen ? Get.width : Get.height,
@@ -639,7 +641,7 @@ class _VideoPageState extends State<VideoPage>
             lists?.assignAll(dataList);
             model = lists?.firstWhere((m) => m.isSelect == true);
             autoClick = false;
-            _initMovie();
+            _initMovie(true);
           },
           dataItem: (dataList) {
             lists?.assignAll(dataList);
@@ -662,7 +664,7 @@ class _VideoPageState extends State<VideoPage>
             lists?.assignAll(dataList);
             model = lists?.firstWhere((m) => m.isSelect == true);
             autoClick = false;
-            _initMovie();
+            _initMovie(true);
           },
           dataItem: (dataList) {
             lists?.assignAll(dataList);
@@ -699,7 +701,7 @@ class _VideoPageState extends State<VideoPage>
                   lists![i + 1].movieId.isNotEmpty ||
                   lists![i + 1].address.isNotEmpty)) {
             model = lists![i + 1];
-            _initMovie();
+            _initMovie(true);
             break;
           } else {
             if (i < (lists!.length - 2) &&
@@ -707,7 +709,7 @@ class _VideoPageState extends State<VideoPage>
                     lists![i + 2].movieId.isNotEmpty ||
                     lists![i + 2].address.isNotEmpty)) {
               model = lists![i + 2];
-              _initMovie();
+              _initMovie(true);
               break;
             }
           }
@@ -962,7 +964,7 @@ class _VideoPageState extends State<VideoPage>
       await player.pause();
     } else {
       if (model?.playTime == 0) {
-        _initMovie();
+        _initMovie(false);
       } else {
         isUsePause = false;
         await player.play();
