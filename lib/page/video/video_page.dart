@@ -524,7 +524,7 @@ class _VideoPageState extends State<VideoPage>
         ServiceEventName.playVideo,
         model?.platform == 0 ? PlatformType.india : PlatformType.middle,
         0,
-        model?.linkId ?? '',
+        model?.recommend == 0 ? model?.linkId ?? '' : '',
         model?.userId ?? '',
         model?.movieId ?? '',
       );
@@ -535,7 +535,7 @@ class _VideoPageState extends State<VideoPage>
         ServiceEventName.newUserActiveByPlayVideo,
         model?.platform == 0 ? PlatformType.india : PlatformType.middle,
         0,
-        model?.linkId ?? '',
+        model?.recommend == 0 ? model?.linkId ?? '' : '',
         model?.userId ?? '',
         model?.movieId ?? '',
       );

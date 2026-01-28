@@ -74,8 +74,8 @@ class ServiceTool {
       HttpTool.eventPostRequest(
         source,
         para: {
-          'csch': {'amorph': app_Bunlde_Id},
-          'tastably': 'ios',
+          'csch': {'amorph': app_Bunlde_Id}, //bundle_id
+          'tastably': 'ios', //os
           'atis': Uuid().v1(), //log_id
           'ambulantes': linkId,
           'cataloging': userId,
