@@ -9,6 +9,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:munu/page/video/video_full_page.dart';
 import 'package:munu/page/video/video_list_page.dart';
+import 'package:munu/tools/play_tool.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:volume_controller/volume_controller.dart';
@@ -612,6 +613,12 @@ class _VideoPageState extends State<VideoPage>
       builder: (context, orientation) {
         return PopScope(
           canPop: true,
+          onPopInvokedWithResult: (bool didPop, Object? result) {
+            if (didPop) {
+              vipSource = VipSource.ad;
+              PlayTool.showPrimunmPage(true);
+            }
+          },
           child: Container(
             width: isFullScreen ? Get.height : Get.width,
             height: isFullScreen ? Get.width : Get.height,
