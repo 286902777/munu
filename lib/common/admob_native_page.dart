@@ -92,8 +92,8 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
       bottom: false,
       child: Scaffold(
         backgroundColor: widget.sceneType == AdsSceneType.middle
-            ? Colors.black
-            : Color(0xA6000000), // 关键：设置透明背景
+            ? Color(0xA6000000)
+            : Colors.black, // 关键：设置透明背景
         body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 36),
