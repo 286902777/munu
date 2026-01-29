@@ -57,7 +57,7 @@ class PremiumTool with ChangeNotifier {
       },
       onError: (error) {
         EasyLoading.dismiss();
-        premiumDoneBlock?.call(PremiumData(), isPay);
+        premiumDoneBlock?.call(PremiumData(), isStore == false);
       },
     );
 

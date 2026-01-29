@@ -203,10 +203,10 @@ class _LaunchPageState extends State<LaunchPage> {
     if (isVip == false) {
       requestAds();
     }
-    // PremiumTool.instance.restore(appStart: true);
-    // if (PremiumTool.instance.productResultList.value.isEmpty) {
-    //   await PremiumTool.instance.queryProductInfo();
-    // }
+    PremiumTool.instance.restore(appStart: true);
+    if (PremiumTool.instance.productResultList.value.isEmpty) {
+      await PremiumTool.instance.queryProductInfo();
+    }
   }
 
   void requestAds() async {

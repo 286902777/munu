@@ -42,7 +42,7 @@ class _PremiumFailPageState extends State<PremiumFailPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 24),
-            Image.asset(Assets.iconFailToast, width: 20, height: 20),
+            Image.asset(Assets.iconPreFail, width: 20, height: 20),
             SizedBox(height: 16),
             Text(
               'Failure to pay',

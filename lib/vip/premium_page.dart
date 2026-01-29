@@ -437,7 +437,7 @@ class _PremiumPageState extends State<PremiumPage>
 
   Widget _subContentView() {
     return SizedBox(
-      height: Get.width / 375 * 74,
+      height: Get.width / 375 * 73,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

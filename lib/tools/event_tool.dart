@@ -111,7 +111,8 @@ class EventTool extends GetConnect {
 
   @override
   void onInit() async {
-    httpClient.baseUrl = 'https://test-ninth.lensvids.com/bobby/naughty/ritchie';
+    httpClient.baseUrl =
+        'https://test-ninth.lensvids.com/bobby/naughty/ritchie';
     // httpClient.baseUrl = 'https://ninth.lensvids.com/halifax/xylem';
     httpClient.maxAuthRetries = 1;
     httpClient.defaultContentType = EventTool.contentType;
@@ -122,7 +123,7 @@ class EventTool extends GetConnect {
     await AppKey.save(AppKey.eventList, {});
     if (data != null) {
       for (var result in data.entries) {
-         postRequest(result.value);
+        postRequest(result.value);
       }
     }
   }
@@ -193,11 +194,12 @@ class EventTool extends GetConnect {
         'trusty': 'mcc',
         'bounty': Uuid().v4(), //log_id
       },
+
       ///自定义后台字段
       'crucible>ofFG': linkId,
       'crucible>QPvmfX': apiPlatform == PlatformType.india
-            ? EventParaValue.cash.value
-            : EventParaValue.quick.value,
+          ? EventParaValue.cash.value
+          : EventParaValue.quick.value,
       'crucible>uPHjof': email,
       'crucible>mBiEt': userId,
       'crucible>ebfqe': playFileId,
@@ -210,46 +212,41 @@ class EventTool extends GetConnect {
   }
 
   Future<void> postRequest(Map<String, dynamic> para) async {
-      String idfv = '';
-      String modelInfo = '';
+    String idfv = '';
+    String modelInfo = '';
+    if (Platform.isIOS) {
+      final IosDeviceInfo iosInfo = await DeviceInfoPlugin().iosInfo;
+      modelInfo = iosInfo.model;
+      idfv = iosInfo.identifierForVendor ?? '';
+    }
+    try {
       if (Platform.isIOS) {
-        final IosDeviceInfo iosInfo = await DeviceInfoPlugin().iosInfo;
-        modelInfo = iosInfo.model;
-        idfv = iosInfo.identifierForVendor ?? '';
-      }
-        try {
-          if (Platform.isIOS) {
-            Response response = await EventTool.instance.post(
-              '',
-              contentType: "application/json",
-              para,
-              headers: {'rapport': idfv},
-              query: {
-                'usurp': modelInfo,
-                'zombie': app_Bunlde_Id,
-                'rapport': idfv,
-              },
-            );
-            if (response.statusCode == 200) {
-              if (para['vector'] == 'racemose') {
-                AppKey.save(AppKey.appInstall, true);
-              }
-              if (para['vector'] == EventApi.landPageExpose.name) {
-                AppKey.save(AppKey.isFirstLink, true);
-              }
-            } else if (response.statusCode != null) {
-              Map<String, dynamic>? data = await AppKey.getMap(AppKey.eventList);
-              data?[para['pursuant']['subtlety']] = para;
-              await AppKey.save(AppKey.eventList, data);
-              print(response.status.code);
-            }
+        Response response = await EventTool.instance.post(
+          '',
+          contentType: "application/json",
+          para,
+          headers: {'rapport': idfv},
+          query: {'usurp': modelInfo, 'zombie': app_Bunlde_Id, 'rapport': idfv},
+        );
+        if (response.statusCode == 200) {
+          if (para['vector'] == 'racemose') {
+            AppKey.save(AppKey.appInstall, true);
           }
-        } catch (e) {
+          if (para['vector'] == EventApi.landPageExpose.name) {
+            AppKey.save(AppKey.isFirstLink, true);
+          }
+        } else if (response.statusCode != null) {
           Map<String, dynamic>? data = await AppKey.getMap(AppKey.eventList);
           data?[para['pursuant']['subtlety']] = para;
           await AppKey.save(AppKey.eventList, data);
-          print("${e.hashCode}");
         }
+      }
+    } catch (e) {
+      Map<String, dynamic>? data = await AppKey.getMap(AppKey.eventList);
+      data?[para['pursuant']['subtlety']] = para;
+      await AppKey.save(AppKey.eventList, data);
+      print("${e.hashCode}");
+    }
   }
 
   // install

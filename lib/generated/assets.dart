@@ -38,6 +38,7 @@ class Assets {
   static const String iconNoContent = 'image/icon/no_content.webp';
   static const String iconNoNetwork = 'image/icon/no_network.webp';
   static const String iconPhotoBg = 'image/icon/photo_bg.webp';
+  static const String iconPreFail = 'image/icon/pre_fail.webp';
   static const String iconRenameInfo = 'image/icon/rename_info.webp';
   static const String iconSuccessToast = 'image/icon/success_toast.webp';
   static const String iconTitle = 'image/icon/title.webp';

@@ -67,7 +67,7 @@ class FireConfigKey {
 
   static String adsTwoIdKey = 'lens_tid';
 
-  static String clockFileName = 'clock_config';
+  static String clockFileName = 'sim_config';
 
   static String userVipName = 'premium_config';
 
@@ -97,7 +97,7 @@ class FireBaseTool {
         FireConfigKey.userVipIndex: 1,
         FireConfigKey.userVipHot: false,
         FireConfigKey.userVipSelect: false,
-        FireConfigKey.userVipType: 'Annually',
+        FireConfigKey.userVipType: 'Yearly',
       },
       {
         FireConfigKey.userVipProductId: 'Lens_week',
@@ -237,28 +237,27 @@ class FireBaseTool {
     };
 
     updateRemoteSet() async {
-      String mfile = remote.getString(
+      String mFile = remote.getString(
         Platform.isIOS
             ? FireConfigKey.maxiOSConfigKey
             : FireConfigKey.maxAndroidConfigKey,
       );
-      String pfile = remote.getString(
+      String pFile = remote.getString(
         Platform.isIOS
             ? FireConfigKey.maxiOSPlusConfigKey
             : FireConfigKey.maxAndroidPlusConfigKey,
       );
 
       String tFile = remote.getString(FireConfigKey.maxiOSThreeConfigKey);
-      String cflie = remote.getString(FireConfigKey.clockFileName);
-      if (mfile.isNotEmpty) {
-        adsFile = jsonDecode(mfile);
+      if (mFile.isNotEmpty) {
+        adsFile = jsonDecode(mFile);
       }
 
-      if (pfile.isNotEmpty) {
-        adsPlusFile = jsonDecode(pfile);
+      if (pFile.isNotEmpty) {
+        adsPlusFile = jsonDecode(pFile);
       }
 
-      if (pfile.isNotEmpty) {
+      if (tFile.isNotEmpty) {
         adsThreeFile = jsonDecode(tFile);
       }
       if (adsFile[FireConfigKey.playWaitKey] != null) {
@@ -350,8 +349,9 @@ class FireBaseTool {
       adsFile[AdsSceneType.three.value] =
           adsThreeFile[AdsSceneType.three.value];
 
-      if (cflie.isNotEmpty) {
-        FireBaseTool.clockFile = jsonDecode(cflie);
+      String simFile = remote.getString(FireConfigKey.clockFileName);
+      if (simFile.isNotEmpty) {
+        FireBaseTool.clockFile = jsonDecode(simFile);
         isSimCard = FireBaseTool.clockFile['sim'];
         isSimLimit = FireBaseTool.clockFile['sim_Limit'];
         isEmulator = FireBaseTool.clockFile['emulator'];
