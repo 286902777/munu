@@ -274,8 +274,8 @@ class _DeepPageState extends State<DeepPage>
     );
     List<UserPoolData> users = DataTool.instance.users;
     List<Map<String, dynamic>> labelArr = [];
-    users.forEach((mod) {
-      mod.labels.forEach((label) {
+    for (var mod in users) {
+      for (var label in mod.labels) {
         Map<String, dynamic> dic = {
           'catalyse': label.id,
           '_78tqbkenx': label.labelName,
@@ -283,8 +283,8 @@ class _DeepPageState extends State<DeepPage>
           'stigmata': label.secondLabelCode,
         };
         labelArr.add(dic);
-      });
-    });
+      }
+    }
     await HttpTool.postRequest(
       ApiKey.userPools,
       apiPlatform,
@@ -405,47 +405,57 @@ class _DeepPageState extends State<DeepPage>
           ),
         ],
       ),
-      title: GestureDetector(
-        onTap: () {
-          if (userId.isNotEmpty) {
-            channelSource = ChannelSource.landpage_avtor;
-            Get.to(() => ChannelPage(userId: userId, platform: apiPlatform));
-          }
-        },
-        child: Container(
-          color: Colors.transparent,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-                child: CachedNetworkImage(
-                  imageUrl: userInfoChange.value ? user?.picture ?? '' : '',
-                  fit: BoxFit.cover,
-                  width: 24,
-                  height: 24,
-                  placeholder: (context, url) =>
-                      Image.asset(Assets.channelAvatar, width: 24, height: 24),
-                  errorWidget: (context, url, error) =>
-                      Image.asset(Assets.channelAvatar, width: 24, height: 24),
-                ),
-              ),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  userInfoChange.value ? user?.name ?? '' : '',
-                  style: const TextStyle(
-                    letterSpacing: -0.5,
-                    fontSize: 16,
-                    color: Color(0xFF03011A),
+      title: Visibility(
+        visible: lists.isNotEmpty,
+        child: GestureDetector(
+          onTap: () {
+            if (userId.isNotEmpty) {
+              channelSource = ChannelSource.landpage_avtor;
+              Get.to(() => ChannelPage(userId: userId, platform: apiPlatform));
+            }
+          },
+          child: Container(
+            color: Colors.transparent,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  child: CachedNetworkImage(
+                    imageUrl: userInfoChange.value ? user?.picture ?? '' : '',
+                    fit: BoxFit.cover,
+                    width: 24,
+                    height: 24,
+                    placeholder: (context, url) => Image.asset(
+                      Assets.channelAvatar,
+                      width: 24,
+                      height: 24,
+                    ),
+                    errorWidget: (context, url, error) => Image.asset(
+                      Assets.channelAvatar,
+                      width: 24,
+                      height: 24,
+                    ),
                   ),
-                  maxLines: 1,
                 ),
-              ),
-              SizedBox(width: 8),
-              Image.asset(Assets.channelDown, width: 16, height: 16),
-            ],
+                SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    userInfoChange.value ? user?.name ?? '' : '',
+                    style: const TextStyle(
+                      letterSpacing: -0.5,
+                      fontSize: 16,
+                      color: Color(0xFF03011A),
+                    ),
+                    maxLines: 1,
+                  ),
+                ),
+                SizedBox(width: 8),
+                Image.asset(Assets.channelDown, width: 16, height: 16),
+                SizedBox(width: 24),
+              ],
+            ),
           ),
         ),
       ),
@@ -607,7 +617,7 @@ class _DeepPageState extends State<DeepPage>
   Widget hotContentWidget() {
     return Obx(
       () => ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         itemCount: otherChange.value ? hotArray.length : 0,
         itemBuilder: (context, index) {
           return GestureDetector(
@@ -626,7 +636,7 @@ class _DeepPageState extends State<DeepPage>
   Widget newContentWidget() {
     return Obx(
       () => ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         itemCount: otherChange.value ? newArray.length : 0,
         itemBuilder: (context, index) {
           return GestureDetector(

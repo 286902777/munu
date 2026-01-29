@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:munu/common/db_tool.dart';
+import 'package:munu/data/video_data.dart';
 import 'package:munu/page/home/record_page.dart';
 import 'package:munu/tools/play_tool.dart';
 
@@ -83,12 +84,16 @@ class _HomeRecordCellState extends State<HomeRecordCell> {
                   DataTool.instance.historyItems.length,
                   (index) => InkWell(
                     onTap: () {
+                      List<VideoData> list = DataTool.instance.historyItems;
+                      for (var m in list) {
+                        m.recommend = 0;
+                      }
                       eventSource = ServiceEventSource.history;
                       playSource = PlaySource.history;
                       PlayTool.pushPage(
-                        DataTool.instance.historyItems[index],
-                        DataTool.instance.historyItems,
-                        DataTool.instance.historyItems[index].netMovie != 0,
+                        list[index],
+                        list,
+                        list[index].netMovie != 0,
                       );
                     },
                     splashColor: Colors.transparent, // 透明水波纹

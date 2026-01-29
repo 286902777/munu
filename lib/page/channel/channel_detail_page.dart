@@ -45,8 +45,8 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
         .where((user) => user.platform == platform)
         .toList();
     List<Map<String, dynamic>> labelArr = [];
-    result.forEach((mod) {
-      mod.labels.forEach((label) {
+    for (var mod in result) {
+      for (var label in mod.labels) {
         Map<String, dynamic> dic = {
           'catalyse': label.id,
           '_78tqbkenx': label.labelName,
@@ -54,8 +54,8 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
           'stigmata': label.secondLabelCode,
         };
         labelArr.add(dic);
-      });
-    });
+      }
+    }
     await HttpTool.postRequest(
       ApiKey.userPools,
       platform == 0 ? PlatformType.india : PlatformType.middle,
@@ -66,11 +66,11 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
       },
       successHandle: (data) {
         if (data != null && data is List) {
-          data.forEach((m) {
+          for (var m in data) {
             if (m is Map<String, dynamic>) {
               recommends.add(m);
             }
-          });
+          }
           if (mounted) {
             setState(() {});
           }
@@ -373,7 +373,7 @@ class _ChannelDetailPageState extends State<ChannelDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 10),
         ],
       ),
     );

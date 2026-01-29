@@ -41,6 +41,7 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    AdmobTool.adsState = AdsState.showing;
     if (widget.doubleAd != null) {
       timeValue = AdmobTool.instance.doubleNativeTime.obs;
       canClick.value =
@@ -91,8 +92,8 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
       bottom: false,
       child: Scaffold(
         backgroundColor: widget.sceneType == AdsSceneType.middle
-            ? Colors.black
-            : Color(0xA6000000), // 关键：设置透明背景
+            ? Color(0xA6000000)
+            : Colors.black, // 关键：设置透明背景
         body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 36),
@@ -229,6 +230,7 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
 
   void closePage() {
     Get.back(result: true);
+    AdmobTool.adsState = AdsState.dismissed;
   }
 
   void runTime() {
@@ -251,6 +253,7 @@ class _AdmobNativePageState extends State<AdmobNativePage> {
     }
     widget.ad.dispose();
     widget.doubleAd?.dispose();
+    AdmobTool.adsState = AdsState.dismissed;
     if (_timer?.isActive ?? false) {
       _timer?.cancel();
     }

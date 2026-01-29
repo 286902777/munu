@@ -119,6 +119,7 @@ class _ChannelPageState extends State<ChannelPage>
           );
         }
         if (adsType == AdsType.native) {
+          AdmobTool.adsState = AdsState.dismissed;
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(
@@ -319,8 +320,8 @@ class _ChannelPageState extends State<ChannelPage>
     );
     List<UserPoolData> users = DataTool.instance.users;
     List<Map<String, dynamic>> labelArr = [];
-    users.forEach((mod) {
-      mod.labels.forEach((label) {
+    for (var mod in users) {
+      for (var label in mod.labels) {
         Map<String, dynamic> dic = {
           'catalyse': label.id,
           '_78tqbkenx': label.labelName,
@@ -328,8 +329,8 @@ class _ChannelPageState extends State<ChannelPage>
           'stigmata': label.secondLabelCode,
         };
         labelArr.add(dic);
-      });
-    });
+      }
+    }
     await HttpTool.postRequest(
       ApiKey.userPools,
       widget.platform,

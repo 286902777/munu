@@ -11,6 +11,7 @@ import 'package:munu/page/video/video_full_page.dart';
 import 'package:munu/page/video/video_list_page.dart';
 import 'package:munu/vip/premium_page.dart';
 import 'package:munu/vip/premium_pop_page.dart';
+import 'package:munu/tools/play_tool.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:volume_controller/volume_controller.dart';
@@ -162,7 +163,7 @@ class _VideoPageState extends State<VideoPage>
         }
       }
     }
-    _initMovie();
+    _initMovie(true);
     player.stream.completed.listen((bool completed) async {
       if (completed == true) {
         model?.playTime = 0;
@@ -301,6 +302,7 @@ class _VideoPageState extends State<VideoPage>
       }
       if (state == AdsState.showing && AdmobTool.scene == AdsSceneType.middle) {
         if (adsType == AdsType.native) {
+          AdmobTool.adsState = AdsState.dismissed;
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(
@@ -357,6 +359,7 @@ class _VideoPageState extends State<VideoPage>
           );
         }
         if (adsType == AdsType.native) {
+          AdmobTool.adsState = AdsState.dismissed;
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(
@@ -427,9 +430,11 @@ class _VideoPageState extends State<VideoPage>
     VolumeController.instance.showSystemUI = true;
   }
 
-  Future<void> _initMovie() async {
+  Future<void> _initMovie(bool upload) async {
     playSuccess = false;
-    newVideoSuccess = false;
+    if (upload == true) {
+      newVideoSuccess = false;
+    }
     playFileId = model?.movieId ?? '';
     isReport.value = model?.netMovie != 0;
     if (isBackPage) {
@@ -523,7 +528,7 @@ class _VideoPageState extends State<VideoPage>
         ServiceEventName.playVideo,
         model?.platform == 0 ? PlatformType.india : PlatformType.middle,
         0,
-        model?.linkId ?? '',
+        model?.recommend == 0 ? model?.linkId ?? '' : '',
         model?.userId ?? '',
         model?.movieId ?? '',
       );
@@ -534,7 +539,7 @@ class _VideoPageState extends State<VideoPage>
         ServiceEventName.newUserActiveByPlayVideo,
         model?.platform == 0 ? PlatformType.india : PlatformType.middle,
         0,
-        model?.linkId ?? '',
+        model?.recommend == 0 ? model?.linkId ?? '' : '',
         model?.userId ?? '',
         model?.movieId ?? '',
       );
@@ -611,7 +616,13 @@ class _VideoPageState extends State<VideoPage>
     return OrientationBuilder(
       builder: (context, orientation) {
         return PopScope(
-          canPop: false,
+          canPop: true,
+          onPopInvokedWithResult: (bool didPop, Object? result) {
+            if (didPop) {
+              vipSource = VipSource.ad;
+              PlayTool.showPrimunmPage(true);
+            }
+          },
           child: Container(
             width: isFullScreen ? Get.height : Get.width,
             height: isFullScreen ? Get.width : Get.height,
@@ -643,7 +654,7 @@ class _VideoPageState extends State<VideoPage>
             lists?.assignAll(dataList);
             model = lists?.firstWhere((m) => m.isSelect == true);
             autoClick = false;
-            _initMovie();
+            _initMovie(true);
           },
           dataItem: (dataList) {
             lists?.assignAll(dataList);
@@ -666,7 +677,7 @@ class _VideoPageState extends State<VideoPage>
             lists?.assignAll(dataList);
             model = lists?.firstWhere((m) => m.isSelect == true);
             autoClick = false;
-            _initMovie();
+            _initMovie(true);
           },
           dataItem: (dataList) {
             lists?.assignAll(dataList);
@@ -703,7 +714,7 @@ class _VideoPageState extends State<VideoPage>
                   lists![i + 1].movieId.isNotEmpty ||
                   lists![i + 1].address.isNotEmpty)) {
             model = lists![i + 1];
-            _initMovie();
+            _initMovie(true);
             break;
           } else {
             if (i < (lists!.length - 2) &&
@@ -711,7 +722,7 @@ class _VideoPageState extends State<VideoPage>
                     lists![i + 2].movieId.isNotEmpty ||
                     lists![i + 2].address.isNotEmpty)) {
               model = lists![i + 2];
-              _initMovie();
+              _initMovie(true);
               break;
             }
           }
@@ -819,11 +830,10 @@ class _VideoPageState extends State<VideoPage>
                   if (isFullScreen) {
                     screenOrientationAction();
                   } else {
-                    Get.back(); // 和下面冲突
-                  }
-                  bool suc = await AdmobTool.showAdsScreen(AdsSceneType.play);
-                  if (suc == false) {
-                    Get.back();
+                    bool suc = await AdmobTool.showAdsScreen(AdsSceneType.play);
+                    if (suc == false) {
+                      Get.back(result: true);
+                    }
                   }
                 },
               ),
@@ -971,7 +981,7 @@ class _VideoPageState extends State<VideoPage>
       await player.pause();
     } else {
       if (model?.playTime == 0) {
-        _initMovie();
+        _initMovie(false);
       } else {
         isUsePause = false;
         await player.play();

@@ -62,11 +62,12 @@ class _RecordCellState extends State<RecordCell> {
   Widget _contentView() {
     return InkWell(
       onTap: () {
-        PlayTool.pushPage(
-          widget.model,
-          DataTool.instance.historyItems,
-          widget.model.netMovie != 0,
-        );
+        List<VideoData> list = DataTool.instance.historyItems;
+        for (var m in list) {
+          m.recommend = 0;
+        }
+        widget.model.recommend = 0;
+        PlayTool.pushPage(widget.model, list, widget.model.netMovie != 0);
       },
       splashColor: Colors.transparent, // 透明水波纹
       highlightColor: Colors.transparent, // 透明高亮
