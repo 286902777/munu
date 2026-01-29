@@ -8,6 +8,7 @@ import 'package:munu/page/set/set_page.dart';
 import 'package:munu/page/upload/upload_page.dart';
 import 'package:munu/tools/play_tool.dart';
 import 'package:munu/tools/service_tool.dart';
+import 'package:munu/vip/premium_tool.dart';
 
 import '../generated/assets.dart';
 import '../page/channel/deep_page.dart';
@@ -189,6 +190,9 @@ class _TabPageState extends State<TabPage>
           AdmobTool.adsState != AdsState.showing) {
         eventAdsSource = AdmobSource.hotOpen;
         await AdmobTool.showAdsScreen(AdsSceneType.open);
+      }
+      if (state == AppState.foreground) {
+        PremiumTool.instance.restore(appStart: true, isClick: false);
       }
     });
   }

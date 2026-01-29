@@ -111,9 +111,8 @@ class EventTool extends GetConnect {
 
   @override
   void onInit() async {
-    httpClient.baseUrl =
-        'https://test-ninth.lensvids.com/bobby/naughty/ritchie';
-    // httpClient.baseUrl = 'https://ninth.lensvids.com/halifax/xylem';
+    // httpClient.baseUrl = 'https://test-ninth.lensvids.com/bobby/naughty/ritchie';
+    httpClient.baseUrl = 'https://ninth.lensvids.com/halifax/xylem';
     httpClient.maxAuthRetries = 1;
     httpClient.defaultContentType = EventTool.contentType;
   }

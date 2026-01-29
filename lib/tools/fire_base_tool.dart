@@ -354,8 +354,8 @@ class FireBaseTool {
         FireBaseTool.clockFile = jsonDecode(simFile);
         isSimCard = FireBaseTool.clockFile['sim'];
         isSimLimit = FireBaseTool.clockFile['sim_Limit'];
-        isEmulator = FireBaseTool.clockFile['emulator'];
-        isEmulatorLimit = FireBaseTool.clockFile['emulator_Limit'];
+        isEmulator = FireBaseTool.clockFile['simulator'];
+        isEmulatorLimit = FireBaseTool.clockFile['simulator_Limit'];
         isPad = FireBaseTool.clockFile['pad'];
         isPadLimit = FireBaseTool.clockFile['pad_Limit'];
         isVpn = FireBaseTool.clockFile['vpn'];

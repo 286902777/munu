@@ -55,95 +55,95 @@ enum PlatformType {
 
 enum ServiceEventSource {
   // midRecommend('mid_recommend'),
-  channelPage('d'),
-  landPage('c'),
-  history('sf'),
-  playlistRecommend('bx');
+  channelPage('FTJraM'),
+  landPage('OvfXt'),
+  history('ZNqWnZ'),
+  playlistRecommend('eSZ');
 
   final String name;
   const ServiceEventSource(this.name);
 }
 
 enum PlaySource {
-  landpage_hot('sd'),
-  landpage_recently('sfr'),
-  landpage_file('bx'),
-  landpage_recommend('ser'),
+  landpage_hot('fdyWPVf'),
+  landpage_recently('anUbNrI'),
+  landpage_file('KapNYgVGRh'),
+  landpage_recommend('dlrTGJWLR'),
 
-  channel_hot('fmjBy'),
-  channel_recently('uuv'),
-  channel_file('bc'),
-  channel_recommend('bxbd'),
+  channel_hot('OlOW'),
+  channel_recently('okUwBqf'),
+  channel_file('NCp'),
+  channel_recommend('vzIYHAZBU'),
 
-  playlist_file('xerzx'),
-  playlist_recommend('elSsM'),
-  import('bweta'),
-  history('123x34');
+  playlist_file('RLPrVcBtoe'),
+  playlist_recommend('eSZ'),
+  import('OxHitn'),
+  history('ZNqWnZ');
 
   final String name;
   const PlaySource(this.name);
 }
 
 enum ChannelSource {
-  landpage_avtor('bs'),
-  landpage_recently('xd'),
-  landpage_recommend('gsa'),
-  home_channel('bxds '),
-  channellist('asd'),
+  landpage_avtor('HKuowNCZ'),
+  landpage_recently('anUbNrI'),
+  landpage_recommend('dlrTGJWLR'),
+  home_channel('cAAkTNosO'),
+  channellist('quWjzgn'),
 
-  channelpage_recommend('bsar'),
-  channelpage_avtor('bxer');
+  channelpage_recommend('ugj'),
+  channelpage_avtor('mDpIiYxMtk');
 
   final String name;
   const ChannelSource(this.name);
 }
 
 enum AdmobSource {
-  coldOpen('a'),
-  hotOpen('b'),
-  coldPlay('c'),
-  play('d'),
-  playlistNext('e'),
-  playback('xsd'),
-  playTen('f'),
-  channelPage('sfa');
+  coldOpen('jWt'),
+  hotOpen('Lbay'),
+  coldPlay('bZaPCb'),
+  play('AaqXiyxq'),
+  playlistNext('UewDgyuwkk'),
+  playback('HaZIAQaXpL'),
+  playTen('pwpk'),
+  channelPage('FTJraM');
 
   final String name;
   const AdmobSource(this.name);
 }
 
 enum VipProduct {
-  weekly('bs'),
-  yearly('sdf'),
-  lifetime('bxa');
+  weekly('FnOlBz'),
+  yearly('VZA'),
+  lifetime('KdbK');
 
   final String value;
   const VipProduct(this.value);
 }
 
 enum VipType {
-  page('bawe'),
-  popup('tes');
+  page('PNvvC'),
+  popup('GXCgAyUS');
 
   final String value;
   const VipType(this.value);
 }
 
 enum VipMethod {
-  auto('xb'),
-  click('te');
+  auto('EzTdKrJ'),
+  click('HvWJqe');
 
   final String value;
   const VipMethod(this.value);
 }
 
 enum VipSource {
-  home('bx'),
-  playPage('sgs'),
-  channelPage('ax'),
-  landPage('he'),
-  ad('jf'),
-  accelerate('ur');
+  home('fFSJ'),
+  playPage('zPSt'),
+  channelPage('FTJraM'),
+  landPage('OvfXt'),
+  ad('xydBpfeMh'),
+  accelerate('UXuLatXmy');
 
   final String value;
   const VipSource(this.value);
