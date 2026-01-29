@@ -57,42 +57,42 @@ class _PremiumPageState extends State<PremiumPage>
       await PremiumTool.instance.queryProductInfo();
       EasyLoading.dismiss();
     }
-    List<PremiumProductData> lists = [];
-    PremiumProductData s = PremiumProductData(
-      productId: preLife,
-      title: 'lift',
-      productInfo: 'productInfo',
-      price: 29.99,
-      showPrice: '${'\$'}29.99',
-      currency: '*',
-      isSelect: true,
-      hot: true,
-    );
-    PremiumProductData sx = PremiumProductData(
-      productId: preYear,
-      title: 'year',
-      productInfo: 'productInfo',
-      price: 19.99,
-      showPrice: '${'\$'}19.99',
-      currency: '*',
-      isSelect: false,
-      hot: false,
-    );
-    PremiumProductData ssx = PremiumProductData(
-      productId: preWeek,
-      title: 'weak',
-      productInfo: 'productInfo',
-      price: 2.99,
-      showPrice: '${'\$'}2.99',
-      currency: '*',
-      isSelect: false,
-      hot: false,
-    );
-    lists.add(s);
-    lists.add(sx);
-    lists.add(ssx);
-
-    PremiumTool.instance.productResultList.value = lists;
+    // List<PremiumProductData> lists = [];
+    // PremiumProductData s = PremiumProductData(
+    //   productId: preLife,
+    //   title: 'lift',
+    //   productInfo: 'productInfo',
+    //   price: 29.99,
+    //   showPrice: '${'\$'}29.99',
+    //   currency: '*',
+    //   isSelect: true,
+    //   hot: true,
+    // );
+    // PremiumProductData sx = PremiumProductData(
+    //   productId: preYear,
+    //   title: 'year',
+    //   productInfo: 'productInfo',
+    //   price: 19.99,
+    //   showPrice: '${'\$'}19.99',
+    //   currency: '*',
+    //   isSelect: false,
+    //   hot: false,
+    // );
+    // PremiumProductData ssx = PremiumProductData(
+    //   productId: preWeek,
+    //   title: 'weak',
+    //   productInfo: 'productInfo',
+    //   price: 2.99,
+    //   showPrice: '${'\$'}2.99',
+    //   currency: '*',
+    //   isSelect: false,
+    //   hot: false,
+    // );
+    // lists.add(s);
+    // lists.add(sx);
+    // lists.add(ssx);
+    //
+    // PremiumTool.instance.productResultList.value = lists;
     // ^ test
     dynamic fileList = FireBaseTool.userVipFile[FireConfigKey.userVipInfoName];
     if (fileList is List) {
@@ -437,7 +437,7 @@ class _PremiumPageState extends State<PremiumPage>
 
   Widget _subContentView() {
     return SizedBox(
-      height: 75,
+      height: Get.width / 375 * 74,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -56,7 +56,7 @@ class PremiumData {
     info: json["info"] ?? '',
     productId: json["productId"] ?? '',
     success: json["success"] ?? false,
-    ok: json["s"] ?? false,
+    ok: json["embrittle"] ?? false,
     autoRenew: json["autoRenew"] ?? false,
     expiresDate: json["expiresDate"] ?? 0,
   );

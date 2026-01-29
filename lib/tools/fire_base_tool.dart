@@ -69,9 +69,9 @@ class FireConfigKey {
 
   static String clockFileName = 'clock_config';
 
-  static String userVipName = 'user_premium_config';
+  static String userVipName = 'premium_config';
 
-  static String userVipInfoName = 'premium_info';
+  static String userVipInfoName = 'premium_list';
 
   static String userVipProductId = 'premium_productId';
   static String userVipHot = 'premium_hot';
@@ -86,21 +86,21 @@ class FireBaseTool {
   static Map userVipFile = {
     FireConfigKey.userVipInfoName: [
       {
-        FireConfigKey.userVipProductId: 'lens_lifetime',
+        FireConfigKey.userVipProductId: 'Lens_lifetime',
         FireConfigKey.userVipIndex: 0,
         FireConfigKey.userVipHot: true,
         FireConfigKey.userVipSelect: true,
         FireConfigKey.userVipType: 'Permanent',
       },
       {
-        FireConfigKey.userVipProductId: 'lens_yearly',
+        FireConfigKey.userVipProductId: 'Lens_year',
         FireConfigKey.userVipIndex: 1,
         FireConfigKey.userVipHot: false,
         FireConfigKey.userVipSelect: false,
         FireConfigKey.userVipType: 'Annually',
       },
       {
-        FireConfigKey.userVipProductId: 'lens_weekly',
+        FireConfigKey.userVipProductId: 'Lens_week',
         FireConfigKey.userVipIndex: 2,
         FireConfigKey.userVipHot: false,
         FireConfigKey.userVipSelect: false,

@@ -18,9 +18,9 @@ import '../tools/event_tool.dart';
 import '../tools/fire_base_tool.dart';
 
 enum PremiumIdKey {
-  weak('lens_weekly'),
-  year('lens_yearly'),
-  life('lens_lifetime');
+  weak('Lens_week'),
+  year('Lens_year'),
+  life('Lens_lifetime');
 
   final String value;
   const PremiumIdKey(this.value);
@@ -57,7 +57,7 @@ class PremiumTool with ChangeNotifier {
       },
       onError: (error) {
         EasyLoading.dismiss();
-        premiumDoneBlock?.call(PremiumData(), isStore == false);
+        premiumDoneBlock?.call(PremiumData(), isPay);
       },
     );
 
@@ -264,7 +264,7 @@ class PremiumTool with ChangeNotifier {
     }
 
     String url =
-        'https://ss.tism'; // https://rme.frameplayvid.com/v1/ios/receipt-verifier
+        'https://Lens.lensvids.com/lobulate/colpeo/fkqhmnpxtm'; // https://rme.frameplayvid.com/v1/ios/receipt-verifier
     final storage = FlutterSecureStorage();
     String? uniqueId = await storage.read(key: 'unique_id');
     String uuId = '';
@@ -280,20 +280,19 @@ class PremiumTool with ChangeNotifier {
     // params['product_id'] = purchaseDetails.productID;
     // params['receipt_base64_data'] =
     // purchaseDetails.verificationData.serverVerificationData;
-    params['s'] = uuId;
-    params['b'] = (await PackageInfo.fromPlatform()).packageName;
-    params['sb'] = purchaseDetails.productID;
-    params['sd'] = receipt;
+    params['cornroot'] = uuId;
+    params['cto'] = (await PackageInfo.fromPlatform()).packageName;
+    params['undighted'] = purchaseDetails.productID;
+    params['panplegia'] = receipt;
     Response response = await GetConnect().post(
       url,
       params,
       contentType: 'application/json',
-      headers: {'humbly': 'unitooth', 'Host': 'rme.frameplayvid.com'},
+      headers: {'shellacks': 'brainge'},
     );
     dynamic responseBody = response.body;
-
     if (responseBody is Map) {
-      dynamic entity = responseBody['moles']; //entity
+      dynamic entity = responseBody['hafnyl']; //entity
       if (entity is Map<String, dynamic>) {
         PremiumData model = PremiumData.fromJson(entity);
         model.success = true;
@@ -303,16 +302,18 @@ class PremiumTool with ChangeNotifier {
 
         if (Platform.isIOS) {
           List pendingRenewalInfo =
-              entity['gmsko6t1ir'] ?? []; //pending_renewal_info
+              entity['ranis'] ?? []; //pending_renewal_info
           if (pendingRenewalInfo.isNotEmpty) {
             model.autoRenew =
-                (pendingRenewalInfo[0]['peavie']) == '1'; //auto_renew_status
+                (pendingRenewalInfo[0]['animadvert']) ==
+                '1'; //auto_renew_status
           }
 
           List latestReceiptInfo =
-              entity['adversed'] ?? []; //latest_receipt_info
+              entity['acidology'] ?? []; //latest_receipt_info
           if (latestReceiptInfo.isNotEmpty) {
-            model.expiresDate = latestReceiptInfo[0]['bilby']; //expires_date_ms
+            model.expiresDate =
+                latestReceiptInfo[0]['twaddledom']; //expires_date_ms
           }
         }
         await AppKey.save(AppKey.isVipUser, model.ok);
@@ -450,7 +451,9 @@ class PremiumTool with ChangeNotifier {
       );
     }
 
-    String url = 'https://rme.arasvid.com/horsecar/skwmvb8osg/rantism';
+    String url =
+        'https://Lens.lensvids.com/lobulate/colpeo/fkqhmnpxtm'; // https://rme.frameplayvid.com/v1/ios/receipt-verifier
+
     final storage = FlutterSecureStorage();
     String? uniqueId = await storage.read(key: 'unique_id');
     String uuId = '';
@@ -461,20 +464,21 @@ class PremiumTool with ChangeNotifier {
       storage.write(key: 'unique_id', value: uuId);
     }
     Map params = {};
-    params['catalin'] = uuId;
-    params['hamates'] = (await PackageInfo.fromPlatform()).packageName;
-    params['indivinity'] = productId;
-    params['polyptych'] = receipt;
+    params['cornroot'] = uuId;
+    params['cto'] = (await PackageInfo.fromPlatform()).packageName;
+    params['undighted'] = productId;
+    params['panplegia'] = receipt;
     Response response = await GetConnect().post(
       url,
       params,
       contentType: 'application/json',
-      headers: {'humbly': 'unitooth', 'Host': 'rme.frameplayvid.com'},
+      headers: {'shellacks': 'brainge'},
     );
+
     dynamic responseBody = response.body;
 
     if (responseBody is Map) {
-      dynamic entity = responseBody['moles']; //entity
+      dynamic entity = responseBody['hafnyl']; //entity
       if (entity is Map<String, dynamic>) {
         PremiumData model = PremiumData.fromJson(entity);
         model.success = true;
@@ -483,16 +487,18 @@ class PremiumTool with ChangeNotifier {
 
         if (Platform.isIOS) {
           List pendingRenewalInfo =
-              entity['gmsko6t1ir'] ?? []; //pending_renewal_info
+              entity['ranis'] ?? []; //pending_renewal_info
           if (pendingRenewalInfo.isNotEmpty) {
             model.autoRenew =
-                (pendingRenewalInfo[0]['peavie']) == '1'; //auto_renew_status
+                (pendingRenewalInfo[0]['animadvert']) ==
+                '1'; //auto_renew_status
           }
 
           List latestReceiptInfo =
-              entity['adversed'] ?? []; //latest_receipt_info
+              entity['acidology'] ?? []; //latest_receipt_info
           if (latestReceiptInfo.isNotEmpty) {
-            model.expiresDate = latestReceiptInfo[0]['bilby']; //expires_date_ms
+            model.expiresDate =
+                latestReceiptInfo[0]['twaddledom']; //expires_date_ms
           }
         }
         await AppKey.save(AppKey.isVipUser, model.ok);

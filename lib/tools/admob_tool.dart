@@ -385,10 +385,7 @@ class AdmobTool {
       if (sceneType == AdsSceneType.plus || sceneType == AdsSceneType.three) {
         resetDisplayTime();
       }
-      AdmobTool.instance.showFailUpload(
-        sceneType,
-        EventParaValue.noPadding.value,
-      );
+
       if (sceneType != AdsSceneType.middle) {
         EventTool.instance.eventUpload(EventApi.adNeedShow, {
           EventParaName.value.name: eventAdsSource.name,

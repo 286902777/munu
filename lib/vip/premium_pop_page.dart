@@ -43,28 +43,28 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
       await PremiumTool.instance.queryProductInfo();
     }
 
-    PremiumProductData sx = PremiumProductData(
-      productId: preYear,
-      title: 'year',
-      productInfo: 'productInfo',
-      price: 19.99,
-      showPrice: '${'\$'}19.99',
-      currency: '*',
-      isSelect: true,
-      hot: true,
-    );
-    PremiumProductData ssx = PremiumProductData(
-      productId: preWeek,
-      title: 'weak',
-      productInfo: 'productInfo',
-      price: 2.99,
-      showPrice: '${'\$'}2.99',
-      currency: '*',
-      isSelect: false,
-      hot: false,
-    );
-    lists.add(sx);
-    lists.add(ssx);
+    // PremiumProductData sx = PremiumProductData(
+    //   productId: preYear,
+    //   title: 'year',
+    //   productInfo: 'productInfo',
+    //   price: 19.99,
+    //   showPrice: '${'\$'}19.99',
+    //   currency: '*',
+    //   isSelect: true,
+    //   hot: true,
+    // );
+    // PremiumProductData ssx = PremiumProductData(
+    //   productId: preWeek,
+    //   title: 'weak',
+    //   productInfo: 'productInfo',
+    //   price: 2.99,
+    //   showPrice: '${'\$'}2.99',
+    //   currency: '*',
+    //   isSelect: false,
+    //   hot: false,
+    // );
+    // lists.add(sx);
+    // lists.add(ssx);
     // ^ test
     for (PremiumProductData m in PremiumTool.instance.productResultList.value) {
       if (m.productId != PremiumIdKey.year.value) {
