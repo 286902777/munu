@@ -120,7 +120,6 @@ class PremiumTool with ChangeNotifier {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _subscription.cancel();
   }

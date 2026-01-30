@@ -19,7 +19,7 @@ class PremiumPopPage extends StatefulWidget {
 
 class _PremiumPopPageState extends State<PremiumPopPage> {
   List<PremiumProductData> lists = [];
-  PremiumProductData? selectData;
+  PremiumProductData? currentData;
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
           if (m.productId == dic[FireConfigKey.userVipProductId]) {
             m.isSelect = dic[FireConfigKey.userVipSelect];
             if (m.isSelect == true) {
-              selectData = m;
+              currentData = m;
             }
           }
         }
@@ -163,7 +163,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    selectData?.showPrice ?? '',
+                                    currentData?.showPrice ?? '',
                                     style: const TextStyle(
                                       letterSpacing: -0.5,
                                       fontSize: 14,
@@ -172,7 +172,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                                     ),
                                   ),
                                   Text(
-                                    '/',
+                                    ' / ',
                                     style: const TextStyle(
                                       letterSpacing: -0.5,
                                       fontSize: 16,
@@ -181,7 +181,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                                     ),
                                   ),
                                   Text(
-                                    selectData?.title ?? '',
+                                    currentData?.title ?? '',
                                     style: const TextStyle(
                                       letterSpacing: -0.5,
                                       fontSize: 9,
@@ -202,7 +202,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
                                     dismissOnTap: false,
                                   );
                                   await PremiumTool.instance.toGetPay(
-                                    selectData,
+                                    currentData,
                                   );
                                 },
                                 child: Container(
@@ -304,7 +304,7 @@ class _PremiumPopPageState extends State<PremiumPopPage> {
           m.isSelect = false;
         }
         mod.isSelect = true;
-        selectData = mod;
+        currentData = mod;
         if (mounted) {
           setState(() {});
         }

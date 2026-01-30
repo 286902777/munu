@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:applovin_max/applovin_max.dart';
-import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -15,9 +14,7 @@ import 'package:flutter/foundation.dart'
         defaultTargetPlatform,
         kIsWeb;
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:munu/tools/event_tool.dart';
 
-import '../keys/app_key.dart';
 import 'admob_tool.dart';
 import 'common_tool.dart';
 
