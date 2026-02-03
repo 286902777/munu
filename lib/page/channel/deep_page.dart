@@ -453,14 +453,12 @@ class _DeepPageState extends State<DeepPage>
                 ),
                 SizedBox(width: 8),
                 Image.asset(Assets.channelDown, width: 16, height: 16),
-                SizedBox(width: 24),
               ],
             ),
           ),
         ),
       ),
       actions: [
-        SizedBox(width: 10),
         GestureDetector(
           onTap: () {
             vipMethod = VipMethod.click;

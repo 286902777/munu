@@ -617,12 +617,7 @@ class _VideoPageState extends State<VideoPage>
       builder: (context, orientation) {
         return PopScope(
           canPop: true,
-          onPopInvokedWithResult: (bool didPop, Object? result) {
-            if (didPop) {
-              vipSource = VipSource.ad;
-              PlayTool.showPrimunmPage(true);
-            }
-          },
+          onPopInvokedWithResult: (bool didPop, Object? result) {},
           child: Container(
             width: isFullScreen ? Get.height : Get.width,
             height: isFullScreen ? Get.width : Get.height,
@@ -832,7 +827,7 @@ class _VideoPageState extends State<VideoPage>
                   } else {
                     bool suc = await AdmobTool.showAdsScreen(AdsSceneType.play);
                     if (suc == false) {
-                      Get.back(result: true);
+                      Get.back();
                     }
                   }
                 },

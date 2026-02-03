@@ -9,7 +9,7 @@ import 'common_tool.dart';
 class PlayTool {
   static pushPage(VideoData model, List<VideoData> lists, bool recommend) {
     Get.to(() => VideoPage(data: model, playList: lists))?.then((result) {
-      if (result != null) {
+      if (result == true) {
         vipSource = VipSource.ad;
         showPrimunmPage(result);
       }
