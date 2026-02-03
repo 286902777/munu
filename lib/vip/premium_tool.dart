@@ -151,7 +151,8 @@ class PremiumTool with ChangeNotifier {
         if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
           //如果苹果返回成功之后去验证票据
-          if (purchaseDetails.status == PurchaseStatus.purchased) {
+          if (purchaseDetails.status == PurchaseStatus.purchased &&
+              isPay == true) {
             String userId = await AppKey.getString(AppKey.appUserId) ?? '';
             EventTool.instance.eventUpload(EventApi.premiumSuc, {
               EventParaName.value.name: vipProduct.value,
