@@ -182,7 +182,6 @@ class EventTool extends GetConnect {
       'weco': {
         'peppery': 'mcc',
         'sworn': systemVersion, //操作系统版本号
-        'subtlety': Uuid().v4(), //log_id
         'sheppard': '${DateTime.now().millisecondsSinceEpoch}', //日志发生的客户端时间
         'ph.d': 'tientsin', //映射关系: {“activate”: “android”, “tientsin”: “ios”}
         'rapport': idfv, //idfv
@@ -236,13 +235,13 @@ class EventTool extends GetConnect {
           }
         } else if (response.statusCode != null) {
           Map<String, dynamic>? data = await AppKey.getMap(AppKey.eventList);
-          data?[para['pursuant']['subtlety']] = para;
+          data?[para['nautical']['bounty']] = para;
           await AppKey.save(AppKey.eventList, data);
         }
       }
     } catch (e) {
       Map<String, dynamic>? data = await AppKey.getMap(AppKey.eventList);
-      data?[para['pursuant']['subtlety']] = para;
+      data?[para['nautical']['bounty']] = para;
       await AppKey.save(AppKey.eventList, data);
       print("${e.hashCode}");
     }
@@ -281,6 +280,10 @@ class EventTool extends GetConnect {
 
   Future<void> eventUpload(EventApi event, Map<String, dynamic>? para) async {
     Map<String, dynamic> commonPara = await _addPara(true);
-    await postRequest({'vector': event.name}..addAll(commonPara));
+    await postRequest(
+      {'vector': event.name}
+        ..addAll(commonPara)
+        ..addAll({event.name: para ?? {}}),
+    );
   }
 }

@@ -127,7 +127,6 @@ class PremiumTool with ChangeNotifier {
   void _listenToPurchaseUpdated(
     List<PurchaseDetails> purchaseDetailsList,
   ) async {
-    EasyLoading.dismiss();
     _purchaseList = purchaseDetailsList;
 
     purchaseDetailsList.sort(
@@ -152,6 +151,16 @@ class PremiumTool with ChangeNotifier {
         if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
           //如果苹果返回成功之后去验证票据
+          if (purchaseDetails.status == PurchaseStatus.purchased) {
+            String userId = await AppKey.getString(AppKey.appUserId) ?? '';
+            EventTool.instance.eventUpload(EventApi.premiumSuc, {
+              EventParaName.value.name: vipProduct.value,
+              EventParaName.type.name: vipType.value, //type
+              EventParaName.method.name: vipMethod.value, //method
+              EventParaName.source.name: vipSource.value, //source
+              EventParaName.iPlayerUid.name: userId,
+            });
+          }
           if (Platform.isIOS) {
             model = await _verifyPurchase(purchaseDetails);
             // } else {
@@ -159,6 +168,7 @@ class PremiumTool with ChangeNotifier {
           }
         } else if (purchaseDetails.status == PurchaseStatus.canceled) {
           //被取消，重置vip信息
+          EasyLoading.dismiss();
           model = premiumData.value;
           model.purchaseDetails = purchaseDetails;
           EventTool.instance.eventUpload(EventApi.premiumFail, {
@@ -166,6 +176,7 @@ class PremiumTool with ChangeNotifier {
           });
         }
         if (purchaseDetails.pendingCompletePurchase) {
+          EasyLoading.dismiss();
           InAppPurchase.instance.completePurchase(purchaseDetails);
         }
         //通知监听者
@@ -173,6 +184,7 @@ class PremiumTool with ChangeNotifier {
         await clearFailedPurchases();
       }
     } else {
+      EasyLoading.dismiss();
       _noticePurchaseStatusListener(PremiumData());
     }
   }
@@ -542,7 +554,6 @@ class PremiumTool with ChangeNotifier {
   ///订单状态监听-----------------------------------------
 
   void _noticePurchaseStatusListener(PremiumData data) {
-    EasyLoading.dismiss();
     PremiumTool.instance.premiumData.value = data;
     PremiumTool.instance.premiumData.notifyListeners();
   }
