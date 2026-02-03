@@ -529,7 +529,7 @@ class _HomePageState extends State<HomePage>
 
   void uploadEvent() async {
     EventTool.instance.eventUpload(EventApi.homeChannelExpose, {
-      EventParaName.sub.name: DataTool.instance.users.length,
+      EventParaName.history.name: DataTool.instance.users.length,
     });
     EventTool.instance.eventUpload(EventApi.homeHistoryExpose, {
       EventParaName.history.name: DataTool.instance.historyItems.length,
