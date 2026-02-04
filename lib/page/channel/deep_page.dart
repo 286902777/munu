@@ -379,10 +379,17 @@ class _DeepPageState extends State<DeepPage>
   @override
   Widget build(BuildContext context) {
     return MunuPage(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: cusNavbar(),
-        body: _mainWidget(),
+      child: PopScope(
+        canPop: true,
+        onPopInvokedWithResult: (bool didPop, Object? result) {
+          isDeepComment = true;
+          closeDeep = true;
+        },
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: cusNavbar(),
+          body: _mainWidget(),
+        ),
       ),
     );
   }

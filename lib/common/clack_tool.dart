@@ -34,7 +34,7 @@ class ClackTool {
   }
 
   static Future<bool> isSimCard() async {
-    final hasSim = await SimReader.hasSimCard();
-    return hasSim;
+    final hasSim = await SimReader.getNetworkInfo();
+    return hasSim?.networkType != null;
   }
 }
