@@ -69,7 +69,7 @@ dependencies:
   screen_brightness: ^2.1.7
   pull_to_refresh: ^2.0.0
   in_app_purchase: 3.2.2 # 3.2.3 订阅状态不对
-  in_app_purchase_storekit: 0.3.14 # 版本高了没有取消的回调
+  in_app_purchase_storekit: 0.3.22+1 # 版本高了没有取消的回调
   vpn_detector: ^1.2.0
   sim_reader: ^1.0.4
 dev_dependencies:

@@ -667,7 +667,7 @@ SPEC CHECKSUMS:
   GoogleUserMessagingPlatform: befe603da6501006420c206222acd449bba45a9c
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   image_picker_ios: e0ece4aa2a75771a7de3fa735d26d90817041326
-  in_app_purchase_storekit: 6553672fdc10ccc8ec984bbbe17e93fc3642a126
+  in_app_purchase_storekit: d1a48cb0f8b29dbf5f85f782f5dd79b21b90a5e6
   InMobiSDK: 43b1d6560bd75c8c382bb54fa8e248f5ed979860
   IronSourceAdQualitySDK: 56314ade811a5226f76dfd377bc09aca0d6610c0
   IronSourceSDK: 66e1483cd62fb63162a965651f6f41c6b91664db
