@@ -183,6 +183,8 @@ class AdmobTool {
           }
         }
       }
+    } else {
+      return null;
     }
     dynamic admobOrMaxAd;
     dynamic admobDoubleAd;
@@ -199,6 +201,7 @@ class AdmobTool {
         if (AdsUnitId.admobNativeAdsUnitTwoId.isNotEmpty &&
             AdmobTool.instance.doubleNativeAd == null) {
           admobDoubleAd = await _requestNativeAd(sceneType, true);
+          AdmobTool.instance.doubleNativeAd = admobDoubleAd;
         }
       }
     } else if (adSourceType == AdsSourceType.max) {
@@ -236,7 +239,6 @@ class AdmobTool {
       });
       int timeStamp = DateTime.now().millisecondsSinceEpoch;
       adsMap[sceneType.value] = admobOrMaxAd;
-      AdmobTool.instance.doubleNativeAd = admobDoubleAd;
       adsTimeStampMap[sceneType.value] = timeStamp;
     }
     _checkAdsValidateTimer();
@@ -257,14 +259,14 @@ class AdmobTool {
   static startLoadingPlus(AdsSceneType sceneType) {
     if (adsMap[AdsSceneType.plus.value] == null &&
         adsRequestIdxMap[sceneType.value] == 0) {
-      initAdmobOrMax(sceneType);
+      initAdmobOrMax(AdsSceneType.plus);
     }
   }
 
   static startLoadingThree(AdsSceneType sceneType) {
     if (adsMap[AdsSceneType.three.value] == null &&
         adsRequestIdxMap[sceneType.value] == 0) {
-      initAdmobOrMax(sceneType);
+      initAdmobOrMax(AdsSceneType.three);
     }
   }
 
@@ -343,9 +345,7 @@ class AdmobTool {
           AdsState.showing,
           adsType: AdsType.native,
           ad: ad,
-          doubleAd: sceneType == AdsSceneType.three
-              ? AdmobTool.instance.doubleNativeAd
-              : null,
+          doubleAd: AdmobTool.instance.doubleNativeAd,
           sceneType: currentScene,
         );
       } else if (ad is MaxAd) {

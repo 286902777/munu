@@ -24,6 +24,7 @@ import '../../keys/app_key.dart';
 import '../../main.dart';
 import '../../tools/common_tool.dart';
 import '../../vip/premium_pop_page.dart';
+import '../../vip/premium_tool.dart';
 import '../channel/channel_page.dart';
 import 'home_list_cell.dart';
 
@@ -64,6 +65,7 @@ class _HomePageState extends State<HomePage>
     requestChannelData();
     uploadEvent();
     uploadOpenApp();
+    PremiumTool.instance.restore(appStart: true);
   }
 
   uploadOpenApp() async {
