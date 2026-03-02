@@ -122,16 +122,16 @@ class FireBaseTool {
     FireConfigKey.middlePlayCloseClick: 80,
     AdsSceneType.open.value: [
       {
-        FireConfigKey.levelKey: 5,
+        FireConfigKey.levelKey: 4,
         FireConfigKey.typeKey: AdsType.rewarded.value,
         FireConfigKey.sourceKey: AdsSourceType.max.value,
         FireConfigKey.adsIdKey: '0101407bdc3d3eca',
       },
       {
-        FireConfigKey.levelKey: 4,
+        FireConfigKey.levelKey: 5,
         FireConfigKey.typeKey: AdsType.interstitial.value,
         FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey: 'ca-app-pub-7475681591463110/7482129416',
+        FireConfigKey.adsIdKey: 'ca-app-pub-8204463855702406/8041796332',
       },
       {
         FireConfigKey.levelKey: 3,
@@ -151,7 +151,7 @@ class FireBaseTool {
         FireConfigKey.levelKey: 4,
         FireConfigKey.typeKey: AdsType.interstitial.value,
         FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey: 'ca-app-pub-7475681591463110/7482129416',
+        FireConfigKey.adsIdKey: 'ca-app-pub-8204463855702406/8041796332',
       },
       {
         FireConfigKey.levelKey: 3,
@@ -171,7 +171,7 @@ class FireBaseTool {
         FireConfigKey.levelKey: 4,
         FireConfigKey.typeKey: AdsType.interstitial.value,
         FireConfigKey.sourceKey: AdsSourceType.admob.value,
-        FireConfigKey.adsIdKey: 'ca-app-pub-7475681591463110/7482129416',
+        FireConfigKey.adsIdKey: 'ca-app-pub-8204463855702406/8041796332',
       },
       {
         FireConfigKey.levelKey: 3,
@@ -448,11 +448,11 @@ class DefaultOptions {
   // );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDMLKmBXFSRXrT7swFLhMRpeSJaGiMn1h0',
-    appId: '1:268941655656:ios:2752e8203170a3399d05dd',
-    projectId: 'lens-ios',
+    apiKey: 'AIzaSyCKyMcjp_n9RoOOaURiuo3fVewYvnaPJGE',
+    appId: '1:702668157763:ios:9e6863e20193b047e075f6',
+    projectId: 'lens-ios-5ca7c',
     iosBundleId: 'com.lens.videoapp',
-    storageBucket: 'lens-ios.firebasestorage.app',
-    messagingSenderId: '268941655656',
+    storageBucket: 'lens-ios-5ca7c.firebasestorage.app',
+    messagingSenderId: '702668157763',
   );
 }
