@@ -811,7 +811,7 @@ class AdmobTool {
           AdmobTool.instance.admobMaxUploadTba(
             ad.adUnitId,
             'max',
-            ad.networkPlacement,
+            ad.networkName,
             ad.adFormat,
             'interstitial',
             ad.revenue * 1000000,
@@ -873,7 +873,7 @@ class AdmobTool {
           AdmobTool.instance.admobMaxUploadTba(
             ad.adUnitId,
             'max',
-            ad.networkPlacement,
+            ad.networkName,
             ad.adFormat,
             'rewarded',
             ad.revenue * 1000000,

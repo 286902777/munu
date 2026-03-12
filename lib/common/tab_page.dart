@@ -71,7 +71,6 @@ class _TabPageState extends State<TabPage>
           );
         }
         if (adsType == AdsType.native) {
-          AdmobTool.adsState = AdsState.dismissed;
           Get.to(
             () => AdmobNativePage(
               ad: ad,
@@ -198,6 +197,10 @@ class _TabPageState extends State<TabPage>
   }
 
   void pushDeepVC() async {
+    if (AdmobTool.adsState == AdsState.showing) {
+      return;
+    }
+
     if (deepLink.isNotEmpty) {
       bool open = await checkClock(deepLink);
       if (open == true) {

@@ -302,7 +302,6 @@ class _VideoPageState extends State<VideoPage>
       }
       if (state == AdsState.showing && AdmobTool.scene == AdsSceneType.middle) {
         if (adsType == AdsType.native) {
-          AdmobTool.adsState = AdsState.dismissed;
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(
@@ -359,7 +358,6 @@ class _VideoPageState extends State<VideoPage>
           );
         }
         if (adsType == AdsType.native) {
-          AdmobTool.adsState = AdsState.dismissed;
           showDialog(
             context: context,
             builder: (context) => AdmobNativePage(

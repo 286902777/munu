@@ -122,9 +122,22 @@ class EventTool extends GetConnect {
     await AppKey.save(AppKey.eventList, {});
     if (data != null) {
       for (var result in data.entries) {
-        postRequest(result.value);
+        String s = result.value["weco"]["sheppard"];
+        int t = int.tryParse(s) ?? 0;
+        bool b = getDaysDifference(DateTime.fromMillisecondsSinceEpoch(t));
+        if (b) {
+          postRequest(result.value);
+        }
       }
     }
+  }
+
+  bool getDaysDifference(DateTime date) {
+    final nowData = DateTime.now();
+    final utcDate1 = DateTime.utc(nowData.year, nowData.month, nowData.day);
+    final utcDate2 = DateTime.utc(date.year, date.month, date.day);
+
+    return (utcDate2.difference(utcDate1).inDays).abs() < 3;
   }
 
   Future<String> getDistinctId() async {
