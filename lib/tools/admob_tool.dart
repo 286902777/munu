@@ -745,6 +745,8 @@ class AdmobTool {
             ad: ad,
             sceneType: currentScene,
           );
+        },
+        onAdRevenuePaidCallback: (ad) {
           AdmobTool.instance.admobMaxUploadTba(
             ad.adUnitId,
             'max',
@@ -808,6 +810,8 @@ class AdmobTool {
             ad: ad,
             sceneType: currentScene,
           );
+        },
+        onAdRevenuePaidCallback: (ad) {
           AdmobTool.instance.admobMaxUploadTba(
             ad.adUnitId,
             'max',
@@ -870,6 +874,8 @@ class AdmobTool {
             ad: ad,
             sceneType: currentScene,
           );
+        },
+        onAdRevenuePaidCallback: (ad) {
           AdmobTool.instance.admobMaxUploadTba(
             ad.adUnitId,
             'max',
